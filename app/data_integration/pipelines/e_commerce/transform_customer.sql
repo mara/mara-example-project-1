@@ -2,67 +2,54 @@ DROP TABLE IF EXISTS ec_dim_next.customer CASCADE;
 
 CREATE TABLE ec_dim_next.customer
 (
-  customer_id                    TEXT    NOT NULL PRIMARY KEY, -- Unique identifier of a customer
-  geo_location_fk                INTEGER NOT NULL,             -- integer representation of a zip_code_prefix
-  first_order_fk                 TEXT,
-  last_order_fk                  TEXT,
+  customer_id           TEXT    NOT NULL PRIMARY KEY, -- Unique identifier of a customer
+  geo_location_fk       INTEGER NOT NULL,             -- integer representation of a zip_code_prefix
+  first_order_fk        TEXT,
+  last_order_fk         TEXT,
 
-  first_order_purchase_date TIMESTAMP WITH TIME ZONE,
-  last_order_purchase_date  TIMESTAMP WITH TIME ZONE,
-  days_since_last_order          INTEGER,
-
-  number_of_orders               INTEGER,
-  number_of_order_items          INTEGER,
-  lifetime_amount                DOUBLE PRECISION,
-  total_freight_value            DOUBLE PRECISION
+  days_since_last_order INTEGER,
+  number_of_orders      INTEGER,
+  number_of_order_items INTEGER,
+  revenue_lifetime      DOUBLE PRECISION,
+  total_freight_value   DOUBLE PRECISION
 );
 
 WITH customer_items   AS (
   SELECT customer_id,
          count(*)                 AS number_of_items,
          count(distinct order_id) AS number_of_orders,
-         sum(price)               AS lifetime_amount,
+         sum(revenue)             AS revenue_lifetime,
          sum(freight_value)       AS total_freight_value
   FROM ec_tmp.order_item
   GROUP BY customer_id
 )
     , customer_orders AS (
-  SELECT DISTINCT customer_id,
+  SELECT DISTINCT order_item.customer_id,
                   first_value(order_id)
-                              over (partition by customer_id
-                                order by _purchase_date asc)  AS first_order_id,
-                  first_value(_purchase_date)
-                              over (partition by customer_id
-                                order by _purchase_date asc)  AS first_order_purchase_date,
-
+                              over (partition by order_item.customer_id
+                                order by "order".purchase_date asc)          AS first_order_id,
                   first_value(order_id)
-                              over (partition by customer_id
-                                order by _purchase_date desc) AS last_order_id,
-
-                  first_value(_purchase_date)
-                              over (partition by customer_id
-                                order by _purchase_date desc) AS last_order_purchase_date,
+                              over (partition by order_item.customer_id
+                                order by "order".purchase_date desc)         AS last_order_id,
                   now() :: DATE
-                    - MAX(_purchase_date)
-                          over (partition by customer_id) :: DATE  AS days_since_last_order
+                    - MAX("order".purchase_date)
+                          over (partition by order_item.customer_id) :: DATE AS days_since_last_order
   FROM ec_tmp.order_item
+       LEFT JOIN ec_tmp.order USING (order_id)
 )
 
 INSERT
 INTO ec_dim_next.customer
 SELECT customer_id,
-       geo_location.geo_location_id                   AS geo_location_fk,
-       customer_orders.first_order_id                 AS first_order_fk,
-       customer_orders.last_order_id                  AS last_order_fk,
+       geo_location.geo_location_id          AS geo_location_fk,
+       customer_orders.first_order_id        AS first_order_fk,
+       customer_orders.last_order_id         AS last_order_fk,
 
-       customer_orders.first_order_purchase_date AS first_order_purchase_date,
-       customer_orders.last_order_purchase_date  AS last_order_purchase_date,
-       customer_orders.days_since_last_order          AS days_since_last_order,
-
-       customer_items.number_of_orders                AS number_of_orders,
-       customer_items.number_of_items                 AS number_of_order_items,
-       customer_items.lifetime_amount                 AS lifetime_amount,
-       customer_items.total_freight_value             AS total_freight_value
+       customer_orders.days_since_last_order AS days_since_last_order,
+       customer_items.number_of_orders       AS number_of_orders,
+       customer_items.number_of_items        AS number_of_order_items,
+       customer_items.revenue_lifetime       AS revenue_lifetime,
+       customer_items.total_freight_value    AS total_freight_value
 FROM ec_tmp.customer
      LEFT JOIN ec_tmp.geo_location USING (zip_code_prefix)
      LEFT JOIN customer_items USING (customer_id)

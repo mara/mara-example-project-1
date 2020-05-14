@@ -11,21 +11,21 @@ CREATE TABLE ec_dim_next.order
 
   status                  ec_dim_next.STATUS,        --Reference to the order status (delivered, shipped, etc).
 
-  purchase_date      TIMESTAMP WITH TIME ZONE,  --Shows the purchase timestamp.
-  approved_at_date             TIMESTAMP WITH TIME ZONE,  --Shows the payment approval timestamp.
+  purchase_date           TIMESTAMP WITH TIME ZONE,  --Shows the purchase timestamp.
+  approved_date           TIMESTAMP WITH TIME ZONE,  --Shows the payment approval timestamp.
   delivered_carrier_date  TIMESTAMP WITH TIME ZONE,  --Shows the order posting timestamp. When it was handled to the logistic partner.
   delivered_customer_date TIMESTAMP WITH TIME ZONE,  --Shows the actual order delivery date to the customer.
   estimated_delivery_date TIMESTAMP WITH TIME ZONE,  --Shows the estimated delivery date that was informed to customer at the purchase moment.
 
   number_of_items         INTEGER,
-  total_price             DOUBLE PRECISION,
+  revenue                 DOUBLE PRECISION,
   total_freight_value     DOUBLE PRECISION
 );
 
 WITH items AS (
   SELECT order_id,
          count(*)           AS number_of_items,
-         sum(price)         AS total_price,
+         sum(revenue)       AS revenue,
          sum(freight_value) AS total_freight_value
   FROM ec_tmp.order_item
   GROUP BY order_id
@@ -39,13 +39,13 @@ SELECT order_id,
        status::ec_dim_next.STATUS AS status,
 
        purchase_date,
-       approved_at_date,
+       approved_date,
        delivered_carrier_date,
        delivered_customer_date,
        estimated_delivery_date,
 
        items.number_of_items      AS number_of_items,
-       items.total_price          AS total_price,
+       items.revenue              AS revenue,
        items.total_freight_value  AS total_freight_value
 FROM ec_tmp.order
      LEFT JOIN items USING (order_id);

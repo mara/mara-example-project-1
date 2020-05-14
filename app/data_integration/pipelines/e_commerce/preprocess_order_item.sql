@@ -9,10 +9,8 @@ CREATE TABLE ec_tmp.order_item
   seller_id           TEXT             NOT NULL, --seller unique identifier
 
   shipping_limit_date TIMESTAMP WITH TIME ZONE,  --Shows the seller shipping limit date for handling the order over to the logistic partner.
-  price               DOUBLE PRECISION NOT NULL, --item price
-  freight_value       DOUBLE PRECISION NOT NULL, --item freight value item (if an order has more than one item the freight value is split between items)
-
-  _purchase_date TIMESTAMP WITH TIME ZONE
+  revenue             DOUBLE PRECISION NOT NULL, --item price
+  freight_value       DOUBLE PRECISION NOT NULL  --item freight value item (if an order has more than one item the freight value is split between items)
 );
 
 INSERT INTO ec_tmp.order_item
@@ -23,10 +21,8 @@ SELECT order_id || '_' || order_item_id AS order_item_id, -- create a unique ord
        seller_id,
 
        shipping_limit_date,
-       price,
-       freight_value,
-
-       "order".purchase_date       AS _purchase_date
+       price                            AS revenue,
+       freight_value
 FROM ec_data.order_items
      LEFT JOIN ec_tmp.order USING (order_id);
 

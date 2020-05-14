@@ -9,10 +9,8 @@ CREATE TABLE ec_dim_next.order_item
   seller_fk           TEXT             NOT NULL,             -- seller unique identifier
 
   shipping_limit_date TIMESTAMP WITH TIME ZONE,              -- Shows the seller shipping limit date for handling the order over to the logistic partner.
-  price               DOUBLE PRECISION NOT NULL,             -- item price
-  freight_value       DOUBLE PRECISION NOT NULL,             -- item freight value item (if an order has more than one item the freight value is split between items)
-
-  _purchase_date TIMESTAMP WITH TIME ZONE
+  revenue               DOUBLE PRECISION NOT NULL,             -- item price
+  freight_value       DOUBLE PRECISION NOT NULL              -- item freight value item (if an order has more than one item the freight value is split between items)
 );
 
 INSERT INTO ec_dim_next.order_item
@@ -23,10 +21,8 @@ SELECT order_item_id,
        seller_id   AS seller_fk,
 
        shipping_limit_date,
-       price,
-       freight_value,
-
-       _purchase_date
+       revenue,
+       freight_value
 FROM ec_tmp.order_item;
 
 SELECT util.add_index('ec_dim_next', 'order_item',
