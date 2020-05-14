@@ -1,0 +1,36 @@
+{
+  "target_name": "customers",
+  "include_version_columns": false,
+  "data_table_fields": [
+    {
+      "name": "customer_id",
+      "data_type": "TEXT",
+      "not_null": true,
+      "comment": "Key to the orders table. Each order has a unique customer_id"
+    },
+    {
+      "name": "customer_unique_id",
+      "data_type": "TEXT",
+      "not_null": true,
+      "comment": "Unique identifier of a customer"
+    },
+    {
+      "name": "customer_zip_code_prefix",
+      "data_type": "TEXT",
+      "not_null": false,
+      "comment": "First five digits of customer zip code"
+    },
+    {
+      "name": "customer_city",
+      "data_type": "TEXT",
+      "not_null": false,
+      "comment": "Customer city name"
+    },
+    {
+      "name": "customer_state",
+      "data_type": "TEXT",
+      "not_null": false,
+      "comment": "Customer state"
+    }
+  ]
+}
