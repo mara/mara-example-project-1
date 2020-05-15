@@ -6,6 +6,7 @@ import sys
 # configure application and packages
 import app.data_integration
 import app.data_sets
+import app.metadata
 import app.ui
 
 # apply environment specific settings (not in git repo)

@@ -9,7 +9,7 @@ CREATE TABLE ec_dim_next.order_item
   seller_fk           TEXT             NOT NULL,             -- seller unique identifier
 
   shipping_limit_date TIMESTAMP WITH TIME ZONE,              -- Shows the seller shipping limit date for handling the order over to the logistic partner.
-  revenue               DOUBLE PRECISION NOT NULL,             -- item price
+  revenue             DOUBLE PRECISION NOT NULL,             -- item price
   freight_value       DOUBLE PRECISION NOT NULL              -- item freight value item (if an order has more than one item the freight value is split between items)
 );
 

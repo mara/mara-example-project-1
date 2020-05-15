@@ -22,6 +22,7 @@ def root_pipeline():
     import app.data_integration.pipelines.load_data.load_ecommerce_data
     import app.data_integration.pipelines.load_data.load_marketing_data
     import app.data_integration.pipelines.e_commerce
+    import app.data_integration.pipelines.generate_artifacts
 
     pipeline = Pipeline(
         id='mara_example_project_1',
@@ -31,6 +32,7 @@ def root_pipeline():
     pipeline.add(app.data_integration.pipelines.load_data.load_ecommerce_data.pipeline, upstreams=['utils'])
     pipeline.add(app.data_integration.pipelines.load_data.load_marketing_data.pipeline, upstreams=['utils'])
     pipeline.add(app.data_integration.pipelines.e_commerce.pipeline, upstreams=['load_ecommerce_data'])
+    pipeline.add(app.data_integration.pipelines.generate_artifacts.pipeline, upstreams=['e_commerce'])
     return pipeline
 
 

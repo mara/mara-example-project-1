@@ -21,7 +21,7 @@ CREATE TABLE ec_dim_next.product
   number_of_orders      INTEGER,
   number_of_order_items INTEGER,
   number_of_customers   INTEGER,
-  lifetime_amount       DOUBLE PRECISION,
+  revenue_all_time      DOUBLE PRECISION,
   total_freight_value   DOUBLE PRECISION,
   avg_days_of_delivery  DOUBLE PRECISION
 );

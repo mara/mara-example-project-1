@@ -13,6 +13,8 @@ from mara_app import monkey_patch
 from mara_page import acl
 from mara_page import navigation
 
+import mara_metadata
+
 from app.ui import start_page
 
 blueprint = flask.Blueprint('ui', __name__, url_prefix='/ui', static_folder='static')
@@ -40,7 +42,8 @@ def css_files(original_function, response):
 def acl_resources():
     return [acl.AclResource(name='Documentation',
                             children=[data_integration.MARA_ACL_RESOURCES().get('Data Integration'),
-                                      mara_db.MARA_ACL_RESOURCES().get('DB Schema')]),
+                                      mara_db.MARA_ACL_RESOURCES().get('DB Schema'),
+                                      mara_metadata.MARA_ACL_RESOURCES()['Metadata']]),
             acl.AclResource(name='Admin',
                             children=[mara_app.MARA_ACL_RESOURCES().get('Configuration'),
                                       mara_acl.MARA_ACL_RESOURCES().get('Acl')])]
@@ -60,6 +63,7 @@ def navigation_root() -> navigation.NavigationEntry:
     return navigation.NavigationEntry(label='Root', children=[
         data_integration.MARA_NAVIGATION_ENTRIES().get('Data Integration'),
         data_sets.MARA_NAVIGATION_ENTRIES().get('Data Sets'),
+        mara_metadata.MARA_NAVIGATION_ENTRIES()['Metadata'],
         mara_db.MARA_NAVIGATION_ENTRIES().get('DB Schema'),
         navigation.NavigationEntry(
             'Settings', icon='cog', description='ACL & Configuration', rank=100,

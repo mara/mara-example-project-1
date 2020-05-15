@@ -9,6 +9,8 @@
 -e git+https://github.com/mara/bigquery-downloader.git@3.0.0#egg=bigquery-downloader
 -e git+https://github.com/mara/data-sets.git@2.2.1#egg=data-sets
 
+-e git+git@codebasehq.com:project-a/mara/mara-metadata.git@master#egg=mara-metadata
+
 # running flask
 gunicorn
 Flask>=1.0.2
