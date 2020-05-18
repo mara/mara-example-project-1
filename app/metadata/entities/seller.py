@@ -2,7 +2,7 @@ from mara_metadata.schema import Entity, Type
 
 seller_entity = Entity(
     name='Seller',
-    description='',
+    description='People that fulfilled orders made at Olist',
     schema_name='ec_dim')
 
 from app.metadata.entities.geo_location import geo_location_entity

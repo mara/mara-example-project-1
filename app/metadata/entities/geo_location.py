@@ -2,40 +2,40 @@ from mara_metadata.schema import Entity, Type
 
 geo_location_entity = Entity(
     name='Geo-location',
-    description='',
+    description='Information on Brazilian zip codes including coordinates',
     schema_name='ec_dim',
     table_name='geo_location'
 )
 
 geo_location_entity.add_attribute(
     name='Geo-location ID',
-    description='',
+    description='Unique identifier of a geo-location entry based on the zip code',
     column_name='geo_location_id',
     type=Type.ID,
     high_cardinality=True)
 geo_location_entity.add_attribute(
     name='Zip code',
-    description='',
+    description='First 5 digits of zip code',
     column_name='zip_code_prefix')
 geo_location_entity.add_attribute(
     name='Latitude',
-    description='',
+    description='Latitude coordinate',
     column_name='latitude',
     type=Type.ID,
     high_cardinality=True)
 geo_location_entity.add_attribute(
     name='Longitude',
-    description='',
+    description='Longitude coordinate',
     column_name='longitude',
     type=Type.ID,
     high_cardinality=True)
 geo_location_entity.add_attribute(
     name='City',
-    description='',
+    description='City name',
     column_name='city',
     type=Type.ID)
 geo_location_entity.add_attribute(
     name='State',
-    description='',
+    description='State name',
     column_name='state',
     type=Type.ID)

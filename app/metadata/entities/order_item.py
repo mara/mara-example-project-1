@@ -2,7 +2,7 @@ from mara_metadata.schema import Entity, Type
 
 order_item_entity = Entity(
     name='Order item',
-    description='',
+    description='Items purchased within each order',
     schema_name='ec_dim',
     table_name='order_item')
 
@@ -16,12 +16,12 @@ order_item_entity.link_entity(target_entity=seller_entity, fk_column='seller_fk'
 
 order_item_entity.add_attribute(
     name='Order item ID',
-    description='',
+    description='Order item unique identifier',
     column_name='order_item_id',
     type=Type.ID,
     high_cardinality=True)
 order_item_entity.add_attribute(
     name='Shipping limit date',
-    description='',
+    description='The Seller shipping limit date for handling the order over to the logistic partner',
     column_name='shipping_limit_date',
     type=Type.DATE)

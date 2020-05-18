@@ -21,16 +21,16 @@ order_item_data_set.add_simple_metric(
     column_name='order_item_id')
 order_item_data_set.add_simple_metric(
     name='# Orders',
-    description='',
+    description='Number of distinct orders',
     aggregation=Aggregation.DISTINCT_COUNT,
     column_name='order_fk')
 order_item_data_set.add_simple_metric(
     name='Revenue',
-    description='',
+    description='Revenue generated based on the price of the item',
     aggregation=Aggregation.SUM,
     column_name='revenue')
 order_item_data_set.add_simple_metric(
     name='Freight value',
-    description='',
+    description='The freight value of the item (if an order has more than one item the freight value is splitted between items)',
     aggregation=Aggregation.SUM,
     column_name='freight_value')
