@@ -7,6 +7,13 @@ order_item_data_set = DataSet(
     name='Order items',
     max_entity_link_depth=1)
 
+order_item_data_set.include_path(['Order', 'Customer'])
+order_item_data_set.include_path(['Order', 'Customer', 'Geo-location'])
+order_item_data_set.include_attributes(['Order', 'Customer', 'Geo-location'], ['Zip code', 'City'])
+
+order_item_data_set.include_path(['Seller', 'Geo-location'])
+order_item_data_set.include_attributes(['Seller', 'Geo-location'], ['Zip code', 'City'])
+
 order_item_data_set.add_simple_metric(
     name='# Order items',
     description='The number of order items',
