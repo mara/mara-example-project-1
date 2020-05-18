@@ -12,8 +12,7 @@ seller_entity.link_entity(target_entity=order_entity, fk_column='first_order_fk'
                           prefix='First order')
 seller_entity.link_entity(target_entity=order_entity, fk_column='last_order_fk',
                           prefix='Last order')
-seller_entity.link_entity(target_entity=geo_location_entity, fk_column='geo_location_fk',
-                          prefix='Geo-location')
+seller_entity.link_entity(target_entity=geo_location_entity, fk_column='geo_location_fk')
 
 seller_entity.add_attribute(
     name='Seller ID',

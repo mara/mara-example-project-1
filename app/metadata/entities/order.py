@@ -7,8 +7,7 @@ order_entity = Entity(
 
 from app.metadata.entities.customer import customer_entity
 
-order_entity.link_entity(target_entity=customer_entity, fk_column='customer_fk',
-                         prefix='Customer')
+order_entity.link_entity(target_entity=customer_entity, fk_column='customer_fk', prefix='Customer')
 
 order_entity.add_attribute(
     name='Order ID',
