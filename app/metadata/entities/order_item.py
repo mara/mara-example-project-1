@@ -2,7 +2,7 @@ from mara_metadata.schema import Entity, Type
 
 order_item_entity = Entity(
     name='Order item',
-    description='Items purchased within each order',
+    description='Items purchased within each order made at Olist Store',
     schema_name='ec_dim',
     table_name='order_item')
 
