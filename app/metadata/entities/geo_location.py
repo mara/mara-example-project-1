@@ -21,21 +21,17 @@ geo_location_entity.add_attribute(
     name='Latitude',
     description='Latitude coordinate',
     column_name='latitude',
-    type=Type.ID,
     high_cardinality=True)
 geo_location_entity.add_attribute(
     name='Longitude',
     description='Longitude coordinate',
     column_name='longitude',
-    type=Type.ID,
     high_cardinality=True)
 geo_location_entity.add_attribute(
     name='City',
     description='City name',
-    column_name='city',
-    type=Type.ID)
+    column_name='city')
 geo_location_entity.add_attribute(
     name='State',
     description='State name',
-    column_name='state',
-    type=Type.ID)
+    column_name='state')
