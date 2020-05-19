@@ -15,4 +15,11 @@ def _data_sets():
 
 
 patch(mara_metadata.config.schema_name)(lambda: 'Mara example project 1')
-patch(mara_metadata.config.db_alias)(lambda: default_db_alias())
+
+@patch(mara_metadata.config.database)
+def _database():
+
+    return mara_metadata.config.DB(
+        database=default_db_alias().database,
+        user=default_db_alias().user,
+        host=default_db_alias().host)
