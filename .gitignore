@@ -1,0 +1,12 @@
+
+/app/local_setup.py
+/app/mondrian-server.properties
+/packages
+/data
+/.venv
+
+*.pyc
+/.idea
+/.vscode
+/.project
+.DS_Store
