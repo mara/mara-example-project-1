@@ -5,17 +5,6 @@ from mara_app.monkey_patch import patch
 
 @patch(data_sets.config.data_sets)
 def _data_sets():
-    return [
-        # data_sets.data_set.DataSet(
-        #     id='order-items', name='Order items',
-        #     database_alias='dwh', database_schema='ec_dim', database_table='order_item_data_set',
-        #     default_column_names=[],
-        #     use_attributes_table=True),
-    ]
-
-
-@patch(data_sets.config.data_sets)
-def _data_sets():
     from mara_metadata.config import data_sets as mt_data_sets
     from mara_metadata.schema import generate_attribute_name
 
@@ -26,7 +15,9 @@ def _data_sets():
                     'Revenue (lifetime)'],
         'Customers': ['Customer ID', 'Geo-location city', 'Last order purchase date', '# Orders', 'Revenue (lifetime)'],
         'Products': ['Product ID', 'Category', '# Orders', '# Order items', '# Customers', 'Revenue (all time)',
-                     'Total freight value']
+                     'Total freight value'],
+        'Marketing funnel': ['MQL ID', 'Closed deal ID', 'Seller ID', '# Orders', '# Order items', '# Customers',
+                             'Revenue (all time)']
     }
 
     result = []

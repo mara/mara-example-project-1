@@ -18,7 +18,8 @@ order_entity.add_attribute(
 order_entity.add_attribute(
     name='Status',
     description='Reference to the order status (delivered, shipped, etc)',
-    column_name='status')
+    column_name='status',
+    type=Type.ENUM)
 order_entity.add_attribute(
     name='Purchase date',
     description='The Purchase timestamp',

@@ -16,7 +16,8 @@ geo_location_entity.add_attribute(
 geo_location_entity.add_attribute(
     name='Zip code',
     description='First 5 digits of zip code',
-    column_name='zip_code_prefix')
+    column_name='zip_code_prefix',
+    type=Type.ENUM)
 geo_location_entity.add_attribute(
     name='Latitude',
     description='Latitude coordinate',
@@ -30,8 +31,10 @@ geo_location_entity.add_attribute(
 geo_location_entity.add_attribute(
     name='City',
     description='City name',
-    column_name='city')
+    column_name='city',
+    type=Type.ENUM)
 geo_location_entity.add_attribute(
     name='State',
     description='State name',
-    column_name='state')
+    column_name='state',
+    type=Type.ENUM)
