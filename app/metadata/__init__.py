@@ -1,9 +1,6 @@
 import mara_metadata.config
 from mara_app.monkey_patch import patch
 
-from data_integration.config import default_db_alias
-from mara_db.config import databases
-
 
 @patch(mara_metadata.config.data_sets)
 def _data_sets():
