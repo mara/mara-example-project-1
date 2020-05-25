@@ -24,6 +24,7 @@ def root_pipeline():
     import app.data_integration.pipelines.e_commerce
     import app.data_integration.pipelines.marketing
     import app.data_integration.pipelines.generate_artifacts
+    import app.data_integration.pipelines.consistency_checks
 
     pipeline = Pipeline(
         id='mara_example_project_1',
@@ -36,6 +37,7 @@ def root_pipeline():
     pipeline.add(app.data_integration.pipelines.marketing.pipeline,
                  upstreams=['load_marketing_data', 'e_commerce'])
     pipeline.add(app.data_integration.pipelines.generate_artifacts.pipeline, upstreams=['marketing'])
+    pipeline.add(app.data_integration.pipelines.consistency_checks.pipeline, upstreams=['generate_artifacts'])
     return pipeline
 
 

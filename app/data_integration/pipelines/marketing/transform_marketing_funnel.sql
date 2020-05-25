@@ -1,29 +1,29 @@
 DROP TABLE IF EXISTS m_dim_next.marketing_funnel CASCADE;
 CREATE TABLE m_dim_next.marketing_funnel
 (
-  mql_id                        TEXT                              NOT NULL, --Marketing Qualified Lead id
-  closed_deal_id                TEXT,                                       --Closed deal MQL id
+  mql_id                        TEXT                              NOT NULL PRIMARY KEY, --Marketing Qualified Lead id
+  closed_deal_id                TEXT,                                                   --Closed deal MQL id
   seller_fk                     TEXT,
-  sdr_id                        TEXT,                                       --Sales Development Representative id
-  sr_id                         TEXT,                                       --Sales Representative
+  sdr_id                        TEXT,                                                   --Sales Development Representative id
+  sr_id                         TEXT,                                                   --Sales Representative
 
-  first_contact_date            DATE                              NOT NULL, --Date of the first contact solicitation.
-  landing_page_id               m_dim_next.LANDING_PAGE           NOT NULL, --Landing page id where the lead was acquired
-  origin                        m_dim_next.ORIGIN                 NOT NULL, --Type of media where the lead was acquired
+  first_contact_date            DATE                              NOT NULL,             --Date of the first contact solicitation.
+  landing_page_id               m_dim_next.LANDING_PAGE           NOT NULL,             --Landing page id where the lead was acquired
+  origin                        m_dim_next.ORIGIN                 NOT NULL,             --Type of media where the lead was acquired
 
   is_closed_deal                m_dim_next.IS_CLOSED_DEAL         NOT NULL,
-  won_date                      TIMESTAMP WITH TIME ZONE,                   --Date the deal was closed.
+  won_date                      TIMESTAMP WITH TIME ZONE,                               --Date the deal was closed.
 
-  business_segment              m_dim_next.BUSINESS_SEGMENT       NOT NULL, --Lead business segment. Informed on contact.
-  lead_type                     m_dim_next.LEAD_TYPE              NOT NULL, --Lead type. Informed on contact.
-  lead_behaviour_profile        m_dim_next.LEAD_BEHAVIOUR_PROFILE NOT NULL, --Lead behaviour profile. SDR identify it on contact
-  has_company                   m_dim_next.HAS_COMPANY,                     --Does the lead have a company (formal documentation)?
-  has_gtin                      m_dim_next.HAS_GTIN,                        --Does the lead have Global Trade Item Number (barcode) for his products?
-  average_stock                 m_dim_next.AVERAGE_STOCK          NOT NULL, --Lead declared average stock. Informed on contact.
-  business_type                 m_dim_next.BUSINESS_TYPE          NOT NULL, --Type of business (reseller/manufacturer etc.)
+  business_segment              m_dim_next.BUSINESS_SEGMENT       NOT NULL,             --Lead business segment. Informed on contact.
+  lead_type                     m_dim_next.LEAD_TYPE              NOT NULL,             --Lead type. Informed on contact.
+  lead_behaviour_profile        m_dim_next.LEAD_BEHAVIOUR_PROFILE NOT NULL,             --Lead behaviour profile. SDR identify it on contact
+  has_company                   m_dim_next.HAS_COMPANY,                                 --Does the lead have a company (formal documentation)?
+  has_gtin                      m_dim_next.HAS_GTIN,                                    --Does the lead have Global Trade Item Number (barcode) for his products?
+  average_stock                 m_dim_next.AVERAGE_STOCK          NOT NULL,             --Lead declared average stock. Informed on contact.
+  business_type                 m_dim_next.BUSINESS_TYPE          NOT NULL,             --Type of business (reseller/manufacturer etc.)
 
-  declared_product_catalog_size DOUBLE PRECISION,                           --Lead declared catalog size. Informed on contact.
-  declared_monthly_revenue      DOUBLE PRECISION,                           --Lead declared estimated monthly revenue. Informed on contact.
+  declared_product_catalog_size DOUBLE PRECISION,                                       --Lead declared catalog size. Informed on contact.
+  declared_monthly_revenue      DOUBLE PRECISION,                                       --Lead declared estimated monthly revenue. Informed on contact.
 
   number_of_orders              INTEGER,
   number_of_order_items         INTEGER,
@@ -36,7 +36,7 @@ CREATE TABLE m_dim_next.marketing_funnel
 INSERT INTO m_dim_next.marketing_funnel
 SELECT mql.mql_id                                                                            AS mql_id,
        deal.closed_deal_id                                                                   AS closed_deal_id,
-       deal.seller_id                                                                        AS seller_fk,
+       seller.seller_id                                                                      AS seller_fk,
        deal.sdr_id                                                                           AS sdr_id,
        deal.sr_id                                                                            AS sr_id,
 
@@ -71,8 +71,8 @@ SELECT mql.mql_id                                                               
        COALESCE(deal.average_stock, 'Unknown') :: m_dim_next.AVERAGE_STOCK                   AS average_stock,
        COALESCE(deal.business_type, 'Unknown') :: m_dim_next.BUSINESS_TYPE                   AS business_type,
 
-       deal.declared_product_catalog_size                                                    AS declared_product_catalog_size,
-       deal.declared_monthly_revenue                                                         AS declared_monthly_revenue,
+       coalesce(deal.declared_product_catalog_size, 0)                                       AS declared_product_catalog_size,
+       coalesce(deal.declared_monthly_revenue, 0)                                            AS declared_monthly_revenue,
 
        seller.number_of_orders,
        seller.number_of_order_items,
@@ -82,8 +82,7 @@ SELECT mql.mql_id                                                               
        seller.total_freight_value
 FROM m_tmp.marketing_qualified_lead mql
      LEFT JOIN m_tmp.closed_deal deal using (mql_id)
-     LEFT JOIN ec_dim.seller using (seller_id)
-WHERE seller.seller_id IS NOT NULL;
+     LEFT JOIN ec_dim.seller using (seller_id);
 
 SELECT util.add_index('m_dim_next', 'marketing_funnel',
                       column_names := ARRAY ['mql_id', 'closed_deal_id', 'seller_fk']);

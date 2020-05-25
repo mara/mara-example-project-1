@@ -25,14 +25,14 @@ marketing_funnel_entity.add_attribute(
     high_cardinality=True)
 
 marketing_funnel_entity.add_attribute(
-    name='SDR id',
+    name='SDR ID',
     description='Sales Development Representative unique identifier',
     column_name='sdr_id',
     type=Type.ID,
     high_cardinality=True)
 
 marketing_funnel_entity.add_attribute(
-    name='SR id',
+    name='SR ID',
     description='Sales Representative unique identifier',
     column_name='sr_id',
     type=Type.ID,
