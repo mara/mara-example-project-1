@@ -1,4 +1,4 @@
-from mara_metadata.schema import Entity, Type
+from mara_schema.schema import Entity, Type
 
 order_item_entity = Entity(
     name='Order item',
@@ -6,9 +6,9 @@ order_item_entity = Entity(
     schema_name='ec_dim',
     table_name='order_item')
 
-from app.metadata.entities.order import order_entity
-from app.metadata.entities.product import product_entity
-from app.metadata.entities.seller import seller_entity
+from app.schema.entities.order import order_entity
+from app.schema.entities.product import product_entity
+from app.schema.entities.seller import seller_entity
 
 order_item_entity.link_entity(target_entity=order_entity, fk_column='order_fk')
 order_item_entity.link_entity(target_entity=product_entity, fk_column='product_fk', prefix='Product')

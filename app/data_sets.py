@@ -5,8 +5,8 @@ from mara_app.monkey_patch import patch
 
 @patch(data_sets.config.data_sets)
 def _data_sets():
-    from mara_metadata.config import data_sets as mt_data_sets
-    from mara_metadata.schema import generate_attribute_name
+    from mara_schema.config import data_sets as mt_data_sets
+    from mara_schema.schema import generate_attribute_name
 
     default_column_names = {
         'Order items': ['Order item ID', 'Product category', 'Order status', 'Order purchase date',

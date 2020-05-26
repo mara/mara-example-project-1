@@ -1,6 +1,6 @@
-from mara_metadata.schema import DataSet, Aggregation
+from mara_schema.schema import DataSet, Aggregation
 
-from app.metadata.entities.order_item import order_item_entity
+from app.schema.entities.order_item import order_item_entity
 
 order_item_data_set = DataSet(
     entity=order_item_entity,

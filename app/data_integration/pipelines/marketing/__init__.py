@@ -31,13 +31,36 @@ pipeline.add(
          ]))
 
 pipeline.add(
+    Task(id="transform_smaller_dimensions",
+         description="Transform smaller marketing dimensions",
+         commands=[
+             ExecuteSQL(sql_file_name="transform_smaller_dimensions.sql")
+         ]),
+    upstreams=["preprocess_marketing_qualified_lead", "preprocess_closed_deal"])
+
+pipeline.add(
+    Task(id="transform_closed_deal",
+         description="",
+         commands=[
+             ExecuteSQL(sql_file_name="transform_closed_deal.sql", echo_queries=False)
+         ]),
+    upstreams=["transform_smaller_dimensions"])
+
+pipeline.add(
+    Task(id="transform_marketing_qualified_lead",
+         description="",
+         commands=[
+             ExecuteSQL(sql_file_name="transform_marketing_qualified_lead.sql", echo_queries=False)
+         ]),
+    upstreams=["transform_smaller_dimensions"])
+
+pipeline.add(
     Task(id="transform_marketing_funnel",
          description="",
          commands=[
-             ExecuteSQL(sql_file_name="transform_marketing_funnel_dimensions.sql"),
              ExecuteSQL(sql_file_name="transform_marketing_funnel.sql")
          ]),
-    upstreams=["preprocess_marketing_qualified_lead", "preprocess_closed_deal"])
+    upstreams=["transform_marketing_qualified_lead", "transform_closed_deal"])
 
 pipeline.add(
     Task(id="constrain_tables",

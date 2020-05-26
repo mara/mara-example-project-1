@@ -1,11 +1,11 @@
-from mara_metadata.schema import Entity, Type
+from mara_schema.schema import Entity, Type
 
 order_entity = Entity(
     name='Order',
     description='Orders made at Olist Store at multiple marketplaces in Brazil',
     schema_name='ec_dim')
 
-from app.metadata.entities.customer import customer_entity
+from app.schema.entities.customer import customer_entity
 
 order_entity.link_entity(target_entity=customer_entity, fk_column='customer_fk', prefix='Customer')
 

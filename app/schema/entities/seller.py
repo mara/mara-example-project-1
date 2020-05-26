@@ -1,12 +1,12 @@
-from mara_metadata.schema import Entity, Type
+from mara_schema.schema import Entity, Type
 
 seller_entity = Entity(
     name='Seller',
     description='Merchants that are selling their products through the Olist department store',
     schema_name='ec_dim')
 
-from app.metadata.entities.geo_location import geo_location_entity
-from app.metadata.entities.order import order_entity
+from app.schema.entities.geo_location import geo_location_entity
+from app.schema.entities.order import order_entity
 
 seller_entity.link_entity(target_entity=order_entity, fk_column='first_order_fk',
                           prefix='First order')

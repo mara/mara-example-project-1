@@ -11,6 +11,8 @@
 
 -e git+git@codebasehq.com:project-a/mara/mara-metadata.git@master#egg=mara-metadata
 
+-e git+git@github.com:mara/mara-schema.git@master#egg=mara-schema
+
 # running flask
 gunicorn
 Flask>=1.0.2

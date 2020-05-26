@@ -1,4 +1,4 @@
-from mara_metadata.schema import Entity, Type
+from mara_schema.schema import Entity, Type
 
 geo_location_entity = Entity(
     name='Geo-location',

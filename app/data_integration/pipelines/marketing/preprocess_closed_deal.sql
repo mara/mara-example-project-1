@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS m_tmp.closed_deal CASCADE;
 CREATE TABLE m_tmp.closed_deal
 (
   closed_deal_id                TEXT NOT NULL,            -- The Marketing Qualified Lead id of the closed deal as PK
-  mql_id                        TEXT NOT NULL,            --Marketing Qualified Lead id
+  marketing_qualified_lead_id   TEXT NOT NULL,            --Marketing Qualified Lead id
   seller_id                     TEXT NOT NULL,            --Seller id
   sdr_id                        TEXT NOT NULL,            --Sales Development Representative id
   sr_id                         TEXT NOT NULL,            --Sales Representative
@@ -25,7 +25,7 @@ CREATE TABLE m_tmp.closed_deal
 
 INSERT INTO m_tmp.closed_deal
 SELECT mql_id                 AS closed_deal_id,
-       mql_id,
+       mql_id                 AS marketing_qualified_lead_id,
        seller_id,
        sdr_id,
        sr_id,
@@ -42,4 +42,5 @@ SELECT mql_id                 AS closed_deal_id,
        declared_monthly_revenue
 FROM m_data.closed_deals;
 
-SELECT util.add_index('m_tmp', 'closed_deal', column_names := ARRAY ['closed_deal_id', 'mql_id', 'seller_id']);
+SELECT util.add_index('m_tmp', 'closed_deal',
+                      column_names := ARRAY ['closed_deal_id', 'marketing_qualified_lead_id', 'seller_id']);

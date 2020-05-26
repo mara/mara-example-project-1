@@ -1,4 +1,4 @@
-from mara_metadata.schema import Entity, Type
+from mara_schema.schema import Entity, Type
 
 marketing_funnel_entity = Entity(
     name='Marketing funnel',
@@ -6,7 +6,7 @@ marketing_funnel_entity = Entity(
     schema_name='m_dim',
     table_name='marketing_funnel')
 
-from app.metadata.entities.seller import seller_entity
+from app.schema.entities.seller import seller_entity
 
 marketing_funnel_entity.link_entity(target_entity=seller_entity, fk_column='seller_fk', prefix='Seller')
 

@@ -1,6 +1,6 @@
-from mara_metadata.schema import DataSet, Aggregation
+from mara_schema.schema import DataSet, Aggregation
 
-from app.metadata.entities.marketing_funnel import marketing_funnel_entity
+from app.schema.entities.marketing_funnel import marketing_funnel_entity
 
 marketing_funnel_data_set = DataSet(
     entity=marketing_funnel_entity,

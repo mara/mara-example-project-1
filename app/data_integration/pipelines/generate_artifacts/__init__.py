@@ -6,11 +6,11 @@ from data_integration.commands.sql import ExecuteSQL
 from data_integration.parallel_tasks.sql import ParallelExecuteSQL
 from data_integration.pipelines import Pipeline, Task
 from etl_tools.create_attributes_table import CreateAttributesTable
-from mara_metadata.config import data_sets, mondrian_fact_tables_schema
-from mara_metadata.schema import DataSet
-from mara_metadata.sql_generation import sql_for_flattened_table, sql_for_mondrian_fact_table
+from mara_schema.config import data_sets, mondrian_schema
+from mara_schema.schema import DataSet
+from mara_schema.sql_generation import sql_for_flattened_table, sql_for_mondrian_fact_table
 
-target_schema = mondrian_fact_tables_schema()
+target_schema = mondrian_schema()['fact_table_schema_name']
 tmp_schema = 'af_tmp'
 
 pipeline = Pipeline(

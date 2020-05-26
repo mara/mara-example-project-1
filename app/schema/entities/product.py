@@ -1,4 +1,4 @@
-from mara_metadata.schema import Entity, Type
+from mara_schema.schema import Entity, Type
 
 product_entity = Entity(
     name='Product',

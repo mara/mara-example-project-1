@@ -16,5 +16,5 @@ import app.local_setup
 # configure application and packages
 import app.data_integration
 import app.data_sets
-import app.metadata
+import app.schema
 import app.ui
