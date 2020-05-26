@@ -19,12 +19,12 @@ pipeline.add_initial(
 
 pipeline.add(
     Task(
-        id="load_customers_data",
+        id="load_customer_data",
         description="Loads the customers data from the back-end DB",
         commands=[
-            ExecuteSQL(sql_file_name='customers/create_customers_data_table.sql'),
-            Copy(sql_file_name='customers/load_customers_data.sql', source_db_alias='olist',
-                 target_db_alias='dwh', target_table='ec_data.customers',
+            ExecuteSQL(sql_file_name='customer/create_customer_data_table.sql'),
+            Copy(sql_file_name='customer/load_customer_data.sql', source_db_alias='olist',
+                 target_db_alias='dwh', target_table='ec_data.customer',
                  delimiter_char=';')
         ]))
 
@@ -42,12 +42,12 @@ pipeline.add(
 
 pipeline.add(
     Task(
-        id="load_order_items_data",
+        id="load_order_item_data",
         description="Loads the order items data from the back-end DB",
         commands=[
-            ExecuteSQL(sql_file_name='order_items/create_order_items_data_table.sql'),
-            Copy(sql_file_name='order_items/load_order_items_data.sql', source_db_alias='olist',
-                 target_db_alias='dwh', target_table='ec_data.order_items',
+            ExecuteSQL(sql_file_name='order_item/create_order_item_data_table.sql'),
+            Copy(sql_file_name='order_item/load_order_item_data.sql', source_db_alias='olist',
+                 target_db_alias='dwh', target_table='ec_data.order_item',
                  delimiter_char=';')
         ]))
 

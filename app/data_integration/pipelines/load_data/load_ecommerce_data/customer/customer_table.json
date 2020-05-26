@@ -1,5 +1,5 @@
 {
-  "target_name": "customers",
+  "target_name": "customer",
   "include_version_columns": false,
   "data_table_fields": [
     {

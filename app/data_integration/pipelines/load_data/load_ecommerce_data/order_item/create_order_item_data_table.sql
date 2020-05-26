@@ -1,6 +1,6 @@
 --This table includes data about the items purchased within each order.
-DROP TABLE IF EXISTS ec_data.order_items CASCADE;
-CREATE TABLE ec_data.order_items
+DROP TABLE IF EXISTS ec_data.order_item CASCADE;
+CREATE TABLE ec_data.order_item
 (
     order_id            TEXT,                     --order unique identifier
     order_item_id       INTEGER,                  --sequential number identifying number of items included in the same order.
