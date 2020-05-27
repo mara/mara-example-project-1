@@ -34,7 +34,7 @@ SELECT order_id,
 
        DATE_PART('day', order_delivered_customer_date -
                         order_purchase_timestamp) AS days_of_delivery
-FROM ec_data.orders
-     LEFT JOIN ec_data.customer ON orders.customer_id = customer.customer_id;
+FROM ec_data.order
+     LEFT JOIN ec_data.customer USING (customer_id);
 
 SELECT util.add_index('ec_tmp', 'order', column_names := ARRAY ['order_id', 'customer_id']);
