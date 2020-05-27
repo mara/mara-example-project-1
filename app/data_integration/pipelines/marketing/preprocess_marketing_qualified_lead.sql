@@ -14,6 +14,6 @@ SELECT mql_id                                       AS marketing_qualified_lead_
        first_contact_date::TIMESTAMP WITH TIME ZONE AS first_contact_date,
        landing_page_id,
        COALESCE(origin, 'Unknown')                  AS origin
-FROM m_data.marketing_qualified_leads;
+FROM m_data.marketing_qualified_lead;
 
 SELECT util.add_index('m_tmp', 'marketing_qualified_lead', column_names := ARRAY ['marketing_qualified_lead_id']);
