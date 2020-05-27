@@ -9,7 +9,7 @@ SELECT util.assert_almost_equal(
            'SELECT sum(revenue_lifetime) FROM m_dim.marketing_funnel',
            'SELECT sum(seller.revenue_lifetime) ' ||
            'FROM ec_dim.seller ' ||
-           'INNER JOIN m_dim.marketing_funnel ON seller_id = seller_fk'
+           'INNER JOIN m_dim.closed_deal ON seller_id = seller_fk'
          );
 
 SELECT util.assert_almost_equal(
@@ -18,7 +18,7 @@ SELECT util.assert_almost_equal(
            'SELECT sum(revenue_lifetime) FROM m_dim.marketing_funnel',
            'SELECT sum(revenue) ' ||
            'FROM ec_dim.order_item ' ||
-           'INNER JOIN m_dim.marketing_funnel USING (seller_fk)'
+           'INNER JOIN m_dim.closed_deal USING (seller_fk)'
          );
 
 SELECT util.assert_equal(
@@ -26,5 +26,5 @@ SELECT util.assert_equal(
            'SELECT sum(number_of_order_items) FROM m_dim.marketing_funnel',
            'SELECT count(*) ' ||
            'FROM ec_dim.order_item ' ||
-           'INNER JOIN m_dim.marketing_funnel USING (seller_fk)'
+           'INNER JOIN m_dim.closed_deal USING (seller_fk)'
          );
