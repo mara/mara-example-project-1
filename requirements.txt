@@ -4,7 +4,7 @@
 -e git+https://github.com/mara/mara-db.git@4.4.1#egg=mara-db
 -e git+https://github.com/mara/mara-page.git@1.5.1#egg=mara-page
 -e git+https://github.com/mara/data-integration.git@2.6.1#egg=data-integration
--e git+https://github.com/mara/mara-etl-tools.git@3.0.1#egg=mara-etl-tools
+-e git+https://github.com/mara/mara-etl-tools.git@3.1.0#egg=mara-etl-tools
 -e git+https://github.com/mara/data-sets.git@2.2.1#egg=data-sets
 -e git+git@github.com:mara/mara-schema.git@master#egg=mara-schema
 

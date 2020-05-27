@@ -21,7 +21,7 @@ SELECT DISTINCT customer_unique_id                                    AS custome
                 first_value(state)
                             over (partition by customer_unique_id
                               order by order_purchase_timestamp desc) AS state
-FROM ec_data.customers
+FROM ec_data.customer
      LEFT JOIN ec_data.orders using (customer_id);
 
 SELECT util.add_index('ec_tmp', 'customer', column_names := ARRAY ['customer_id']);
