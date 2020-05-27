@@ -1,56 +1,35 @@
 alembic==1.4.2
 arrow==0.15.6
-awscli==1.18.66
--e git+https://github.com/mara/bigquery-downloader.git@332dcb4dbbf3111a9645d3dae8cd2cbe340ec148#egg=bigquery_downloader
-botocore==1.16.16
-cachetools==4.1.0
 certifi==2020.4.5.1
 chardet==3.0.4
 click==7.1.2
-colorama==0.4.3
 -e git+https://github.com/mara/data-integration.git@1b02b217f3005ff11f0547ad7478bd9a937e48e1#egg=data_integration
 -e git+https://github.com/mara/data-sets.git@f58a8b859e168f13697526be8725d8eefa84acba#egg=data_sets
-docutils==0.15.2
 Flask==1.1.2
-google-api-core==1.17.0
-google-auth==1.15.0
-google-cloud-bigquery==1.24.0
-google-cloud-core==1.3.0
-google-resumable-media==0.5.0
-googleapis-common-protos==1.51.0
 graphviz==0.14
 gunicorn==20.0.4
 idna==2.9
 itsdangerous==1.1.0
 Jinja2==2.11.2
-jmespath==0.10.0
 lxml==4.5.1
 Mako==1.1.2
 -e git+https://github.com/mara/mara-acl.git@751066101c1cac484edd2984fd0eace283f6332d#egg=mara_acl
 -e git+https://github.com/mara/mara-app.git@29222bf65fd78a9834151afaf58532c7fb6cf6f9#egg=mara_app
 -e git+https://github.com/mara/mara-db.git@488f33f7ea2910d45c1ed503b890293730251123#egg=mara_db
 -e git+ssh://git@github.com/mara/mara-etl-tools.git@ebd22cb0d6159f72147aba771817b7db8e9e2d1e#egg=mara_etl_tools
--e git+git@codebasehq.com:project-a/mara/mara-metadata.git@1ad53b44d2d0c6dc48490afe4b86a17ecd4233c8#egg=mara_metadata
 -e git+https://github.com/mara/mara-page.git@c499a6c44aaa638c1515c3a857e5f68cad8b84c9#egg=mara_page
--e git+git@github.com:mara/mara-schema.git@1a6aa0af97a2d1d329b61b68f79a1ddac503a05b#egg=mara_schema
+-e git+git@github.com:mara/mara-schema.git@d1a68b99334f12f90db5ce1298b9c9e8694b6288#egg=mara_schema
 MarkupSafe==1.1.1
 more-itertools==8.3.0
 multimethod==1.3
 pipdeptree==0.13.2
-protobuf==3.12.1
 psutil==5.7.0
 psycopg2-binary==2.8.5
-pyasn1==0.4.8
-pyasn1-modules==0.2.8
 Pygments==2.6.1
 python-dateutil==2.8.1
 python-editor==1.0.4
 pythondialog==3.5.1
-pytz==2020.1
-PyYAML==5.3.1
 requests==2.23.0
-rsa==3.4.2
-s3transfer==0.3.3
 six==1.15.0
 SQLAlchemy==1.3.17
 SQLAlchemy-Utils==0.36.6

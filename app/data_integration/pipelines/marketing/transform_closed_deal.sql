@@ -82,6 +82,7 @@ SELECT util.add_index('m_dim_next', 'closed_deal',
 CREATE OR REPLACE FUNCTION m_tmp.constrain_closed_deal()
   RETURNS VOID AS
 $$
+SELECT util.add_fk('m_dim_next', 'closed_deal', 'm_dim_next', 'marketing_qualified_lead');
 SELECT util.add_fk('m_dim_next', 'closed_deal', 'ec_dim', 'seller');
 $$
   LANGUAGE SQL;
