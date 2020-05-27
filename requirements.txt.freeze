@@ -19,6 +19,7 @@ Mako==1.1.2
 -e git+ssh://git@github.com/mara/mara-etl-tools.git@ebd22cb0d6159f72147aba771817b7db8e9e2d1e#egg=mara_etl_tools
 -e git+https://github.com/mara/mara-page.git@c499a6c44aaa638c1515c3a857e5f68cad8b84c9#egg=mara_page
 -e git+git@github.com:mara/mara-schema.git@d1a68b99334f12f90db5ce1298b9c9e8694b6288#egg=mara_schema
+-e git+ssh://git@github.com/mara/olist-ecommerce-data.git@8a5dfdea13f1e5ae4ae5ad873fce47889b586626#egg=olist_ecommerce_data
 MarkupSafe==1.1.1
 more-itertools==8.3.0
 multimethod==1.3
