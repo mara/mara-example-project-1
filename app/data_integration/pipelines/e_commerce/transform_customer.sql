@@ -57,7 +57,7 @@ FROM ec_tmp.customer
 
 SELECT util.add_index('ec_dim_next', 'customer', column_names := ARRAY ['geo_location_fk']);
 
-CREATE OR REPLACE FUNCTION ec_tmp.constrain_customers()
+CREATE OR REPLACE FUNCTION ec_tmp.constrain_customer()
   RETURNS VOID AS
 $$
 SELECT util.add_fk('ec_dim_next', 'customer', 'ec_dim_next', 'geo_location');

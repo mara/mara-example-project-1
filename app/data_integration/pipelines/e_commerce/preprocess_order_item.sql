@@ -23,7 +23,7 @@ SELECT order_id || '_' || order_item_id AS order_item_id, -- create a unique ord
        shipping_limit_date,
        price                            AS revenue,
        freight_value
-FROM ec_data.order_items
+FROM ec_data.order_item
      LEFT JOIN ec_tmp.order USING (order_id)
      -- Leave out order-items without order information
 WHERE "order".order_id IS NOT NULL;

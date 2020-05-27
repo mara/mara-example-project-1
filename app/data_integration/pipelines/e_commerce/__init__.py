@@ -117,7 +117,8 @@ pipeline.add(
     upstreams=["transform_seller",
                "transform_customer",
                "transform_order_item",
-               "transform_order"])
+               "transform_order",
+               "transform_geo_location"])
 
 pipeline.add_final(
     Task(id="replace_schema",
