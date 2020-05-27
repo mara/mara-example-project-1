@@ -17,7 +17,6 @@ Mako==1.1.2
 -e git+https://github.com/mara/mara-app.git@29222bf65fd78a9834151afaf58532c7fb6cf6f9#egg=mara_app
 -e git+https://github.com/mara/mara-db.git@488f33f7ea2910d45c1ed503b890293730251123#egg=mara_db
 -e git+https://github.com/mara/mara-etl-tools.git@1be1cd30ef2740d05b44cfc4a9f570e918f3310e#egg=mara_etl_tools
-mara-metadata==0.0.1
 -e git+https://github.com/mara/mara-page.git@c499a6c44aaa638c1515c3a857e5f68cad8b84c9#egg=mara_page
 -e git+git@github.com:mara/mara-schema.git@d1a68b99334f12f90db5ce1298b9c9e8694b6288#egg=mara_schema
 MarkupSafe==1.1.1
