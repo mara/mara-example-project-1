@@ -1,6 +1,6 @@
 --This table includes data about the products sold by Olist.
-DROP TABLE IF EXISTS ec_data.products CASCADE;
-CREATE TABLE ec_data.products
+DROP TABLE IF EXISTS ec_data.product CASCADE;
+CREATE TABLE ec_data.product
 (
     product_id            TEXT,    --unique product identifier
     product_category_name TEXT,    --root category of product, in Portuguese.

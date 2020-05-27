@@ -1,6 +1,6 @@
 --This table includes data about the orders payment options.
-DROP TABLE IF EXISTS ec_data.order_payments CASCADE;
-CREATE TABLE ec_data.order_payments
+DROP TABLE IF EXISTS ec_data.order_payment CASCADE;
+CREATE TABLE ec_data.order_payment
 (
     order_id             TEXT,            --unique identifier of an order.
     payment_sequential   INTEGER,         --a customer may pay an order with more than one payment method. If he does so, a sequence will be created to

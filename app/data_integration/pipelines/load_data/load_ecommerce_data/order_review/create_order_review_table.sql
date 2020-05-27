@@ -2,8 +2,8 @@
 --After a customer purchases the product from Olist Store a seller gets notified to fulfill that order.
 --Once the customer receives the product, or the estimated delivery date is due,
 --the customer gets a satisfaction survey by email where he can give a note for the purchase experience and write down some comments.
-DROP TABLE IF EXISTS ec_data.order_reviews CASCADE;
-CREATE TABLE ec_data.order_reviews
+DROP TABLE IF EXISTS ec_data.order_review CASCADE;
+CREATE TABLE ec_data.order_review
 (
     review_id        TEXT,                     --unique review identifier
     order_id         TEXT,                     --unique order identifier

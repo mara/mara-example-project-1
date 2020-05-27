@@ -1,6 +1,6 @@
 --This is the core table. From each order you might find all other information.
-DROP TABLE IF EXISTS ec_data.orders CASCADE;
-CREATE TABLE ec_data.orders
+DROP TABLE IF EXISTS ec_data.order CASCADE;
+CREATE TABLE ec_data.order
 (
     order_id                      TEXT,                     --unique identifier of the order.
     customer_id                   TEXT,                     --key to the customer table. Each order has a unique customer_id.
