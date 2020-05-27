@@ -14,6 +14,7 @@ from mara_page import acl
 from mara_page import navigation
 
 import mara_schema
+import olist_ecommerce
 
 from app.ui import start_page
 
