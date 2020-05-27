@@ -1,7 +1,7 @@
 --After a qualified lead fills in a form at a landing page he is contacted by a Sales Development Representative.
 --At this step some information is checked and more information about the lead is gathered.
-DROP TABLE IF EXISTS m_data.closed_deals CASCADE;
-CREATE TABLE m_data.closed_deals
+DROP TABLE IF EXISTS m_data.closed_deal CASCADE;
+CREATE TABLE m_data.closed_deal
 (
     mql_id                        TEXT,                     --Marketing Qualified Lead id
     seller_id                     TEXT,                     --Seller id

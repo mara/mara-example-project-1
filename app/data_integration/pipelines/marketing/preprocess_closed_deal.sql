@@ -40,7 +40,7 @@ SELECT mql_id                 AS closed_deal_id,
        business_type          AS business_type,
        declared_product_catalog_size,
        declared_monthly_revenue
-FROM m_data.closed_deals;
+FROM m_data.closed_deal;
 
 SELECT util.add_index('m_tmp', 'closed_deal',
                       column_names := ARRAY ['closed_deal_id', 'marketing_qualified_lead_id', 'seller_id']);
