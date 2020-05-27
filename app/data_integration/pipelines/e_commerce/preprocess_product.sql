@@ -17,14 +17,14 @@ INSERT INTO ec_tmp.product
 SELECT product_id,
 
        coalesce(product_category_name_translation.product_category_name_english,
-                products.product_category_name) AS category,
+                product.product_category_name) AS category,
 
        photos_quantity                          AS number_of_photos,
        weight_g                                 AS weight,
        length_cm                                AS length,
        height_cm                                AS height,
        width_cm                                 AS width
-FROM ec_data.products
+FROM ec_data.product
      LEFT JOIN ec_data.product_category_name_translation USING (product_category_name);
 
 SELECT util.add_index('ec_tmp', 'product', column_names := ARRAY ['product_id']);

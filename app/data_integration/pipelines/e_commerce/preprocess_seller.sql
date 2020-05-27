@@ -13,6 +13,6 @@ SELECT seller_id,
        zip_code_prefix,
        initcap(city) AS city,
        state
-FROM ec_data.sellers;
+FROM ec_data.seller;
 
 SELECT util.add_index('ec_tmp', 'seller', column_names := ARRAY ['seller_id']);
