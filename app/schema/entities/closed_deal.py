@@ -11,7 +11,7 @@ from app.schema.entities.marketing_qualified_lead import marketing_qualified_lea
 
 closed_deal_entity.link_entity(target_entity=marketing_qualified_lead_entity,
                                fk_column='marketing_qualified_lead_fk')
-closed_deal_entity.link_entity(target_entity=seller_entity, fk_column='seller_fk', prefix='Seller')
+closed_deal_entity.link_entity(target_entity=seller_entity, fk_column='seller_fk')
 
 closed_deal_entity.add_attribute(
     name='Closed deal ID',
