@@ -1,117 +1,105 @@
-# Mara Example Project
+# Mara Example Project 1
 
-A runnable app that demonstrates how to build a data warehouse with mara. Combines the [data-integration](https://github.com/mara/data-integration) and [bigquery-downloader](https://github.com/mara/bigquery-downloader) libraries with the [mara-app](https://github.com/mara/mara-app) framework into a project. 
+A runnable app that demonstrates how to build a data warehouse with mara. 
+Combines the [data-integration](https://github.com/mara/data-integration) and 
+[olist-ecommerce-data](https://github.com/mara/olist-ecommerce-data) libraries 
+with the [mara-app](https://github.com/mara/mara-app) framework into a project. 
 
-The example ETL integrates PyPi download stats and GitHub repo activitiy metrics into more general Python project activity stats.
+The example ETL integrates publicly available e-commerce and marketing data into a more general 
+modeling and structure for highlighting the most crucial capabilities of the Mara framework.
 
 The repository is intended to serve as a template for new projects.
 
 &nbsp;
 
+## Example: E-commerce and marketing data by Olist
 
-## Example: Python Project Stats
+The project uses two real anonymized data sources: 
 
-The project uses two data sources: 
+1. The [Brazilian e-commerce dataset by Olist](https://www.kaggle.com/olistbr/brazilian-ecommerce).
+It contains information of 100k orders from 2016 to 2018 made at multiple marketplaces in Brazil through the Olist platform,
+covering a range of standard e-commerce dimensions and metrics.
 
-1. The [PyPI downloads](https://packaging.python.org/guides/analyzing-pypi-package-downloads/) BigQuery data set at [https://bigquery.cloud.google.com/dataset/the-psf:pypi](https://bigquery.cloud.google.com/dataset/the-psf:pypi) (Google login required). It contains each individual package download together with project and client attributes. 
+2. The [Marketing funnel dataset by Olist](https://www.kaggle.com/olistbr/marketing-funnel-olist). 
+It contains information of 8k, randomly sampled Marketing Qualified Leads (MQLs) that requested contact between Jun. 1st 2017 and Jun 1st 2018.
+Its features allows viewing a sales process from multiple dimensions: lead category, catalog size, behaviour profile, etc. 
 
-2. The [Github archive](https://www.gharchive.org/) BigQuery data set at [https://bigquery.cloud.google.com/dataset/githubarchive:day](https://bigquery.cloud.google.com/dataset/githubarchive:day). It contains nearly all events that happen to Github repositories.
+The total size of these data is 121MB and is included as a project requirement from the
+[olist-ecommerce-data](https://github.com/mara/olist-ecommerce-data) package for ease of loading.
 
-From both data sources, a set of pre-aggregated and filtered CSVs is incrementally downloaded using the queries in [app/bigquery_downloader](app/biqquery_downloader):
+Then there is the ETL in [app/data_integration/pipelines](app/data_integration/pipelines) that transforms 
+this data into a classic Kimball-like [star schema](https://en.wikipedia.org/wiki/Star_schema):
 
-```console
-$ gunzip --decompress --stdout data/2018/04/10/pypi/downloads-v1.csv.gz | grep "\tflask\t\|day_id" | head -n 11
-day_id	project	project_version	python_version	installer	number_of_downloads
-20180410	flask	0.1		bandersnatch	1
-20180410	flask	0.2		bandersnatch	1
-20180410	flask	0.5		bandersnatch	1
-20180410	flask	0.6		bandersnatch	1
-20180410	flask	0.8		bandersnatch	1
-20180410	flask	0.9		bandersnatch	1
-20180410	flask	0.10	2.6	pip	1
-20180410	flask	0.11		Browser	1
-20180410	flask	0.11		bandersnatch	1
-20180410	flask	0.5.1		bandersnatch	1
-```
-
-```console
-$ gunzip --decompress --stdout data/2018/04/10/github/repo-activity-v1.csv.gz | grep "\tflask\t\|day_id"
-day_id	user	repository	number_of_forks	number_of_commits	number_of_closed_pull_requests
-20180410	liks79	flask	1		
-20180410	dengyifan	flask		1	
-20180410	xeriok18600	flask		1	
-20180410	manhhomienbienthuy	flask		10
-20180410	davidism	flask		49	
-20180410	pallets	flask	10	6	3
-```
-
-The total size of these (compressed) csv files is 3.5GB for the time range from Jan 2017 to April 2018.
-
-&nbsp;
-
-Then there is the ETL in [app/data_integration/pipelines](app/data_integration/pipelines) that transforms this data into a classic Kimball-like [star schema](https://en.wikipedia.org/wiki/Star_schema):
-
+todo: change screen
 ![Star schema](docs/star-schema.png)
 
-It shows 4 database schemas, each created by a different pipeline: 
+It shows 2 database schemas, each created by a different pipeline: 
 
-- `time`: All days from the beginning of data processing until yesterday,
-- `pypi_dim`: PyPI download counts per project version, installer and day,
-- `gh_dim`: The number of commits, forks and closed pull requests per Github repository and day,
-- `pp_dim`: PyPI and Github metrics merged by day and repository/ project name.
-
-The overall database size of the data warehouse is roughly 100GB for the timerange mentioned above. 
+- `ec_dim`: Covering transformations and builds data-sets related to the e-commerce public data by Olist.
+- `m_dim`: Builds the marketing-funnel data-sets based on Olist sellers' marketing funnel and the e-commerce data.
 
 &nbsp;
 
 With this structure in place, it is then possible to run queries like this:
 
 ```sql
-SELECT 
-  _date, project_name, number_of_downloads, number_of_forks, 
-  number_of_commits, number_of_closed_pull_requests 
-FROM pp_dim.python_project_activity 
-  JOIN pypi_dim.project ON project_id = project_fk 
-  JOIN time.day ON day_fk = day_id 
-WHERE project_name = 'flask' 
-ORDER BY day_fk DESC 
+SELECT seller_id,
+       origin,
+       first_contact_date::DATE AS first_contact_date,
+       won_date::DATE AS won_date,
+       seller.number_of_orders,
+       seller.number_of_deliveries,
+       seller.number_of_customers,
+       seller.revenue_lifetime
+FROM m_dim.marketing_funnel
+     JOIN m_dim.closed_deal USING (marketing_qualified_lead_fk)
+     JOIN m_dim.marketing_qualified_lead ON marketing_qualified_lead_fk = marketing_qualified_lead_id
+     JOIN ec_dim.seller ON seller_id = seller_fk
 LIMIT 10;
 ```
 
 ```
-   _date    | project_name | number_of_downloads | number_of_forks | number_of_commits | number_of_closed_pull_requests 
-------------+--------------+---------------------+-----------------+-------------------+--------------------------------
- 2018-04-10 | flask        |               45104 |              11 |                67 |                              3
- 2018-04-09 | flask        |               57177 |              13 |                45 |                              4
- 2018-04-08 | flask        |               70392 |              13 |                 7 |                               
- 2018-04-07 | flask        |               65060 |              10 |                 7 |                               
- 2018-04-06 | flask        |               70779 |               7 |                11 |                              2
- 2018-04-05 | flask        |               62215 |               6 |                22 |                               
- 2018-04-04 | flask        |               33116 |              11 |                23 |                               
- 2018-04-03 | flask        |               39248 |              15 |                27 |                               
- 2018-04-02 | flask        |               54517 |              14 |                17 |                               
- 2018-04-01 | flask        |               68685 |               4 |                 6 |                               
+            seller_id             |     origin     | first_contact_date |  won_date  | number_of_orders | number_of_deliveries | number_of_customers | revenue_lifetime 
+----------------------------------+----------------+--------------------+------------+------------------+----------------------+---------------------+------------------
+ 2c43fb513632d29b3b58df74816f1b06 | organic_search | 2018-02-21         | 2018-02-26 |                3 |                    3 |                   3 |              858
+ 612170e34b97004b3ba37eae81836b4c | organic_search | 2018-04-03         | 2018-06-05 |              107 |                  107 |                 107 |         23065.02
+ ed8cb7b190ceb6067227478e48cf8dde | unknown        | 2017-10-09         | 2018-07-03 |               15 |                   15 |                  15 |            573.5
+ 1c742ac33582852aaf3bcfbf5893abcf | organic_search | 2018-02-06         | 2018-02-07 |                1 |                    1 |                   1 |             97.9
+ 44ed138eca6214d572ce1d813fb0049b | unknown        | 2018-04-13         | 2018-04-17 |                2 |                    2 |                   2 |           129.79
+ 87d73636a3acf123e842bb890a4db036 | paid_search    | 2017-10-18         | 2018-04-24 |                1 |                    1 |                   1 |            269.9
+ b566ab0ef88016e00422755e305103c6 | paid_search    | 2018-02-21         | 2018-02-23 |                5 |                    5 |                   5 |             1208
+ 2d2322d842118867781fc737e96d59a1 | direct_traffic | 2018-04-15         | 2018-05-22 |                8 |                    8 |                   8 |            176.4
+ 9e7c5f4d7770eab65738cca38f9efccf | paid_search    | 2018-04-05         | 2018-04-10 |                2 |                    2 |                   2 |            184.8
+ df91910b6a03bb2e3358fa6a35e32f6f | referral       | 2018-04-03         | 2018-04-10 |               14 |                   13 |                  14 |           2312.1
 (10 rows)
 ```
 
 &nbsp;
 
-Mara data integration pipelines are visualized and debugged though a web ui. Here, the pipeline `github` is run (locally on an old Mac with 2 days of data): 
+### Mara schema
+tbd
 
+&nbsp;
+
+Mara data integration pipelines are visualized and debugged though a web ui. Here, the pipeline `e_commerce` is run (locally on an Ubuntu 18.04 with all available data): 
+
+todo: change gif
 ![Mara web ui ETL run](docs/mara-web-ui-etl-run.gif)
 
 &nbsp;
 
 On production, pipelines are run through a cli interface:
 
+todo: change gif
 ![Mara cli ETL run](docs/mara-cli-etl-run.gif)
 
 &nbsp;
 
 Mara ETL pipelines are compeletely transparent, both to stakeholders in terms of applied business logic and to data engineers in terms of runtime behavior.
 
-This is the page in the web ui that visualizes the pipeline `pypi`: 
+This is the page in the web ui that visualizes the pipeline `e_commerce`: 
 
+todo: change screen
 ![Mara web UI for pipelines](docs/mara-web-ui-pipeline.png)
 
 It shows 
@@ -123,7 +111,7 @@ It shows
 
 &nbsp;
 
-Similarly, this the page for the task `pypi/transform_project`:
+Similarly, this the page for the task `e_commerce/transform_order_item`:
 
 ![Mara web ui for tasks](docs/mara-web-ui-task.png)
 
@@ -178,8 +166,9 @@ Clone the repository somewhere. Copy the file [`app/local_setup.py.example`](app
 Log into PostgreSQL with `psql -U root postgres` and create two databases:
 
 ```sql
-CREATE DATABASE example_project_dwh;
-CREATE DATABASE example_project_mara;
+CREATE DATABASE example_project_1_dwh;
+CREATE DATABASE example_project_1_mara;
+CREATE DATABASE olist_ecommerce;
 ```
 
 Hit `make` in the root directory of the project. This will 
@@ -187,6 +176,7 @@ Hit `make` in the root directory of the project. This will
 - create a virtual environment in `.venv`,
 - install all packages from [`requirements.txt.freeze`](requirements.txt.freeze) (if you want to create a new `requirements.txt.freeze` from [`requirements.txt`](requirements.txt), then run `make update-packages`),
 - create a number of tables that are needed for running mara.
+- load the source data by Olist.
 
 You can now activate the virtual environment with 
 
@@ -208,23 +198,19 @@ The app is now accessible at [http://localhost:5000](http://localhost:5000).
 
 &nbsp;
 
-### Downloading PyPI and Github data from BigQuery
+### Loading the Olist e-commerce and marketing public data
 
-This step takes many hours to complete. If you don't have time for this (or don't want to go through the hassle of creating Google Cloud credentials), we provide a daily updated copy of the result data sets on s3. You can get (and update) the set of result CSVs with 
+The data is loaded as part of the initial build with `make`. 
+You can (re-)load the data into a Postgres database with
 
 ```console
-$ make sync-bigquery-csv-data-sets-from-s3
+$ make load-olist-data
 ```
 
 &nbsp;
 
-To download the data yourself, follow the instructions in the README of the [mara/bigquery-downloader](https://github.com/mara/bigquery-downloader) package to get a Google Cloud credentials file. Store it in `app/bigquery_downloader/bigquery-credentials.json`. 
-
-Then run the downloader in an activated virtual environment with:
-
-```
-$ flask bigquery_downloader.download_data
-```
+For more information about the underlying data and for custom downloads, 
+visit the official data reference in Kaggle [official dataset reference in Kaggle](https://www.kaggle.com/olistbr/brazilian-ecommerce)
 
 &nbsp;
 

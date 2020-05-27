@@ -1,9 +1,6 @@
-import collections
 import pathlib
 
-import mara_db.postgresql
 from data_integration.commands.sql import ExecuteSQL
-from data_integration.parallel_tasks.sql import ParallelExecuteSQL
 from data_integration.pipelines import Pipeline, Task
 from etl_tools.create_attributes_table import CreateAttributesTable
 from mara_schema.config import data_sets, mondrian_schema
@@ -24,11 +21,11 @@ pipeline.add_initial(
         id="initialize_schemas",
         description="Recreates the tmp and data schemas",
         commands=[
-            ExecuteSQL(sql_statement=f"""DROP SCHEMA IF EXISTS {target_schema}_next CASCADE;
-CREATE SCHEMA {target_schema}_next;
-DROP SCHEMA IF EXISTS {tmp_schema} CASCADE;
-CREATE SCHEMA {tmp_schema};""", echo_queries=True)
-        ]))
+            ExecuteSQL(sql_statement=f"""
+            DROP SCHEMA IF EXISTS {target_schema}_next CASCADE;
+            CREATE SCHEMA {target_schema}_next;
+            DROP SCHEMA IF EXISTS {tmp_schema} CASCADE;
+            CREATE SCHEMA {tmp_schema};""", echo_queries=True)]))
 
 for data_set in data_sets():
     task_id = f"create_{data_set.entity.name.replace(' ', '_').lower()}"
