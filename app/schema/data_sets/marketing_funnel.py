@@ -7,18 +7,19 @@ marketing_funnel_data_set = DataSet(
     name='Marketing funnel',
     max_entity_link_depth=1)
 
-marketing_funnel_data_set.include_path(['Seller', 'Geo-location'])
+marketing_funnel_data_set.include_path(['Closed deal', 'Seller'])
+marketing_funnel_data_set.include_path(['Closed deal', 'Seller', 'Geo-location'])
 
 marketing_funnel_data_set.add_simple_metric(
-    name='# MQLs',
+    name='# Marketing qualified leads',
     description='The number of MQLs',
     aggregation=Aggregation.COUNT,
-    column_name='mql_id')
+    column_name='marketing_qualified_lead_fk')
 marketing_funnel_data_set.add_simple_metric(
     name='# Closed deals',
     description='The number of closed deals',
     aggregation=Aggregation.COUNT,
-    column_name='closed_deal_id')
+    column_name='closed_deal_fk')
 marketing_funnel_data_set.add_simple_metric(
     name='# Orders',
     description='Number of orders with at-least one item fulfilled by this seller',
