@@ -16,11 +16,7 @@ order_item_data_set.include_attributes(['Seller', 'Geo-location'], ['Zip code', 
 
 order_item_data_set.include_path(['Order', 'Customer', ('Order','First order')])
 
-order_item_data_set.add_simple_metric(
-    name='# Order items',
-    description='The number of order items',
-    aggregation=Aggregation.COUNT,
-    column_name='order_item_id')
+
 order_item_data_set.add_simple_metric(
     name='# Orders',
     description='Number of distinct orders',
@@ -33,6 +29,6 @@ order_item_data_set.add_simple_metric(
     column_name='revenue')
 order_item_data_set.add_simple_metric(
     name='Freight value',
-    description='The freight value of the item (if an order has more than one item the freight value is splitted between items)',
+    description='The freight value of the item (if an order has more than one item the freight value is split between items)',
     aggregation=Aggregation.SUM,
     column_name='freight_value')
