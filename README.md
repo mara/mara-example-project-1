@@ -115,7 +115,7 @@ It shows its
 
 &nbsp;
 
-### Mara schema
+### Mara Schema
 
 This package [Mara Schema](https://github.com/mara/mara-schema) contains a lightweight opinionated DWH schema management framework which manages business semantics in DWH, automates ETL process and generation of artifacts, and ensures consistency across reporting tools and transparency to DWH users.
 
