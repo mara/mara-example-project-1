@@ -6,7 +6,7 @@ Combines the [data-integration](https://github.com/mara/data-integration) and
 with the [mara-app](https://github.com/mara/mara-app) framework into a project. 
 
 The example ETL integrates publicly available e-commerce and marketing data into a more general 
-modeling and structure for highlighting the most crucial capabilities of the Mara framework.
+modeling and structure for highlighting the capabilities of the Mara framework.
 
 The repository is intended to serve as a template for new projects.
 
@@ -30,8 +30,7 @@ The total size of these data is 121MB and is included as a project requirement f
 Then there is the ETL in [app/data_integration/pipelines](app/data_integration/pipelines) that transforms 
 this data into a classic Kimball-like [star schema](https://en.wikipedia.org/wiki/Star_schema):
 
-todo: change screen
-![Star schema](docs/star-schema.png)
+![Star schema](docs/star_schema.svg)
 
 It shows 2 database schemas, each created by a different pipeline: 
 
@@ -76,11 +75,6 @@ LIMIT 10;
 
 &nbsp;
 
-### Mara schema
-tbd
-
-&nbsp;
-
 Mara data integration pipelines are visualized and debugged though a web ui. Here, the pipeline `e_commerce` is run (locally on an Ubuntu 18.04 with all available data): 
 
 todo: change gif
@@ -121,6 +115,11 @@ It shows its
 - run times over time,
 - all commands of the task,
 - system statistics, a timeline and output of the last runs. 
+
+&nbsp;
+
+### Mara schema
+tbd
 
 &nbsp;
 
@@ -200,8 +199,7 @@ The app is now accessible at [http://localhost:5000](http://localhost:5000).
 
 ### Loading the Olist e-commerce and marketing public data
 
-The data is loaded as part of the initial build with `make`. 
-You can (re-)load the data into a Postgres database with
+You can load the data into a Postgres database with
 
 ```console
 $ make load-olist-data
