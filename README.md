@@ -2,7 +2,7 @@
 
 A runnable app that demonstrates how to build a data warehouse with mara. 
 Combines the [data-integration](https://github.com/mara/data-integration) and 
-[olist-ecommerce-data](https://github.com/mara/olist-ecommerce-data) libraries 
+[mara-schema](https://github.com/mara/mara-schema) libraries 
 with the [mara-app](https://github.com/mara/mara-app) framework into a project. 
 
 The example ETL integrates publicly available e-commerce and marketing data into a more general 
