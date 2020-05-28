@@ -14,14 +14,14 @@ The repository is intended to serve as a template for new projects.
 
 ## Example: E-commerce and marketing data by Olist
 
-The project uses two real anonymized data sources: 
+The project uses two real, publicly available and anonymized data sources: 
 
 1. The [Brazilian e-commerce dataset by Olist](https://www.kaggle.com/olistbr/brazilian-ecommerce).
-It contains information of 100k orders from 2016 to 2018 made at multiple marketplaces in Brazil through the Olist platform,
+Containing information of 100k orders from 2016 to 2018 made at multiple marketplaces in Brazil through the Olist platform,
 covering a range of standard e-commerce dimensions and metrics.
 
 2. The [Marketing funnel dataset by Olist](https://www.kaggle.com/olistbr/marketing-funnel-olist). 
-It contains information of 8k, randomly sampled Marketing Qualified Leads (MQLs) that requested contact between Jun. 1st 2017 and Jun 1st 2018.
+Containing information of 8k, randomly sampled Marketing Qualified Leads (MQLs) that requested contact between Jun. 1st 2017 and Jun 1st 2018.
 Its features allows viewing a sales process from multiple dimensions: lead category, catalog size, behaviour profile, etc. 
 
 The total size of these data is 121MB and is included as a project requirement from the
@@ -34,8 +34,8 @@ this data into a classic Kimball-like [star schema](https://en.wikipedia.org/wik
 
 It shows 2 database schemas, each created by a different pipeline: 
 
-- `ec_dim`: Covering transformations and builds data-sets related to the e-commerce public data by Olist.
-- `m_dim`: Builds the marketing-funnel data-sets based on Olist sellers' marketing funnel and the e-commerce data.
+- `ec_dim`: Transforms and builds data-sets related to the e-commerce public data by Olist.
+- `m_dim`: Transforms and builds the marketing-funnel data-sets based on Olist sellers' marketing funnel and the e-commerce data.
 
 &nbsp;
 
@@ -102,7 +102,7 @@ It shows
 
 &nbsp;
 
-Similarly, this the page for the task `e_commerce/transform_order_item`:
+Similarly, this is the page for the task `e_commerce/transform_order_item`:
 
 ![Mara web ui for tasks](docs/mara-web-ui-task.png)
 
@@ -159,7 +159,7 @@ Start a database client with `sudo -u postgres psql postgres` and then create a 
 
 Clone the repository somewhere. Copy the file [`app/local_setup.py.example`](app/local_setup.py.example) to `app/local_setup.py` and adapt to your machine.
 
-Log into PostgreSQL with `psql -U root postgres` and create two databases:
+Log into PostgreSQL with `psql -U root postgres` and create three databases:
 
 ```sql
 CREATE DATABASE example_project_1_dwh;
@@ -195,20 +195,23 @@ The app is now accessible at [http://localhost:5000](http://localhost:5000).
 
 ### Loading the Olist e-commerce and marketing public data
 
-You can load the data into a Postgres database with
+You can load the data into a Postgres database with:
 
 ```console
 $ make load-olist-data
 ```
 
+This will load the data in the `olist_ecommerce` PostgreSQL database, locally.
+
 For more information about the underlying data and for custom downloads, 
-visit the official data reference in Kaggle [official dataset reference in Kaggle](https://www.kaggle.com/olistbr/brazilian-ecommerce)
+visit the [official dataset reference in Kaggle](https://www.kaggle.com/olistbr/brazilian-ecommerce)
 
 &nbsp;
 
 ### Running the ETL
 
-For development, it is recommended to run the ETL from the web UI (see above). On production, use `flask data_integration.ui.run` to run a pipeline or a set of its child nodes. 
+For development, it is recommended to run the ETL from the web UI (see above). 
+On production, use `flask data_integration.ui.run` to run a pipeline or a set of its child nodes. 
 
 The command `data_integration.ui.run_interactively` provides an ncurses-based menu for selecting and running pipelines.
 
