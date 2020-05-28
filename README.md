@@ -30,7 +30,7 @@ The total size of these data is 121MB and is included as a project requirement f
 Then there is the ETL in [app/data_integration/pipelines](app/data_integration/pipelines) that transforms 
 this data into a classic Kimball-like [star schema](https://en.wikipedia.org/wiki/Star_schema):
 
-![Star schema](docs/star_schema.svg)
+![Star schema](docs/star-schema.png)
 
 It shows 2 database schemas, each created by a different pipeline: 
 
@@ -89,7 +89,7 @@ todo: change gif
 
 &nbsp;
 
-Mara ETL pipelines are compeletely transparent, both to stakeholders in terms of applied business logic and to data engineers in terms of runtime behavior.
+Mara ETL pipelines are completely transparent, both to stakeholders in terms of applied business logic and to data engineers in terms of runtime behavior.
 
 This is the page in the web ui that visualizes the pipeline `e_commerce`: 
 
