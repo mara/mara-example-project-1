@@ -119,7 +119,20 @@ It shows its
 &nbsp;
 
 ### Mara schema
-tbd
+
+This package [Mara Schema](https://github.com/mara/mara-schema) contains a lightweight opinionated DWH schema management framework which manages business semantics in DWH, automates ETL process and generation of artifacts, and ensures consistency across reporting tools and transparency to DWH users.
+
+The package has a web UI for documentation of business semantic in DWH: Entities, Attributes, Metrics, DataSets, etc.
+
+![Mara schema documentation overview](docs/mara-schema-documentation-overview.png)
+
+The file [schema.py](https://github.com/mara/mara-schema/blob/master/mara_schema/schema.py) contains classes for `DataSet`, `Entity`, `Metric`, `Attribute`, etc.
+The repository [app/schema](https://github.com/mara/mara-example-project-1/tree/master/app/schema) contains files to create Entity objects and DataSet objects for this example project.
+
+The file [sql_generation.py](https://github.com/mara/mara-schema/blob/master/mara_schema/sql_generation.py) contains functions to generate SQL for flattened tables and Mondrian fact tables. 
+Please take a look at the pipeline [generate_artifacts](https://github.com/mara/mara-example-project-1/blob/master/app/data_integration/pipelines/generate_artifacts/__init__.py), which shows an example of using Mara Schema to automate the generation of artifacts:
+
+![Generate artifacts pipeline](docs/generate-artifacts-pipeline.png)
 
 &nbsp;
 
