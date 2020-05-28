@@ -77,14 +77,12 @@ LIMIT 10;
 
 Mara data integration pipelines are visualized and debugged though a web ui. Here, the pipeline `e_commerce` is run (locally on an Ubuntu 18.04 with all available data): 
 
-todo: change gif
 ![Mara web ui ETL run](docs/mara-web-ui-etl-run.gif)
 
 &nbsp;
 
 On production, pipelines are run through a cli interface:
 
-todo: change gif
 ![Mara cli ETL run](docs/mara-cli-etl-run.gif)
 
 &nbsp;
@@ -93,7 +91,6 @@ Mara ETL pipelines are completely transparent, both to stakeholders in terms of 
 
 This is the page in the web ui that visualizes the pipeline `e_commerce`: 
 
-todo: change screen
 ![Mara web UI for pipelines](docs/mara-web-ui-pipeline.png)
 
 It shows 
@@ -175,7 +172,6 @@ Hit `make` in the root directory of the project. This will
 - create a virtual environment in `.venv`,
 - install all packages from [`requirements.txt.freeze`](requirements.txt.freeze) (if you want to create a new `requirements.txt.freeze` from [`requirements.txt`](requirements.txt), then run `make update-packages`),
 - create a number of tables that are needed for running mara.
-- load the source data by Olist.
 
 You can now activate the virtual environment with 
 
@@ -204,8 +200,6 @@ You can load the data into a Postgres database with
 ```console
 $ make load-olist-data
 ```
-
-&nbsp;
 
 For more information about the underlying data and for custom downloads, 
 visit the official data reference in Kaggle [official dataset reference in Kaggle](https://www.kaggle.com/olistbr/brazilian-ecommerce)

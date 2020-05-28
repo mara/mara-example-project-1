@@ -8,4 +8,5 @@ include .scripts/mara-app/install.mk
 sync-bigquery-csv-data-sets-from-s3:
 	.venv/bin/aws s3 sync s3://mara-example-project-data data --delete --no-progress --no-sign-request
 
-
+load-olist-data:
+	. .venv/bin/activate; flask olist_ecommerce.load-data
