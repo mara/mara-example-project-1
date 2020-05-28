@@ -10,3 +10,4 @@
 /.vscode
 /.project
 .DS_Store
+.env

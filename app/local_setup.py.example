@@ -7,16 +7,18 @@ import mara_db.dbs
 from mara_app.monkey_patch import patch
 
 import app.config
+import os
 
 
 @patch(mara_db.config.databases)
 def databases():
+    # Retrieve Postgres db-host from container's environment, else localhost for a native postgres
+    db_host = os.environ.get('POSTGRES_HOST') if os.environ.get('POSTGRES_HOST') else 'localhost'
     return {
-        # the project requires three databases: 'mara' for the app itself, 'dwh' for the etl
-        # and 'olist' for the source data
-        'dwh': mara_db.dbs.PostgreSQLDB(user='root', host='localhost', database='example_project_1_dwh'),
-        'mara': mara_db.dbs.PostgreSQLDB(user='root', host='localhost', database='example_project_1_mara'),
-        'olist': mara_db.dbs.PostgreSQLDB(user='root', host='localhost', database='olist_ecommerce')
+        # the project requires two databases: 'mara' for the app itself, and 'dwh' for the etl
+        'dwh': mara_db.dbs.PostgreSQLDB(user='root', host=db_host, database='example_project_1_dwh'),
+        'mara': mara_db.dbs.PostgreSQLDB(user='root', host=db_host, database='example_project_1_mara'),
+        'olist': mara_db.dbs.PostgreSQLDB(user='root', host=db_host, database='olist_ecommerce')
     }
 
 # Disable http header based authentication
