@@ -131,6 +131,13 @@ Please take a look at the pipeline [generate_artifacts](https://github.com/mara/
 
 ![Generate artifacts pipeline](docs/generate-artifacts-pipeline.png)
 
+The following flask command generates a XML file for Mondrian schema in an activated virtual environment.
+Please check the [README.md](https://github.com/mara/mara-schema/blob/master/README.md#create-mondrian-schema) for the configuration.
+
+````
+$ flask mara_schema.create-mondrian-schema
+```` 
+
 &nbsp;
 
 ## Getting started
