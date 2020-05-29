@@ -9,6 +9,8 @@ def _data_sets():
     from mara_schema.schema import generate_attribute_name
 
     default_column_names = {
+        'Orders': ['Order ID', 'Status', 'Purchase date', '# Order items',
+                   'Revenue', 'Total freight value'],
         'Order items': ['Order item ID', 'Product category', 'Order status', 'Order purchase date',
                         'Order approved date', 'Order delivered customer date', 'Revenue', 'Freight value'],
         'Sellers': ['Seller ID', 'Last order purchase date', 'Geo-location city', '# Orders', '# Deliveries',
