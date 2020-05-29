@@ -40,7 +40,7 @@ for data_set in data_sets():
              ]))
     pipeline.add(
         CreateAttributesTable(
-            id=f"{task_id}_data_set_attributes",
+            id=f"{task_id}_flattened_table_attributes",
             source_schema_name=f'{target_schema}_next',
             source_table_name=f'{data_set.entity.table_name}_flattened_table'),
         upstreams=[f'{task_id}_flattened_table'])
