@@ -1,13 +1,18 @@
 alembic==1.4.2
 arrow==0.15.6
+cachetools==4.1.0
 certifi==2020.4.5.1
 chardet==3.0.4
 click==7.1.2
--e git+https://github.com/mara/data-integration.git@1b02b217f3005ff11f0547ad7478bd9a937e48e1#egg=data_integration
--e git+https://github.com/mara/data-sets.git@f58a8b859e168f13697526be8725d8eefa84acba#egg=data_sets
+-e git+https://github.com/mara/data-integration.git@2b3409d06dc9c0385cc2c0f0d937d025dfc01f9d#egg=data_integration
+-e git+https://github.com/mara/data-sets.git@5a8f07ed8ea47844bdfc6947ef531b24300b79f3#egg=data_sets
 Flask==1.1.2
+google-auth==1.16.1
+google-auth-httplib2==0.0.3
+google-auth-oauthlib==0.4.1
 graphviz==0.14
 gunicorn==20.0.4
+httplib2==0.18.1
 idna==2.9
 itsdangerous==1.1.0
 Jinja2==2.11.2
@@ -15,23 +20,28 @@ lxml==4.5.1
 Mako==1.1.2
 -e git+https://github.com/mara/mara-acl.git@751066101c1cac484edd2984fd0eace283f6332d#egg=mara_acl
 -e git+https://github.com/mara/mara-app.git@29222bf65fd78a9834151afaf58532c7fb6cf6f9#egg=mara_app
--e git+https://github.com/mara/mara-db.git@488f33f7ea2910d45c1ed503b890293730251123#egg=mara_db
--e git+https://github.com/mara/mara-etl-tools.git@ebd22cb0d6159f72147aba771817b7db8e9e2d1e#egg=mara_etl_tools
+-e git+https://github.com/mara/mara-db.git@4ebb689adfb2d4b4350f0cdc6ebb765f77fa3371#egg=mara_db
+-e git+https://github.com/mara/mara-etl-tools.git@4de7c8ef647f159866db9360cf5ece51a22363b9#egg=mara_etl_tools
 -e git+https://github.com/mara/mara-page.git@c499a6c44aaa638c1515c3a857e5f68cad8b84c9#egg=mara_page
--e git+ssh://git@github.com/mara/mara-schema.git@d1a68b99334f12f90db5ce1298b9c9e8694b6288#egg=mara_schema
+-e git+ssh://git@github.com/mara/mara-schema.git@d6e1d73810552265119a938900605a8591110494#egg=mara_schema
 MarkupSafe==1.1.1
 more-itertools==8.3.0
 multimethod==1.3
+oauthlib==3.1.0
 -e git+ssh://git@github.com/mara/olist-ecommerce-data.git@8a5dfdea13f1e5ae4ae5ad873fce47889b586626#egg=olist_ecommerce_data
 pipdeptree==0.13.2
 psutil==5.7.0
 psycopg2==2.8.5
 psycopg2-binary==2.8.5
+pyasn1==0.4.8
+pyasn1-modules==0.2.8
 Pygments==2.6.1
 python-dateutil==2.8.1
 python-editor==1.0.4
 pythondialog==3.5.1
 requests==2.23.0
+requests-oauthlib==1.3.0
+rsa==4.0
 six==1.15.0
 SQLAlchemy==1.3.17
 SQLAlchemy-Utils==0.36.6
