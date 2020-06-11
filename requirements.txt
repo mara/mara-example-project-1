@@ -3,9 +3,10 @@
 -e git+https://github.com/mara/mara-acl.git@2.0.0#egg=mara-acl
 -e git+https://github.com/mara/mara-db.git@4.5.0#egg=mara-db
 -e git+https://github.com/mara/mara-page.git@1.5.1#egg=mara-page
--e git+https://github.com/mara/data-integration.git@2.8.3#egg=data-integration
--e git+https://github.com/mara/mara-etl-tools.git@3.1.1#egg=mara-etl-tools
--e git+https://github.com/mara/data-sets.git@2.4.1#egg=data-sets
+
+-e git+https://github.com/mara/mara-pipelines.git@3.0.0#egg=mara-pipelines
+-e git+https://github.com/mara/mara-etl-tools.git@4.0.0#egg=mara-etl-tools
+-e git+https://github.com/mara/mara-data-explorer.git@3.0.0#egg=mara-data-explorer
 
 -e git+ssh://git@github.com/mara/mara-schema.git@master#egg=mara-schema.git
 -e git+ssh://git@github.com/mara/olist-ecommerce-data.git@master#egg=olist-ecommerce-data.git

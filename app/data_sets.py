@@ -1,9 +1,9 @@
-import data_sets.config
-import data_sets.data_set
+import mara_data_explorer.config
+import mara_data_explorer.data_set
 from mara_app.monkey_patch import patch
 
 
-@patch(data_sets.config.data_sets)
+@patch(mara_data_explorer.config.data_sets)
 def _data_sets():
     from mara_schema.config import data_sets as mt_data_sets
     from mara_schema.schema import Attribute
@@ -30,7 +30,7 @@ def _data_sets():
             for prefixed_name, attribute in attributes.items():
                 if attribute.personal_data:
                     personal_data_column_names.append(prefixed_name)
-        _data_set = data_sets.data_set.DataSet(
+        _data_set = mara_data_explorer.data_set.DataSet(
             id=data_set.name.replace(' ', '-').lower(), name=data_set.name,
             database_alias='dwh', database_schema='af_dim',
             database_table=f'{data_set.entity.table_name}_data_set',
@@ -44,4 +44,4 @@ def _data_sets():
 
 
 # adapt to the favorite chart color of your company
-patch(data_sets.config.charts_color)(lambda: '#008000')
+patch(mara_data_explorer.config.charts_color)(lambda: '#008000')
