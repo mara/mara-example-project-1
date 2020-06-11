@@ -5,7 +5,7 @@ from data_integration.pipelines import Pipeline, Task
 from etl_tools.create_attributes_table import CreateAttributesTable
 from mara_schema.config import data_sets, mondrian_schema
 from mara_schema.schema import DataSet
-from mara_schema.sql_generation import sql_for_flattened_table, sql_for_mondrian_fact_table
+from mara_schema.artifact_generation.data_set_tables import sql_for_flattened_table, sql_for_star_schema_fact_table
 
 target_schema = mondrian_schema()['fact_table_schema_name']
 tmp_schema = 'af_tmp'
@@ -49,7 +49,7 @@ for data_set in data_sets():
         Task(id=f'{task_id}_mondrian_fact_table',
              description=f"Creates the {data_set.entity.name} mondrian fact table",
              commands=[ExecuteSQL(
-                 sql_statement=lambda data_set=data_set: sql_for_mondrian_fact_table(data_set=data_set))]
+                 sql_statement=lambda data_set=data_set: sql_for_star_schema_fact_table(data_set=data_set))]
              ))
 
 pipeline.add_final(

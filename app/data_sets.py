@@ -6,7 +6,7 @@ from mara_app.monkey_patch import patch
 @patch(data_sets.config.data_sets)
 def _data_sets():
     from mara_schema.config import data_sets as mt_data_sets
-    from mara_schema.schema import generate_attribute_name
+    from mara_schema.schema import Attribute
 
     default_column_names = {
         'Orders': ['Order ID', 'Status', 'Purchase date', '# Order items',
@@ -27,9 +27,9 @@ def _data_sets():
     for data_set in mt_data_sets():
         personal_data_column_names = []
         for path, attributes in data_set.connected_attributes().items():
-            for attribute in attributes:
+            for prefixed_name, attribute in attributes.items():
                 if attribute.personal_data:
-                    personal_data_column_names.append(generate_attribute_name(attribute, path))
+                    personal_data_column_names.append(attribute.prefixed_name(attribute, path))
         _data_set = data_sets.data_set.DataSet(
             id=data_set.name.replace(' ', '-').lower(), name=data_set.name,
             database_alias='dwh', database_schema='af_dim',
