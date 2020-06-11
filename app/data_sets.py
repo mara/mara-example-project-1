@@ -29,7 +29,7 @@ def _data_sets():
         for path, attributes in data_set.connected_attributes().items():
             for prefixed_name, attribute in attributes.items():
                 if attribute.personal_data:
-                    personal_data_column_names.append(attribute.prefixed_name(attribute, path))
+                    personal_data_column_names.append(prefixed_name)
         _data_set = data_sets.data_set.DataSet(
             id=data_set.name.replace(' ', '-').lower(), name=data_set.name,
             database_alias='dwh', database_schema='af_dim',
