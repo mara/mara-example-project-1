@@ -1,8 +1,8 @@
 import pathlib
 
-from data_integration.commands.sql import ExecuteSQL, Copy
-from data_integration.pipelines import Pipeline, Task
-from data_integration import config
+from mara_pipelines.commands.sql import ExecuteSQL, Copy
+from mara_pipelines.pipelines import Pipeline, Task
+from mara_pipelines import config
 
 pipeline = Pipeline(
     id="load_ecommerce_data",
