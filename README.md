@@ -231,9 +231,9 @@ visit the [official dataset reference in Kaggle](https://www.kaggle.com/olistbr/
 ### Running the ETL
 
 For development, it is recommended to run the ETL from the web UI (see above). 
-On production, use `flask data_integration.ui.run` to run a pipeline or a set of its child nodes. 
+On production, use `flask mara_pipelines.ui.run` to run a pipeline or a set of its child nodes. 
 
-The command `data_integration.ui.run_interactively` provides an ncurses-based menu for selecting and running pipelines.
+The command `mara_pipelines.ui.run_interactively` provides an ncurses-based menu for selecting and running pipelines.
 
 &nbsp;
 
