@@ -1,18 +1,13 @@
 alembic==1.4.2
 arrow==0.15.6
-cachetools==4.1.0
 certifi==2020.4.5.1
 chardet==3.0.4
 click==7.1.2
 -e git+https://github.com/mara/data-integration.git@2b3409d06dc9c0385cc2c0f0d937d025dfc01f9d#egg=data_integration
 -e git+https://github.com/mara/data-sets.git@5a8f07ed8ea47844bdfc6947ef531b24300b79f3#egg=data_sets
 Flask==1.1.2
-google-auth==1.16.1
-google-auth-httplib2==0.0.3
-google-auth-oauthlib==0.4.1
 graphviz==0.14
 gunicorn==20.0.4
-httplib2==0.18.1
 idna==2.9
 itsdangerous==1.1.0
 Jinja2==2.11.2
@@ -27,21 +22,16 @@ Mako==1.1.2
 MarkupSafe==1.1.1
 more-itertools==8.3.0
 multimethod==1.3
-oauthlib==3.1.0
 -e git+ssh://git@github.com/mara/olist-ecommerce-data.git@8a5dfdea13f1e5ae4ae5ad873fce47889b586626#egg=olist_ecommerce_data
 pipdeptree==0.13.2
 psutil==5.7.0
 psycopg2==2.8.5
 psycopg2-binary==2.8.5
-pyasn1==0.4.8
-pyasn1-modules==0.2.8
 Pygments==2.6.1
 python-dateutil==2.8.1
 python-editor==1.0.4
 pythondialog==3.5.1
 requests==2.23.0
-requests-oauthlib==1.3.0
-rsa==4.0
 six==1.15.0
 SQLAlchemy==1.3.17
 SQLAlchemy-Utils==0.36.6
