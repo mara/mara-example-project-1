@@ -9,5 +9,5 @@ def data_dir():
 
 
 def first_date():
-    """The first date for which to download and integrate BigQuery data"""
+    """The first date for which to process data (can be used to limit data volumes on local machine)"""
     return datetime.date(2017, 1, 1)
