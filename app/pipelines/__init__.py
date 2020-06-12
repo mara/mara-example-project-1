@@ -18,26 +18,26 @@ patch(mara_pipelines.config.default_db_alias)(lambda: 'dwh')
 @patch(mara_pipelines.config.root_pipeline)
 @functools.lru_cache(maxsize=None)
 def root_pipeline():
-    import app.data_integration.pipelines.utils
-    import app.data_integration.pipelines.load_data.load_ecommerce_data
-    import app.data_integration.pipelines.load_data.load_marketing_data
-    import app.data_integration.pipelines.e_commerce
-    import app.data_integration.pipelines.marketing
-    import app.data_integration.pipelines.generate_artifacts
-    import app.data_integration.pipelines.consistency_checks
+    import app.pipelines.utils
+    import app.pipelines.load_data.load_ecommerce_data
+    import app.pipelines.load_data.load_marketing_data
+    import app.pipelines.e_commerce
+    import app.pipelines.marketing
+    import app.pipelines.generate_artifacts
+    import app.pipelines.consistency_checks
 
     pipeline = Pipeline(
         id='mara_example_project_1',
         description='An example pipeline that integrates the Olist e-commerce and marketing funnel data')
 
-    pipeline.add(app.data_integration.pipelines.utils.pipeline)
-    pipeline.add(app.data_integration.pipelines.load_data.load_ecommerce_data.pipeline, upstreams=['utils'])
-    pipeline.add(app.data_integration.pipelines.load_data.load_marketing_data.pipeline, upstreams=['utils'])
-    pipeline.add(app.data_integration.pipelines.e_commerce.pipeline, upstreams=['load_ecommerce_data'])
-    pipeline.add(app.data_integration.pipelines.marketing.pipeline,
+    pipeline.add(app.pipelines.utils.pipeline)
+    pipeline.add(app.pipelines.load_data.load_ecommerce_data.pipeline, upstreams=['utils'])
+    pipeline.add(app.pipelines.load_data.load_marketing_data.pipeline, upstreams=['utils'])
+    pipeline.add(app.pipelines.e_commerce.pipeline, upstreams=['load_ecommerce_data'])
+    pipeline.add(app.pipelines.marketing.pipeline,
                  upstreams=['load_marketing_data', 'e_commerce'])
-    pipeline.add(app.data_integration.pipelines.generate_artifacts.pipeline, upstreams=['marketing'])
-    pipeline.add(app.data_integration.pipelines.consistency_checks.pipeline, upstreams=['generate_artifacts'])
+    pipeline.add(app.pipelines.generate_artifacts.pipeline, upstreams=['marketing'])
+    pipeline.add(app.pipelines.consistency_checks.pipeline, upstreams=['generate_artifacts'])
     return pipeline
 
 

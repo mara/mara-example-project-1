@@ -14,7 +14,7 @@ if not local_setup_py_path.exists():
 import app.local_setup
 
 # configure application and packages
-import app.data_integration
+import app.pipelines
 import app.data_sets
 import app.schema
 import app.ui
