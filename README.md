@@ -1,7 +1,7 @@
 # Mara Example Project 1
 
 A runnable app that demonstrates how to build a data warehouse with mara. 
-Combines the [data-integration](https://github.com/mara/data-integration) and 
+Combines the [mara-pipelines](https://github.com/mara/mara-pipelines) and 
 [mara-schema](https://github.com/mara/mara-schema) libraries 
 with the [mara-app](https://github.com/mara/mara-app) framework into a project. 
 
@@ -21,13 +21,13 @@ Containing information of 100k orders from 2016 to 2018 made at multiple marketp
 covering a range of standard e-commerce dimensions and metrics.
 
 2. The [Marketing funnel dataset by Olist](https://www.kaggle.com/olistbr/marketing-funnel-olist). 
-Containing information of 8k, randomly sampled Marketing Qualified Leads (MQLs) that requested contact between Jun. 1st 2017 and Jun 1st 2018.
-Its features allows viewing a sales process from multiple dimensions: lead category, catalog size, behaviour profile, etc. 
+Containing information of 8k, randomly sampled Marketing Qualified Leads (MQLs) that requested contact between 01.06.2017 and 01.06.2018.
+Its features allow viewing a sales process from multiple dimensions: lead category, catalog size, behaviour profile, etc. 
 
-The total size of these data is 121MB and is included as a project requirement from the
+The total size of this data is 121MB and is included as a project requirement from the
 [olist-ecommerce-data](https://github.com/mara/olist-ecommerce-data) package for ease of loading.
 
-Then there is the ETL in [app/data_integration/pipelines](app/data_integration/pipelines) that transforms 
+Then, there is the ETL in [app/pipelines](app/pipelines) that transforms 
 this data into a classic Kimball-like [star schema](https://en.wikipedia.org/wiki/Star_schema):
 
 ![Star schema](docs/star-schema.png)
@@ -75,7 +75,7 @@ LIMIT 10;
 
 &nbsp;
 
-Mara data integration pipelines are visualized and debugged though a web ui. Here, the pipeline `e_commerce` is run (locally on an Ubuntu 18.04 with all available data): 
+The Mara pipelines are visualized and debugged though a web ui. Here, the pipeline `e_commerce` is run (locally on an Ubuntu 18.04 with all available data): 
 
 ![Mara web ui ETL run](docs/mara-web-ui-etl-run.gif)
 
@@ -117,21 +117,28 @@ It shows its
 
 ### Mara Schema
 
-This package [Mara Schema](https://github.com/mara/mara-schema) contains a lightweight opinionated DWH schema management framework which manages business semantics in DWH, automates ETL process and generation of artifacts, and ensures consistency across reporting tools and transparency to DWH users.
+The package [Mara Schema](https://github.com/mara/mara-schema) contains a lightweight opinionated DWH schema management 
+framework which manages business semantics in a DWH, automates ETL processes and generation of artifacts, 
+and ensures consistency across reporting tools and transparency to the DWH users.
 
-The package has a web UI for documentation of business semantic in DWH: Entities, Attributes, Metrics, DataSets, etc.
+The package has a web UI for documentation of the business semantics in a DWH: 
+Entities, Attributes, Metrics, DataSets, etc.
 
 ![Mara schema documentation overview](docs/mara-schema-documentation-overview.png)
 
-The file [schema.py](https://github.com/mara/mara-schema/blob/master/mara_schema/schema.py) contains classes for `DataSet`, `Entity`, `Metric`, `Attribute`, etc.
-The repository [app/schema](https://github.com/mara/mara-example-project-1/tree/master/app/schema) contains files to create Entity objects and DataSet objects for this example project.
+The [mara-schema/schema](https://github.com/mara/mara-schema/tree/master/mara_schema/schema) directory,
+contains modules with classes for `DataSet`, `Entity`, `Metric`, `Attribute`, etc.
+The directory [app/schema](https://github.com/mara/mara-example-project-1/tree/master/app/schema) contains files
+to create Entity objects and DataSet objects for this example project.
 
-The file [sql_generation.py](https://github.com/mara/mara-schema/blob/master/mara_schema/sql_generation.py) contains functions to generate SQL for flattened tables and Mondrian fact tables. 
-Please take a look at the pipeline [generate_artifacts](https://github.com/mara/mara-example-project-1/blob/master/app/data_integration/pipelines/generate_artifacts/__init__.py), which shows an example of using Mara Schema to automate the generation of artifacts:
+The [mara-schema/artifact_generation](https://github.com/mara/mara-schema/tree/master/mara_schema/artifact_generation) 
+directory, contains modules with functions that generate SQL for flattened tables and Mondrian fact tables. 
+Please take a look at the pipeline [generate_artifacts](https://github.com/mara/mara-example-project-1/blob/master/app/pipelines/generate_artifacts/__init__.py),
+which shows an example of using Mara Schema to automate the generation of artifacts:
 
 ![Generate artifacts pipeline](docs/generate-artifacts-pipeline.png)
 
-The following flask command generates a XML file for Mondrian schema in an activated virtual environment.
+The following flask command generates an XML file for Mondrian schema in an activated virtual environment.
 Please check the [README.md](https://github.com/mara/mara-schema/blob/master/README.md#create-mondrian-schema) for the configuration.
 
 ````
@@ -167,7 +174,8 @@ Mara does not run Windows.
 
 &nbsp;
 
-On Mac, install Postgresql with `brew install -v postgresql`. On Ubuntu, follow  [these instructions](https://www.postgresql.org/download/linux/ubuntu/). Also, install the [cstore_fdw](https://github.com/citusdata/cstore_fdw) with `brew install cstore_fdw` and [postgresql-hll](https://github.com/citusdata/postgresql-hll) extensions from source.
+On Mac, install Postgresql with `brew install -v postgresql`. On Ubuntu, follow  [these instructions](https://www.postgresql.org/download/linux/ubuntu/). 
+Also, install the [cstore_fdw](https://github.com/citusdata/cstore_fdw) with `brew install cstore_fdw` and [postgresql-hll](https://github.com/citusdata/postgresql-hll) extensions from source.
 
 To optimize PostgreSQL for ETL workloads, update your postgresql.conf along [this example](docs/postgresql.conf).
 
