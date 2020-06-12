@@ -46,8 +46,8 @@ for data_set in data_sets():
         upstreams=[f'{task_id}_flattened_table'])
 
     pipeline.add(
-        Task(id=f'{task_id}_mondrian_fact_table',
-             description=f"Creates the {data_set.entity.name} mondrian fact table",
+        Task(id=f'{task_id}_star_schema_fact_table',
+             description=f"Creates the {data_set.entity.name} star schema fact table",
              commands=[ExecuteSQL(
                  sql_statement=lambda data_set=data_set: sql_for_star_schema_fact_table(data_set=data_set))]
              ))

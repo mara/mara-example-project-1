@@ -132,7 +132,7 @@ The directory [app/schema](https://github.com/mara/mara-example-project-1/tree/m
 to create Entity objects and DataSet objects for this example project.
 
 The [mara-schema/artifact_generation](https://github.com/mara/mara-schema/tree/master/mara_schema/artifact_generation) 
-directory, contains modules with functions that generate SQL for flattened tables and Mondrian fact tables. 
+directory, contains modules with functions that generate SQL for flattened tables and star schema fact tables. 
 Please take a look at the pipeline [generate_artifacts](https://github.com/mara/mara-example-project-1/blob/master/app/pipelines/generate_artifacts/__init__.py),
 which shows an example of using Mara Schema to automate the generation of artifacts:
 
@@ -142,7 +142,7 @@ The following flask command generates an XML file for Mondrian schema in an acti
 Please check the [README.md](https://github.com/mara/mara-schema/blob/master/README.md#create-mondrian-schema) for the configuration.
 
 ````
-$ flask mara_schema.create-mondrian-schema
+$ flask mara_schema.ui.create-mondrian-schema
 ```` 
 
 &nbsp;
