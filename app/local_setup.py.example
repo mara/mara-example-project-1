@@ -30,7 +30,6 @@ patch(mara_pipelines.config.max_number_of_parallel_tasks)(lambda: 4)
 # The first day for which to download and process data (default 2017-01-01).
 # Locally, a few days of data is enough to test a pipeline.
 # On production, size of days that can be processed depends on machine size.
-# One year of data amounts to roughly 50GB database size
 # patch(app.config.first_date)(lambda: datetime.date.today() - datetime.timedelta(days=5))
 
 # Whether it is possible to run the ETL from the web UI
