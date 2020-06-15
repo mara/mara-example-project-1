@@ -4,7 +4,7 @@ from mara_pipelines.commands.sql import ExecuteSQL
 from mara_pipelines.pipelines import Pipeline, Task
 from etl_tools.create_attributes_table import CreateAttributesTable
 from mara_schema.config import data_sets, mondrian_schema
-from mara_schema.schema import DataSet
+from mara_schema.schema.data_set import DataSet
 from mara_schema.artifact_generation.data_set_tables import sql_for_flattened_table, sql_for_star_schema_fact_table
 
 target_schema = mondrian_schema()['fact_table_schema_name']

@@ -1,4 +1,5 @@
-from mara_schema.schema import Entity, Type
+from mara_schema.schema.entity import Entity
+from mara_schema.schema.attribute import Type
 
 seller_entity = Entity(
     name='Seller',
