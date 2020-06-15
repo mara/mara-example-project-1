@@ -5,13 +5,9 @@ import mara_mondrian.connection
 import mara_mondrian.mdx
 import mara_mondrian.schema
 from mara_pipelines.commands.bash import RunBash
-from mara_pipelines.commands.python import RunFunction
 from mara_pipelines.logging import logger
-from mara_pipelines.pipelines import Pipeline, Task, ParallelTask
+from mara_pipelines.pipelines import Pipeline, Task, Command
 from mara_page import html
-import mara_pipelines.config
-import math
-import more_itertools
 
 pipeline = Pipeline(
     id="update_frontends",
@@ -32,38 +28,24 @@ update_mondrian.add(
          ]),
     upstreams=[])
 
-def run_mdx_query(query) -> bool:
 
-    logger.log(query, logger.Format.ITALICS)
-    try:
-        response = mara_mondrian.mdx.process_execute_response(mara_mondrian.connection.execute(query))
-    except mara_mondrian.connection.MondrianError as e:
-        logger.log(str(e), logger.Format.VERBATIM, is_error=True)
-        return False
-
-    logger.log(str(list(response['axes']['Axis0'].tuples[0].members.values())[0].name), logger.Format.VERBATIM)
-
-    return True
-
-class WarmMondrianCube(ParallelTask):
-    def __init__(self, id: str, description: str, cube: mara_mondrian.schema.Cube, max_number_of_parallel_tasks: int = None) -> None:
-        super().__init__(id,
-                         description,
-                         max_number_of_parallel_tasks=max_number_of_parallel_tasks)
+class WarmMondrianCube(Command):
+    def __init__(self, cube: mara_mondrian.schema.Cube) -> None:
+        super().__init__()
         self.cube = cube
 
-    def add_parallel_tasks(self, sub_pipeline: Pipeline) -> None:
+    def run(self) -> bool:
+        for query in self.queries():
+            logger.log(query, logger.Format.ITALICS)
+            try:
+                response = mara_mondrian.mdx.process_execute_response(mara_mondrian.connection.execute(query))
+            except mara_mondrian.connection.MondrianError as e:
+                logger.log(str(e), logger.Format.VERBATIM, is_error=True)
+                return False
 
-        queries = self.queries()
-        commands = []
-        for query in queries:
-            commands.append(RunFunction(run_mdx_query, args=[query]))
+            logger.log(str(list(response['axes']['Axis0'].tuples[0].members.values())[0].name), logger.Format.VERBATIM)
 
-        chunk_size = math.ceil(len(commands) / (2 * mara_pipelines.config.max_number_of_parallel_tasks()))
-        for n, chunk in enumerate(more_itertools.chunked(commands, chunk_size)):
-            task = Task(id=str(n), description='Process a portion of the queries')
-            task.add_commands(chunk)
-            sub_pipeline.add(task)
+        return True
 
     def queries(self):
         queries = []
@@ -83,12 +65,13 @@ class WarmMondrianCube(ParallelTask):
         return [('Cube name', self.cube.name),
                 ('MDX queries', html.highlight_syntax('\n'.join(self.queries()), 'tsql'))]
 
+
 for cube_name, cube in mara_mondrian.schema.mondrian_schema().cubes.items():
     update_mondrian.add(
-        WarmMondrianCube(
-            id=cube_name.replace(' ', '_').lower(),
-            description=f'Warms the dimension caches for the "{cube_name}" cube',
-            cube=cube),
-        upstreams=['flush_mondrian_caches'])
+        Task(id=cube_name.replace(' ', '_').lower(),
+             description=f'Warms the dimension caches for the "{cube_name}" cube',
+             commands=[WarmMondrianCube(cube)]),
+        upstreams=['flush_mondrian_caches']
+    )
 
 pipeline.add(update_mondrian)
