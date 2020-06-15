@@ -11,6 +11,8 @@
 -e git+ssh://git@github.com/mara/mara-schema.git@master#egg=mara-schema
 -e git+ssh://git@github.com/mara/olist-ecommerce-data.git@master#egg=olist-ecommerce-data
 
+-e git+ssh://git@github.com/kirilpanev/mara-mondrian.git@master#egg=mara-mondrian
+
 # running flask
 gunicorn
 Flask>=1.0.2

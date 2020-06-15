@@ -1,0 +1,47 @@
+#
+# Configuration of the Mondrian Server application
+#
+
+
+# connection to postgresql dwh database
+databaseUrl=jdbc:postgresql://localhost/example_project_1_dwh?user=root&password=
+
+
+# absolute path to mondrian schema
+mondrianSchemaFile=/Users/mloetzsch/Projects/mara/mara-example-project-1/app/mondrian/schema.xml
+
+
+# --- Saiku auth / ACL, see README ---
+
+# URL that will be called to check whether a given user has access rights to Saiku
+#saikuAuthorizationUrl=http://localhost:5000/mondrian/saiku/authorize
+
+# A fixed user name and password for simple Saiku authentication
+saikuUsername =
+saikuPassword =
+
+
+# the local directory where saiku user queries are stored
+saikuStorageDir=/Users/mloetzsch/Projects/mara/mara-example-project-1/data/saiku-queries
+
+
+
+# --- Mondrian Settings ----
+
+# enable/disable logging of mondrian internals, MDX, generated SQL queries and XMLA requests
+logMondrian = true
+logMdx = true
+logSql = true
+logXmla = true
+
+
+# the locale that is used for formatting numbers (1.234,56 vs. 1,234.56) and currencies (€ vs. $)
+locale = de_DE
+
+
+# set arbitrary configurations for the Mondrian engine
+# see https://mondrian.pentaho.com/documentation/configuration.php for options
+# mondrian.xxx =
+# mondrian.yyy =
+
+
