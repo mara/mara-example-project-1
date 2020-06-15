@@ -8,8 +8,8 @@
 -e git+https://github.com/mara/mara-etl-tools.git@4.0.0#egg=mara-etl-tools
 -e git+https://github.com/mara/mara-data-explorer.git@3.0.0#egg=mara-data-explorer
 
--e git+ssh://git@github.com/mara/mara-schema.git@master#egg=mara-schema.git
--e git+ssh://git@github.com/mara/olist-ecommerce-data.git@master#egg=olist-ecommerce-data.git
+-e git+ssh://git@github.com/mara/mara-schema.git@master#egg=mara-schema
+-e git+ssh://git@github.com/mara/olist-ecommerce-data.git@master#egg=olist-ecommerce-data
 
 # running flask
 gunicorn
