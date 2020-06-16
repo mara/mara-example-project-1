@@ -16,14 +16,15 @@ Mako==1.1.3
 -e git+https://github.com/mara/mara-data-explorer.git@77803fcf07516aae163bb709c9f4b8105896e0bb#egg=mara_data_explorer
 -e git+https://github.com/mara/mara-db.git@4ebb689adfb2d4b4350f0cdc6ebb765f77fa3371#egg=mara_db
 -e git+https://github.com/mara/mara-etl-tools.git@55bb4e8729af44bd8ccb88f9cb95dd3eef81ecee#egg=mara_etl_tools
+-e git+ssh://git@github.com/kirilpanev/mara-mondrian.git@e20353029333d4a909eaeb7e8c8da6c0a57ec13b#egg=mara_mondrian
 -e git+https://github.com/mara/mara-page.git@c499a6c44aaa638c1515c3a857e5f68cad8b84c9#egg=mara_page
 -e git+https://github.com/mara/mara-pipelines.git@ab41e916be81969212f2f0e95a6b0e5794dd800d#egg=mara_pipelines
--e git+ssh://git@github.com/mara/mara-schema.git@d6e1d73810552265119a938900605a8591110494#egg=mara_schema
+-e git+ssh://git@github.com/mara/mara-schema.git@53807f2539c008c1a50646e08c8459caf2221bd6#egg=mara_schema
 MarkupSafe==1.1.1
-more-itertools==8.3.0
+more-itertools==8.4.0
 multimethod==1.3
 -e git+ssh://git@github.com/mara/olist-ecommerce-data.git@8a5dfdea13f1e5ae4ae5ad873fce47889b586626#egg=olist_ecommerce_data
-pipdeptree==0.13.2
+pipdeptree==1.0.0
 psutil==5.7.0
 psycopg2==2.8.5
 psycopg2-binary==2.8.5
