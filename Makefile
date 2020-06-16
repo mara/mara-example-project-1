@@ -12,5 +12,5 @@ load-olist-data:
 	. .venv/bin/activate; flask olist_ecommerce.load-data
 
 # run saiku and mondrian
-run-cubes:
+run-mondrian-server:
 	java -Dmondrian-server.properties=.mondrian-server.properties -jar packages/mara-mondrian/mara_mondrian/jetty-runner.jar --port 8080 packages/mara-mondrian/mara_mondrian/mondrian-server.war 2>&1
