@@ -12,6 +12,7 @@ import mara_page.acl
 from mara_app import monkey_patch
 from mara_page import acl
 from mara_page import navigation
+import mara_mondrian
 
 import mara_schema
 import olist_ecommerce
