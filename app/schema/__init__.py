@@ -13,12 +13,12 @@ def _data_sets():
     from app.schema.data_sets.product import product_data_set
     from app.schema.data_sets.marketing_funnel import marketing_funnel_data_set
 
-    return [order_data_set, order_item_data_set, seller_data_set, customer_data_set, product_data_set,
-            marketing_funnel_data_set]
+    return [
+        order_data_set,
+        order_item_data_set,
+        seller_data_set,
+        customer_data_set,
+        product_data_set,
+        marketing_funnel_data_set
+    ]
 
-
-patch(mara_schema.config.mondrian_schema)(lambda: {
-    "schema_name": "Mara example project 1",
-    "fact_table_schema_name": "af_dim",
-    "schema_file_dir": pathlib.Path('./app/mondrian')
-})

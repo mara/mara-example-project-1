@@ -24,6 +24,7 @@ def root_pipeline():
     import app.pipelines.e_commerce
     import app.pipelines.marketing
     import app.pipelines.generate_artifacts
+    import app.pipelines.update_frontends
     import app.pipelines.consistency_checks
     import app.pipelines.update_frontends
 
@@ -37,9 +38,11 @@ def root_pipeline():
     pipeline.add(app.pipelines.e_commerce.pipeline, upstreams=['load_ecommerce_data'])
     pipeline.add(app.pipelines.marketing.pipeline,
                  upstreams=['load_marketing_data', 'e_commerce'])
+
     pipeline.add(app.pipelines.generate_artifacts.pipeline, upstreams=['marketing'])
     pipeline.add(app.pipelines.update_frontends.pipeline, upstreams=['generate_artifacts'])
     pipeline.add(app.pipelines.consistency_checks.pipeline, upstreams=['update_frontends'])
+
     return pipeline
 
 
