@@ -20,4 +20,5 @@ customer_entity.add_attribute(
     description='The unique identifier of the customer',
     column_name='customer_id',
     type=Type.ID,
+    personal_data=True,
     high_cardinality=True)

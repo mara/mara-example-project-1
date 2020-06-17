@@ -20,4 +20,5 @@ seller_entity.add_attribute(
     description='The unique identifier of the Seller',
     column_name='seller_id',
     type=Type.ID,
+    personal_data=True,
     high_cardinality=True)
