@@ -19,9 +19,9 @@ Mako==1.1.3
 -e git+ssh://git@github.com/mara/mara-mondrian.git@f210e55209dd3e047852649175b2333132507f20#egg=mara_mondrian
 -e git+https://github.com/mara/mara-page.git@c499a6c44aaa638c1515c3a857e5f68cad8b84c9#egg=mara_page
 -e git+https://github.com/mara/mara-pipelines.git@ab41e916be81969212f2f0e95a6b0e5794dd800d#egg=mara_pipelines
--e git+ssh://git@github.com/mara/mara-schema.git@697bafc1253b99df74c2433b6b839b3f0e5980ba#egg=mara_schema
+-e git+ssh://git@github.com/mara/mara-schema.git@cc24b874cb506e42bf4e983260212d4180251ded#egg=mara_schema
 MarkupSafe==1.1.1
-more-itertools==8.4.0
+more-itertools==8.3.0
 multimethod==1.3
 -e git+ssh://git@github.com/mara/olist-ecommerce-data.git@8a5dfdea13f1e5ae4ae5ad873fce47889b586626#egg=olist_ecommerce_data
 pipdeptree==1.0.0
