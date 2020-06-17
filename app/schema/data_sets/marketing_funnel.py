@@ -11,11 +11,6 @@ marketing_funnel_data_set.include_path(['Closed deal', 'Seller'])
 marketing_funnel_data_set.include_path(['Closed deal', 'Seller', 'Geo-location'])
 
 marketing_funnel_data_set.add_simple_metric(
-    name='# Marketing qualified leads',
-    description='The number of MQLs',
-    aggregation=Aggregation.COUNT,
-    column_name='marketing_qualified_lead_fk')
-marketing_funnel_data_set.add_simple_metric(
     name='# Closed deals',
     description='The number of closed deals',
     aggregation=Aggregation.COUNT,

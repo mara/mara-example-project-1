@@ -8,11 +8,6 @@ customer_data_set = DataSet(
     max_entity_link_depth=1)
 
 customer_data_set.add_simple_metric(
-    name='# Customers',
-    description='The number of customers',
-    aggregation=Aggregation.COUNT,
-    column_name='customer_id')
-customer_data_set.add_simple_metric(
     name='Days since last order',
     description='Average number of days after the last order fulfillment by this seller',
     aggregation=Aggregation.AVERAGE,
@@ -37,3 +32,7 @@ customer_data_set.add_simple_metric(
     description='Total freight value of items purchased by this customer',
     aggregation=Aggregation.SUM,
     column_name='total_freight_value')
+customer_data_set.add_composed_metric(
+    name='Avg. revenue per order',
+    description='The average amount that the customer spent per order',
+    formula='[Revenue (lifetime)] / [# Orders]')

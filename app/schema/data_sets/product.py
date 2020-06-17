@@ -8,11 +8,6 @@ product_data_set = DataSet(
     max_entity_link_depth=1)
 
 product_data_set.add_simple_metric(
-    name='# Products',
-    description='The number of products',
-    aggregation=Aggregation.COUNT,
-    column_name='product_id')
-product_data_set.add_simple_metric(
     name='# Orders',
     description='The number of orders containing this product',
     aggregation=Aggregation.SUM,

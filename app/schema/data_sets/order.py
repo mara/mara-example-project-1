@@ -25,3 +25,7 @@ order_data_set.add_simple_metric(
     description='The freight value of the entire order (if an order has more than one item the freight value is split between items)',
     aggregation=Aggregation.SUM,
     column_name='total_freight_value')
+order_data_set.add_composed_metric(
+    name='Avg. revenue per order item',
+    description='The average revenue made in this order per order item',
+    formula='[Revenue (lifetime)] / [# Orders]')

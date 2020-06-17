@@ -8,11 +8,6 @@ seller_data_set = DataSet(
     max_entity_link_depth=1)
 
 seller_data_set.add_simple_metric(
-    name='# Sellers',
-    description='The number of sellers',
-    aggregation=Aggregation.COUNT,
-    column_name='seller_id')
-seller_data_set.add_simple_metric(
     name='Avg. days since last order',
     description='Average number of days after the last order fulfillment by this seller',
     aggregation=Aggregation.AVERAGE,
@@ -47,3 +42,7 @@ seller_data_set.add_simple_metric(
     description='Total freight value of items fulfilled by this seller',
     aggregation=Aggregation.SUM,
     column_name='total_freight_value')
+seller_data_set.add_composed_metric(
+    name='Avg. revenue per order',
+    description='The average revenue that the seller made per order',
+    formula='[Revenue (lifetime)] / [# Orders]')
