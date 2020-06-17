@@ -28,4 +28,4 @@ order_data_set.add_simple_metric(
 order_data_set.add_composed_metric(
     name='Avg. revenue per order item',
     description='The average revenue made in this order per order item',
-    formula='[Revenue (lifetime)] / [# Orders]')
+    formula='[Revenue] / [# Order items]')
