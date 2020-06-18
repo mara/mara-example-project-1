@@ -2,7 +2,7 @@ import sys
 import time
 
 import mara_schema.config
-from mara_schema.schema.metric import SimpleMetric, ComposedMetric
+from mara_schema.metric import SimpleMetric, ComposedMetric
 
 from app.metabase import config
 from app.metabase.client import MetabaseClient
