@@ -16,6 +16,8 @@ def databases():
         # and 'olist' for the source data
         'dwh': mara_db.dbs.PostgreSQLDB(user='root', host='localhost', database='example_project_1_dwh'),
         'mara': mara_db.dbs.PostgreSQLDB(user='root', host='localhost', database='example_project_1_mara'),
+        'frontend': mara_db.dbs.PostgreSQLDB(user='root', host='localhost', database='example_project_1_metabase'),
+        'metabase': mara_db.dbs.PostgreSQLDB(user='root', host='localhost', database='example_project_1_metabase'),
         'olist': mara_db.dbs.PostgreSQLDB(user='root', host='localhost', database='olist_ecommerce')
     }
 

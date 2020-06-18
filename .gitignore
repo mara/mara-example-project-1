@@ -4,6 +4,7 @@
 /packages
 /data
 /.venv
+/.metabase
 
 *.pyc
 /.idea

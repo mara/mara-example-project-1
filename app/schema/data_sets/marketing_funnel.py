@@ -55,3 +55,7 @@ marketing_funnel_data_set.add_simple_metric(
     description='Lead declared estimated monthly revenue. Informed on contact',
     aggregation=Aggregation.SUM,
     column_name='declared_monthly_revenue')
+marketing_funnel_data_set.add_composed_metric(
+    name='# Order per customer',
+    description='Average number of orders per customer',
+    formula='[# Orders] / [# Customers]')

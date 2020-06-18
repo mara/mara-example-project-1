@@ -18,3 +18,4 @@ import app.pipelines
 import app.data_sets
 import app.schema
 import app.ui
+import app.metabase

@@ -1,0 +1,7 @@
+DROP SCHEMA IF EXISTS util CASCADE;
+
+CREATE SCHEMA util;
+
+DROP SCHEMA IF EXISTS metabase_next CASCADE;
+
+CREATE SCHEMA metabase_next;

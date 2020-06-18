@@ -1,8 +1,15 @@
+all: ensure-config
+	make -s -j install-packages setup-metabase
+
 # output coloring & timing
 include .scripts/mara-app/init.mk
 
 # virtual env creation, package updates, db migration
 include .scripts/mara-app/install.mk
+
+# project specific scripts
+include .scripts/config.mk
+include .scripts/metabase.mk
 
 # if you don't want to download the two big
 sync-bigquery-csv-data-sets-from-s3:
