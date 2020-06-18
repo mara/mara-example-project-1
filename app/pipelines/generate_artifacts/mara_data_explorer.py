@@ -4,7 +4,7 @@ from etl_tools.create_attributes_table import CreateAttributesTable
 from mara_pipelines.commands.python import RunFunction
 from mara_pipelines.commands.sql import ExecuteSQL
 from mara_pipelines.pipelines import Pipeline, Task
-from mara_schema.artifact_generation.data_set_tables import data_set_sql_query, database_identifier
+from mara_schema.sql_generation import data_set_sql_query
 from mara_schema.config import data_sets
 
 from .cstore_tables import create_cstore_table_for_query

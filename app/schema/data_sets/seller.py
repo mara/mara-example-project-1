@@ -1,4 +1,4 @@
-from mara_schema.schema.data_set import DataSet, Aggregation
+from mara_schema.data_set import DataSet, Aggregation
 
 from app.schema.entities.seller import seller_entity
 

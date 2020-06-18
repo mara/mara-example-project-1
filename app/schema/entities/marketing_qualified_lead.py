@@ -1,5 +1,5 @@
-from mara_schema.schema.entity import Entity
-from mara_schema.schema.attribute import Type
+from mara_schema.entity import Entity
+from mara_schema.attribute import Type
 
 marketing_qualified_lead_entity = Entity(
     name='Marketing qualified lead',

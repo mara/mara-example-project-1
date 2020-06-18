@@ -6,7 +6,7 @@ from mara_app.monkey_patch import patch
 @patch(mara_data_explorer.config.data_sets)
 def _data_sets():
     from mara_schema.config import data_sets as mt_data_sets
-    from mara_schema.schema.attribute import Attribute
+    from mara_schema.attribute import Attribute
 
     default_column_names = {
         'Orders': ['Order ID', 'Status', 'Purchase date', '# Order items',
