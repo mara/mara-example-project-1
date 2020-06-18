@@ -2,13 +2,8 @@ import pathlib
 
 from mara_pipelines.commands.sql import ExecuteSQL
 from mara_pipelines.pipelines import Pipeline, Task
-from etl_tools.create_attributes_table import CreateAttributesTable
+from mara_schema.artifact_generation.data_set_tables import data_set_sql_query, database_identifier
 from mara_schema.config import data_sets
-from mara_schema.schema.data_set import DataSet
-from mara_schema.artifact_generation.data_set_tables import sql_for_flattened_table, sql_for_star_schema_fact_table
-from mara_pipelines.commands.python import RunFunction
-
-
 
 pipeline = Pipeline(
     id="flatten_data_sets_for_mondrian",
@@ -32,7 +27,8 @@ for data_set in data_sets():
              description=f'Flattens the "{data_set.name}" data set for best use in Mondrian',
              commands=[
                  ExecuteSQL(f"""
-CREATE TABLE mondrian_next."{data_set.entity.name}_star" AS
-{sql_for_star_schema_fact_table(data_set)};
-""")]))
-
+CREATE TABLE mondrian_next.{database_identifier(data_set.name)} AS
+{data_set_sql_query(data_set=data_set, human_readable_columns=False, star_schema=True,
+                    include_personal_data=False, include_high_cardinality_attributes=False)};
+""",
+                            echo_queries=False)]))

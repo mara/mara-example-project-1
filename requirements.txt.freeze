@@ -19,7 +19,7 @@ Mako==1.1.3
 -e git+ssh://git@github.com/mara/mara-mondrian.git@87da3be5b6779bd0f19f5b26a685f902bdf4566f#egg=mara_mondrian
 -e git+https://github.com/mara/mara-page.git@c499a6c44aaa638c1515c3a857e5f68cad8b84c9#egg=mara_page
 -e git+https://github.com/mara/mara-pipelines.git@ab41e916be81969212f2f0e95a6b0e5794dd800d#egg=mara_pipelines
--e git+ssh://git@github.com/mara/mara-schema.git@0345e71244d2ca99ba75b871a5ec703329085e97#egg=mara_schema
+-e git+ssh://git@github.com/mara/mara-schema.git@89aa1fdcbcf0df119abd453f3e65d15469d82a43#egg=mara_schema
 MarkupSafe==1.1.1
 more-itertools==8.3.0
 multimethod==1.3

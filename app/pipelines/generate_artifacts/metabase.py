@@ -3,7 +3,7 @@ import pathlib
 from mara_pipelines.commands.python import RunFunction
 from mara_pipelines.commands.sql import ExecuteSQL
 from mara_pipelines.pipelines import Pipeline, Task
-from mara_schema.artifact_generation.data_set_tables import sql_for_flattened_table
+from mara_schema.artifact_generation.data_set_tables import data_set_sql_query
 from mara_schema.config import data_sets
 
 from .cstore_tables import create_cstore_table_for_query
@@ -31,7 +31,9 @@ CREATE SCHEMA metabase_next;
 
 for data_set in data_sets():
     def query(data_set):
-        return sql_for_flattened_table(data_set)
+        return data_set_sql_query(data_set=data_set, human_readable_columns=True, pre_compute_metrics=False,
+                                  star_schema=False, include_personal_data=False,
+                                  include_high_cardinality_attributes=True)
 
 
     def create_cstore_table(data_set):
@@ -46,4 +48,5 @@ for data_set in data_sets():
                  ExecuteSQL(sql_statement=lambda data_set=data_set: f"""
 INSERT INTO metabase_next."{data_set.name}"
 {query(data_set)};
-""")]))
+""",
+                            echo_queries=False)]))

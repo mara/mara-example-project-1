@@ -23,7 +23,7 @@ pipeline.add(mondrian_pipeline)
 
 pipeline.add_final(
     Task(id='replace_schemas',
-         description='Replaces the frontend schemas with their next versions.',
+         description='Replaces the frontend schemas with their next versions',
          commands=[ExecuteSQL(sql_statement=f"SELECT util.replace_schema('{schema}', '{schema}_next')")
                    for schema in ['metabase', 'data_sets', 'mondrian']]))
 
