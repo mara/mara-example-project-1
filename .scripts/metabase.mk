@@ -1,7 +1,7 @@
 # running metabase locally
 
 metabase-directory := .metabase
-metabase-version := v0.34.3
+metabase-version := v0.35.4
 metabase-db := example_project_1_metabase
 metabase-connection-uri := postgres://127.0.0.1:5432/$(metabase-db)?user=root
 

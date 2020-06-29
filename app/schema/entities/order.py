@@ -17,7 +17,7 @@ order_entity.add_attribute(
     type=Type.ID,
     high_cardinality=True)
 order_entity.add_attribute(
-    name='Status',
+    name='Order status',
     description='Reference to the order status (delivered, shipped, etc)',
     column_name='status',
     type=Type.ENUM)
