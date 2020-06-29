@@ -2,10 +2,7 @@ from mara_schema.data_set import DataSet, Aggregation
 
 from app.schema.entities.product import product_entity
 
-product_data_set = DataSet(
-    entity=product_entity,
-    name='Products',
-    max_entity_link_depth=1)
+product_data_set = DataSet(entity=product_entity, name='Products')
 
 product_data_set.add_simple_metric(
     name='# Orders',

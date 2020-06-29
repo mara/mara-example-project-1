@@ -2,10 +2,7 @@ from mara_schema.data_set import DataSet, Aggregation
 
 from app.schema.entities.seller import seller_entity
 
-seller_data_set = DataSet(
-    entity=seller_entity,
-    name='Sellers',
-    max_entity_link_depth=1)
+seller_data_set = DataSet(entity=seller_entity, name='Sellers')
 
 seller_data_set.add_simple_metric(
     name='Avg. days since last order',

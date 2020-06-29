@@ -29,6 +29,6 @@ for data_set in data_sets():
                  ExecuteSQL(f"""
 CREATE TABLE mondrian_next.{database_identifier(data_set.name)} AS
 {data_set_sql_query(data_set=data_set, human_readable_columns=False, star_schema=True,
-                    include_personal_data=False, include_high_cardinality_attributes=False)};
+                    personal_data=False, high_cardinality_attributes=False)};
 """,
                             echo_queries=False)]))

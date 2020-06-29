@@ -38,7 +38,7 @@ def metabase_db_alias() -> str:
 
 def dwh_db_alias() -> str:
     """The alias of the database that Metabase reads from"""
-    return 'frontend'
+    return 'dwh'
 
 
 def dwh_db_name() -> str:

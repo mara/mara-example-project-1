@@ -28,16 +28,16 @@ def update_metadata() -> bool:
     time.sleep(seconds)
 
     metadata = client.get(f'/api/database/{dwh_db_id}/metadata')
-    cubes = {data_set.name: data_set for data_set in mara_schema.config.data_sets()}
+    data_sets = {data_set.name: data_set for data_set in mara_schema.config.data_sets()}
 
     for table in metadata['tables']:
-        cube = cubes.get(table['name'])
-        if cube:
+        data_set = data_sets.get(table['name'])
+        if data_set:
             client.put(f'/api/table/{table["id"]}',
-                       {'description': cube.entity.description,
+                       {'description': data_set.entity.description,
                         'show_in_getting_started': True})
             _attributes = {}
-            for path, attributes in cube.connected_attributes().items():
+            for path, attributes in data_set.connected_attributes().items():
                 for name, attribute in attributes.items():
                     _attributes[name] = attribute
             for field in table['fields']:
@@ -51,7 +51,7 @@ def update_metadata() -> bool:
                     client.put(f'/api/field/{field["id"]}',
                                {'description': None, 'visibility_type': 'details-only'})
 
-            for name, _metric in cube.metrics.items():
+            for name, _metric in data_set.metrics.items():
                 if isinstance(_metric, SimpleMetric):
                     field = next(filter(lambda f: f['name'] == _metric.name, table['fields']), None)
                     if not field:
@@ -86,7 +86,7 @@ def update_metadata() -> bool:
                     client.post('/api/metric', metric)
 
             for metric in table['metrics']:
-                if metric['name'] not in cube.metrics:
+                if metric['name'] not in data_set.metrics:
                     client.put(f'/api/metric/{metric["id"]}',
                                {'archived': True, 'revision_message': 'Auto schema import'})
 

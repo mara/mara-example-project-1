@@ -2,13 +2,7 @@ from mara_schema.data_set import DataSet, Aggregation
 
 from app.schema.entities.marketing_funnel import marketing_funnel_entity
 
-marketing_funnel_data_set = DataSet(
-    entity=marketing_funnel_entity,
-    name='Marketing funnel',
-    max_entity_link_depth=1)
-
-marketing_funnel_data_set.include_path(['Closed deal', 'Seller'])
-marketing_funnel_data_set.include_path(['Closed deal', 'Seller', 'Geo-location'])
+marketing_funnel_data_set = DataSet(entity=marketing_funnel_entity, name='Marketing funnel')
 
 marketing_funnel_data_set.add_simple_metric(
     name='# Closed deals',

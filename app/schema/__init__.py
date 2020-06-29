@@ -1,5 +1,3 @@
-import pathlib
-
 import mara_schema.config
 from mara_app.monkey_patch import patch
 
@@ -21,4 +19,3 @@ def _data_sets():
         product_data_set,
         marketing_funnel_data_set
     ]
-

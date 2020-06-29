@@ -31,9 +31,9 @@ CREATE SCHEMA metabase_next;
 
 for data_set in data_sets():
     def query(data_set):
-        return data_set_sql_query(data_set=data_set, human_readable_columns=True, pre_compute_metrics=False,
-                                  star_schema=False, include_personal_data=False,
-                                  include_high_cardinality_attributes=True)
+        return data_set_sql_query(data_set=data_set, human_readable_columns=True, pre_computed_metrics=False,
+                                  star_schema=False, personal_data=False,
+                                  high_cardinality_attributes=True)
 
 
     def create_cstore_table(data_set):

@@ -28,8 +28,8 @@ CREATE SCHEMA data_sets_next;
 for data_set in data_sets():
     def query(data_set):
         return data_set_sql_query(
-            data_set=data_set, human_readable_columns=False, pre_compute_metrics=True, star_schema=False,
-            include_personal_data=True, include_high_cardinality_attributes=True)
+            data_set=data_set, human_readable_columns=False, pre_computed_metrics=True, star_schema=False,
+            personal_data=True, high_cardinality_attributes=True)
 
 
     def create_cstore_table(data_set):
