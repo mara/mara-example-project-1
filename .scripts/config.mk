@@ -12,6 +12,9 @@ ensure-config:
 app/local_setup.py:
 	cp -v app/local_setup.py.example app/local_setup.py
 
-
 .ensure-database-%:
-	psql $* -c " " || psql postgres -c "create database $*;"
+	if psql -lqt | cut -d \| -f 1 | grep -qw $* ; then \
+		echo "$* database exists"; \
+	else \
+		psql postgres -c "create database $*;"; \
+	fi;
