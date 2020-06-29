@@ -1,5 +1,8 @@
 all: ensure-config
-	make -s -j install-packages setup-metabase
+	make -s -j setup-mara
+	make load-olist-data
+	make setup-metabase
+
 
 # output coloring & timing
 include .scripts/mara-app/init.mk
@@ -10,10 +13,6 @@ include .scripts/mara-app/install.mk
 # project specific scripts
 include .scripts/config.mk
 include .scripts/metabase.mk
-
-# if you don't want to download the two big
-sync-bigquery-csv-data-sets-from-s3:
-	.venv/bin/aws s3 sync s3://mara-example-project-data data --delete --no-progress --no-sign-request
 
 load-olist-data:
 	. .venv/bin/activate; flask olist_ecommerce.load-data
