@@ -45,7 +45,7 @@ def update_metadata() -> bool:
                 if attribute:
                     client.put(f'/api/field/{field["id"]}',
                                {'description': attribute.description or 'tbd',
-                                'retired': 'normal'
+                                'retired': 'normal', 'visibility_type': 'normal',
                                 })
                 else:
                     client.put(f'/api/field/{field["id"]}',
