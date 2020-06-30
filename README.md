@@ -185,21 +185,14 @@ Start a database client with `sudo -u postgres psql postgres` and then create a 
 
 ### Installation
 
-Clone the repository somewhere. Copy the file [`app/local_setup.py.example`](app/local_setup.py.example) to `app/local_setup.py` and adapt to your machine.
-
-Log into PostgreSQL with `psql -U root postgres` and create three databases:
-
-```sql
-CREATE DATABASE example_project_1_dwh;
-CREATE DATABASE example_project_1_mara;
-CREATE DATABASE olist_ecommerce;
-```
-
-Hit `make` in the root directory of the project. This will 
+Clone the repository somewhere and hit `make` in the root directory of the project. This will:
 
 - create a virtual environment in `.venv`,
 - install all packages from [`requirements.txt.freeze`](requirements.txt.freeze) (if you want to create a new `requirements.txt.freeze` from [`requirements.txt`](requirements.txt), then run `make update-packages`),
-- create a number of tables that are needed for running mara.
+- copy the file `app/local_setup.py.example` to `app/local_setup.py`, which you can adapt to your machine.
+- create the necessary databases and a number of tables that are needed for running mara.
+- store the Olist e-commerce and marketing data in the `olist_ecommerce` PostgreSQL database, locally.
+
 
 You can now activate the virtual environment with 
 
@@ -218,21 +211,6 @@ $ flask run --with-threads --reload --eager-loading
 ```
 
 The app is now accessible at [http://localhost:5000](http://localhost:5000).
-
-&nbsp;
-
-### Loading the Olist e-commerce and marketing public data
-
-You can load the data into a Postgres database with:
-
-```console
-$ make load-olist-data
-```
-
-This will load the data in the `olist_ecommerce` PostgreSQL database, locally.
-
-For more information about the underlying data and for custom downloads, 
-visit the [official dataset reference in Kaggle](https://www.kaggle.com/olistbr/brazilian-ecommerce)
 
 &nbsp;
 
