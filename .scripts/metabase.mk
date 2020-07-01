@@ -8,7 +8,7 @@ metabase-metadata-db-connection-uri ?= postgres://127.0.0.1:5432/$(metabase-meta
 
 
 run-metabase: $(metabase-directory)/metabase-$(metabase-version).jar
-	cd $(metabase-directory); MB_DB_CONNECTION_URI=$(metabase-connection-uri) java -jar metabase-$(metabase-version).jar
+	cd $(metabase-directory); MB_DB_CONNECTION_URI=$(metabase-metadata-db-connection-uri) java -jar metabase-$(metabase-version).jar
 
 $(metabase-directory)/metabase-$(metabase-version).jar:
 	mkdir -pv $(metabase-directory)
