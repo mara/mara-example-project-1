@@ -1,4 +1,9 @@
-"""Functions for setting up Metabase by directly writing to its metadata database"""
+"""
+Functions for setting up Metabase by directly writing to its metadata database
+
+Especially useful for the initial setup of a Metabase instance (when the API is not available yet).
+"""
+
 import json
 import uuid
 from functools import singledispatch
@@ -12,7 +17,11 @@ from . import config
 
 
 def setup():
-    """Sets the admin user credentials, adds a db connection and sets a few other configurations"""
+    """
+    Sets the admin user credentials, adds a db connection and sets a few other configurations.
+
+    Patch or copy this method if you want to something differently.
+    """
     print('\033[36m.. creating admin user \033[0m')
     add_user(email=config.metabase_admin_email(),
              first_name=config.metabase_admin_first_name(),
@@ -22,7 +31,7 @@ def setup():
              groups=['Administrators', 'All users'])
 
     print('\033[36m.. updating databases\033[0m')
-    update_databases({config.dwh_db_name(): mara_db.dbs.db(config.dwh_db_alias())})
+    update_databases({config.metabase_data_db_name(): mara_db.dbs.db(config.metabase_data_db_alias())})
 
     print('\033[36m.. updating settings\033[0m')
     update_settings([("anon-tracking-enabled", False),
@@ -37,17 +46,15 @@ def setup():
 
 def add_user(first_name: str, last_name: str, email: str, password: str,
              is_superuser: bool, groups: [str]):
-    """Creates a user in Metabase"""
+    """Creates a user in Metabase by writing directly to the metadata db"""
 
     # rebuilt password hashing logic from
     # https://github.com/metabase/metabase/blob/master/src/metabase/models/user.clj
     password_salt = str(uuid.uuid4())
-    encrypted_password = bcrypt.hashpw(
-        (password_salt + config.metabase_admin_password()).encode('utf-8'),
-        bcrypt.gensalt(rounds=10, prefix=b"2a")
-    ).decode("utf-8")
+    encrypted_password = bcrypt.hashpw((password_salt + password).encode('utf-8'),
+                                       bcrypt.gensalt(rounds=10, prefix=b"2a")).decode("utf-8")
 
-    with mara_db.postgresql.postgres_cursor_context(config.metabase_db_alias()) as cursor:
+    with mara_db.postgresql.postgres_cursor_context(config.metabase_metadata_db_alias()) as cursor:
         cursor.execute(f"""
 INSERT INTO core_user (email, first_name, last_name, password, password_salt, 
                        date_joined, is_superuser, is_active)
@@ -104,7 +111,7 @@ def update_databases(databases: {str: mara_db.dbs.DB}):
     Args:
         databases: A mapping of database names to database configurations
     """
-    with mara_db.postgresql.postgres_cursor_context(config.metabase_db_alias()) as cursor:
+    with mara_db.postgresql.postgres_cursor_context(config.metabase_metadata_db_alias()) as cursor:
         cursor.execute('SELECT id, name FROM metabase_database')
         existing_database_ids = {name: id for id, name in cursor.fetchall()}
 
@@ -143,7 +150,12 @@ DELETE FROM metabase_database WHERE id = {'%s'};
 
 
 def update_settings(settings: [(str, str)]):
-    with mara_db.postgresql.postgres_cursor_context(config.metabase_db_alias()) as cursor:
+    """
+    Sets a list of settings (key, value)
+
+    See https://git.xyser.com/Test/metabase/blob/master/src/metabase/public_settings.clj
+    """
+    with mara_db.postgresql.postgres_cursor_context(config.metabase_metadata_db_alias()) as cursor:
         execute_values(cursor, f"""
 INSERT INTO setting (key, value)
 VALUES {'%s'}
@@ -156,4 +168,3 @@ ON CONFLICT (key) DO UPDATE
 DELETE FROM setting WHERE key = 'setup-token';
 """)
         print(cursor.query.decode('utf-8'))
-

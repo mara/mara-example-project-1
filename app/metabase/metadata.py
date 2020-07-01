@@ -12,12 +12,12 @@ def update_metadata() -> bool:
     """Updates descriptions of tables & fields in Metabase, creates metrics and flushes field caches"""
     client = MetabaseClient()
 
-    dwh_db_id = next(filter(lambda db: db['name'] == config.dwh_db_name(),
+    dwh_db_id = next(filter(lambda db: db['name'] == config.metabase_data_db_name(),
                             client.get('/api/database/')),
                      {}).get('id')
 
     if not dwh_db_id:
-        print(f'Database {config.dwh_db_name()} not found in Metabase', file=sys.stderr)
+        print(f'Database {config.metabase_data_db_name()} not found in Metabase', file=sys.stderr)
         return False
 
     print('.. Triggering schema sync')
