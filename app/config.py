@@ -2,10 +2,7 @@
 
 import pathlib
 import datetime
-import mara_mondrian.config
-from mara_app.monkey_patch import patch
 
-patch(mara_mondrian.config.schema_file)(lambda: pathlib.Path('app/mondrian/schema.xml'))
 
 def data_dir():
     """The directory where persistent input data is stored"""

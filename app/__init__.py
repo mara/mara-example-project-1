@@ -19,3 +19,8 @@ import app.data_sets
 import app.schema
 import app.ui
 import app.metabase
+
+
+def MARA_CONFIG_MODULES():
+    from . import config
+    return [config]

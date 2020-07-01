@@ -13,19 +13,21 @@ setup-mara:
 # install exact package versions from requirements.txt.freeze
 install-packages:
 	make -j .venv/bin/python check-for-unpushed-package-changes
-	.venv/bin/pip install --requirement=requirements.txt.freeze --src=./packages --upgrade --exists-action=w
+	.venv/bin/python -m pip install --upgrade pip wheel requests setuptools pipdeptree
+	.venv/bin/python -m pip install --requirement=requirements.txt.freeze --src=./packages --upgrade --exists-action=w
 
 
 # update packages from requirements.txt and create requirements.txt.freeze
 update-packages:
 	make -j check-for-unpushed-package-changes .venv/bin/python
-	PYTHONWARNINGS="ignore" .venv/bin/pip install --requirement=requirements.txt --src=./packages --upgrade --exists-action=w
-	make -j check-for-inconstent-package-dependencies .copy-mara-app-scripts
+	.venv/bin/python -m pip install --upgrade pip wheel requests setuptools pipdeptree
+	PYTHONWARNINGS="ignore" .venv/bin/python -m pip install --requirement=requirements.txt --src=./packages --upgrade --exists-action=w
+	make -j check-for-inconsistent-package-dependencies .copy-mara-app-scripts
 
 # write freeze file
 # pkg-ressources is automatically added on ubuntu, but breaks the install.
 # https://stackoverflow.com/a/40167445/1380673
-	.venv/bin/pip freeze | grep -v "pkg-resources" > requirements.txt.freeze
+	.venv/bin/python -m pip freeze | grep -v "pkg-resources" > requirements.txt.freeze
 
 	make check-for-newer-package-versions
 	make migrate-mara-db
@@ -33,7 +35,7 @@ update-packages:
 
 
 # create or update virtualenv
-.venv/bin/python: 
+.venv/bin/python:
 # if .venv is already a symlink, don't overwrite it
 	mkdir -p .venv
 
@@ -44,7 +46,7 @@ update-packages:
 	echo export FLASK_DEBUG=1 >> .venv/bin/activate
 	echo export FLASK_APP=$(shell pwd)/app/app.py >> .venv/bin/activate
 
-# on Mac, some operations in a multiprocessing environment chrash Python with this message:
+# on Mac, some operations in a multiprocessing environment crash Python with this message:
 #     +[__NSCFConstantString initialize] may have been in progress in another thread when fork() was called.
 #     We cannot safely call it or ignore it in the fork() child process. Crashing instead.
 #     Set a breakpoint on objc_initializeAfterForkError to debug.
@@ -64,7 +66,7 @@ update-packages:
 
 # install minimum set of required packages
 # wheel needs to be early to be able to build wheels
-	.venv/bin/pip install --upgrade wheel requests setuptools pipdeptree
+	.venv/bin/python -m pip install --upgrade pip wheel requests setuptools pipdeptree
 
 # Workaround problems with un-vendored urllib3/requests in pip on ubuntu/debian
 # This forces .venv/bin/pip to use the vendored versions of urllib3 from the installed requests version
@@ -84,7 +86,7 @@ run-flask:
 
 # run https://github.com/naiquevin/pipdeptree to check whether the currently installed packages have
 # incompatible dependencies
-check-for-inconstent-package-dependencies:
+check-for-inconsistent-package-dependencies:
 	.venv/bin/pipdeptree --warn=fail
 
 

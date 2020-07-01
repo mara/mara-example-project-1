@@ -1,9 +1,10 @@
 # running metabase locally
 
-metabase-directory := .metabase
-metabase-version := v0.35.4
-metabase-db := example_project_1_metabase
-metabase-connection-uri := postgres://127.0.0.1:5432/$(metabase-db)?user=root
+# set variables unless already set earlier
+metabase-directory ?= .metabase
+metabase-version ?= v0.35.4
+metabase-metadata-db ?= metabase_metadata
+metabase-metadata-db-connection-uri ?= postgres://127.0.0.1:5432/$(metabase-metadata-db)?user=root
 
 
 run-metabase: $(metabase-directory)/metabase-$(metabase-version).jar
