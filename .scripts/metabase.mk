@@ -19,3 +19,6 @@ migrate-metabase-db: $(metabase-directory)/metabase-$(metabase-version).jar
 setup-metabase: migrate-metabase-db
 	source .venv/bin/activate; flask app.metabase.setup
 
+
+.cleanup-metabase:
+	rm -rf metabase-directory

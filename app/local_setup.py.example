@@ -1,29 +1,34 @@
-import datetime
-
-import mara_pipelines.config
 import mara_acl.config
 import mara_db.config
 import mara_db.dbs
+import mara_pipelines.config
 from mara_app.monkey_patch import patch
-
-import app.config
 
 
 @patch(mara_db.config.databases)
 def databases():
     return {
-        # the project requires three databases: 'mara' for the app itself, 'dwh' for the etl
-        # and 'olist' for the source data
+        # the ETL creates the data sets in this database
         'dwh': mara_db.dbs.PostgreSQLDB(user='root', host='localhost', database='example_project_1_dwh'),
+
+        # for Mara meta data
         'mara': mara_db.dbs.PostgreSQLDB(user='root', host='localhost', database='example_project_1_mara'),
-        'frontend': mara_db.dbs.PostgreSQLDB(user='root', host='localhost', database='example_project_1_metabase'),
-        'metabase': mara_db.dbs.PostgreSQLDB(user='root', host='localhost', database='example_project_1_metabase'),
+
+        # Metabase queries data from this database, data sets are copied there from DWH
+        'metabase-data': mara_db.dbs.PostgreSQLDB(user='root', host='127.0.0.1',
+                                                  database='example_project_1_metabase_data'),
+
+        # for Metabase meta data
+        'metabase-metadata': mara_db.dbs.PostgreSQLDB(user='root', host='127.0.0.1',
+                                                      database='example_project_1_metabase_metadata'),
+
+        # The e-commerce example data set
         'olist': mara_db.dbs.PostgreSQLDB(user='root', host='localhost', database='olist_ecommerce')
     }
 
+
 # Disable http header based authentication
 patch(mara_acl.config.require_email_http_header)(lambda: False)
-
 
 # How many cores to use for running the ETL, defaults to the number of CPUs of the machine
 # On production, make sure the ETL does not slow down other services too much
@@ -32,6 +37,7 @@ patch(mara_pipelines.config.max_number_of_parallel_tasks)(lambda: 4)
 # The first day for which to download and process data (default 2017-01-01).
 # Locally, a few days of data is enough to test a pipeline.
 # On production, size of days that can be processed depends on machine size.
+# One year of data amounts to roughly 50GB database size
 # patch(app.config.first_date)(lambda: datetime.date.today() - datetime.timedelta(days=5))
 
 # Whether it is possible to run the ETL from the web UI

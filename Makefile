@@ -1,7 +1,7 @@
-all: ensure-config
-	make -s -j setup-mara
-	make load-olist-data
-	make setup-metabase
+all:
+	make -j ensure-config ensure-databases
+	make setup-mara
+	make load-olist-data setup-metabase
 
 
 # output coloring & timing
@@ -10,8 +10,13 @@ include .scripts/mara-app/init.mk
 # virtual env creation, package updates, db migration
 include .scripts/mara-app/install.mk
 
-# project specific scripts
+# creation of databases that are needed in a local setup
+include .scripts/databases.mk
+
+# ensure local_setup.py exists
 include .scripts/config.mk
+
+# metabase setup
 include .scripts/metabase.mk
 
 load-olist-data:
@@ -20,3 +25,7 @@ load-olist-data:
 # run saiku and mondrian
 run-mondrian-server:
 	java -Dmondrian-server.properties=./mondrian-server.properties -jar packages/mara-mondrian/mara_mondrian/jetty-runner.jar --port 8080 packages/mara-mondrian/mara_mondrian/mondrian-server.war 2>&1
+
+
+cleanup:
+	make -j .cleanup-vitualenv .cleanup-databases .cleanup-metabase .cleanup-config
