@@ -18,7 +18,7 @@ patch(mara_pipelines.config.default_db_alias)(lambda: 'dwh')
 @patch(mara_pipelines.config.root_pipeline)
 @functools.lru_cache(maxsize=None)
 def root_pipeline():
-    import app.pipelines.utils
+    import app.pipelines.initialize_db
     import app.pipelines.load_data.load_ecommerce_data
     import app.pipelines.load_data.load_marketing_data
     import app.pipelines.e_commerce
@@ -32,9 +32,9 @@ def root_pipeline():
         id='mara_example_project_1',
         description='An example pipeline that integrates the Olist e-commerce and marketing funnel data')
 
-    pipeline.add(app.pipelines.utils.pipeline)
-    pipeline.add(app.pipelines.load_data.load_ecommerce_data.pipeline, upstreams=['utils'])
-    pipeline.add(app.pipelines.load_data.load_marketing_data.pipeline, upstreams=['utils'])
+    pipeline.add(app.pipelines.initialize_db.pipeline)
+    pipeline.add(app.pipelines.load_data.load_ecommerce_data.pipeline, upstreams=['initialize_db'])
+    pipeline.add(app.pipelines.load_data.load_marketing_data.pipeline, upstreams=['initialize_db'])
     pipeline.add(app.pipelines.e_commerce.pipeline, upstreams=['load_ecommerce_data'])
     pipeline.add(app.pipelines.marketing.pipeline,
                  upstreams=['load_marketing_data', 'e_commerce'])

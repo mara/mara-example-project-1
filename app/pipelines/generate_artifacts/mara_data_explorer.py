@@ -33,7 +33,7 @@ for data_set in data_sets():
 
 
     def create_cstore_table(data_set):
-        return create_cstore_table_for_query(query(data_set), 'data_sets_next', data_set.id())
+        return create_cstore_table_for_query(query(data_set), 'data_sets_next', data_set.id(), 'dwh')
 
 
     task_id = f"flatten_{data_set.id()}_for_data_explorer"
