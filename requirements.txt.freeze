@@ -1,14 +1,14 @@
 alembic==1.4.2
-arrow==0.15.6
+arrow==0.15.7
 bcrypt==3.1.7
-certifi==2020.4.5.2
+certifi==2020.6.20
 cffi==1.14.0
 chardet==3.0.4
 click==7.1.2
 Flask==1.1.2
 graphviz==0.14
 gunicorn==20.0.4
-idna==2.9
+idna==2.10
 itsdangerous==1.1.0
 Jinja2==2.11.2
 lxml==4.5.1
@@ -18,12 +18,12 @@ Mako==1.1.3
 -e git+https://github.com/mara/mara-data-explorer.git@77803fcf07516aae163bb709c9f4b8105896e0bb#egg=mara_data_explorer
 -e git+https://github.com/mara/mara-db.git@4ebb689adfb2d4b4350f0cdc6ebb765f77fa3371#egg=mara_db
 -e git+https://github.com/mara/mara-etl-tools.git@55bb4e8729af44bd8ccb88f9cb95dd3eef81ecee#egg=mara_etl_tools
--e git+ssh://git@github.com/mara/mara-mondrian.git@5d96e213eae8baedb38e5068d7d2ea5662d1bddd#egg=mara_mondrian
+-e git+ssh://git@github.com/mara/mara-mondrian.git@757a0a4d64f289a2cfb21ff0a15689720a9c6fa6#egg=mara_mondrian
 -e git+https://github.com/mara/mara-page.git@c499a6c44aaa638c1515c3a857e5f68cad8b84c9#egg=mara_page
 -e git+https://github.com/mara/mara-pipelines.git@ab41e916be81969212f2f0e95a6b0e5794dd800d#egg=mara_pipelines
--e git+ssh://git@github.com/mara/mara-schema.git@aa0b51c14dba6886026a56a7f62ff6a935949470#egg=mara_schema
+-e git+ssh://git@github.com/mara/mara-schema.git@92c02c0aecec2a0720b22b17d6528074da6d529b#egg=mara_schema
 MarkupSafe==1.1.1
-more-itertools==8.3.0
+more-itertools==8.4.0
 multimethod==1.3
 -e git+ssh://git@github.com/mara/olist-ecommerce-data.git@8a5dfdea13f1e5ae4ae5ad873fce47889b586626#egg=olist_ecommerce_data
 pipdeptree==1.0.0
@@ -37,7 +37,7 @@ python-editor==1.0.4
 pythondialog==3.5.1
 requests==2.24.0
 six==1.15.0
-SQLAlchemy==1.3.17
+SQLAlchemy==1.3.18
 SQLAlchemy-Utils==0.36.6
 urllib3==1.25.9
 Werkzeug==1.0.1
