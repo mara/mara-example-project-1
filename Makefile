@@ -1,7 +1,7 @@
 all:
 	make -j ensure-config ensure-databases
 	make setup-mara
-	make load-olist-data setup-metabase
+	make -j load-olist-data setup-metabase
 
 
 # output coloring & timing
