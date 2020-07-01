@@ -106,3 +106,9 @@ check-for-newer-package-versions:
 
 .check-newer-%:
 	.scripts/mara-app/check-newer.sh packages/$*
+
+
+# remove virtual env
+.cleanup-vitualenv: .check-for-unpushed-package-changes
+	rm -rf .venv
+	rm -rf packages
