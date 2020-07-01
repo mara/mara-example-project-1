@@ -41,7 +41,7 @@ def root_pipeline():
 
     pipeline.add(app.pipelines.generate_artifacts.pipeline, upstreams=['marketing'])
     pipeline.add(app.pipelines.update_frontends.pipeline, upstreams=['generate_artifacts'])
-    pipeline.add(app.pipelines.consistency_checks.pipeline, upstreams=['update_frontends'])
+    pipeline.add(app.pipelines.consistency_checks.pipeline, upstreams=['generate_artifacts'])
 
     return pipeline
 
