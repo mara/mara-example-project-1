@@ -3,6 +3,8 @@ all:
 	make setup-mara
 	make -j load-olist-data setup-metabase setup-mondrian-server
 
+run:
+	make -j run-metabase run-mondrian-server run-flask
 
 # output coloring & timing
 include .scripts/mara-app/init.mk

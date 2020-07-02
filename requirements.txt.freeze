@@ -18,8 +18,8 @@ Mako==1.1.3
 -e git+https://github.com/mara/mara-data-explorer.git@77803fcf07516aae163bb709c9f4b8105896e0bb#egg=mara_data_explorer
 -e git+https://github.com/mara/mara-db.git@4f8a4d113912a3b6c0548d414459b19fe1f7c8c7#egg=mara_db
 -e git+https://github.com/mara/mara-etl-tools.git@55bb4e8729af44bd8ccb88f9cb95dd3eef81ecee#egg=mara_etl_tools
--e git+ssh://git@github.com/martin-loetzsch/mara-metabase.git@6e2386f4ad2e30819fa4b381737ff6e29f8c98f9#egg=mara_metabase
--e git+ssh://git@github.com/mara/mara-mondrian.git@894236fdb32467f6005b98498247b06d7405a331#egg=mara_mondrian
+-e git+ssh://git@github.com/mara/mara-metabase.git@91ed73902c992f51fd88572547c029b186d65267#egg=mara_metabase
+-e git+ssh://git@github.com/mara/mara-mondrian.git@176b12b9511561c28f619251a177e4466a051eb8#egg=mara_mondrian
 -e git+https://github.com/mara/mara-page.git@c499a6c44aaa638c1515c3a857e5f68cad8b84c9#egg=mara_page
 -e git+https://github.com/mara/mara-pipelines.git@ab41e916be81969212f2f0e95a6b0e5794dd800d#egg=mara_pipelines
 -e git+https://github.com/mara/mara-schema.git@3b8c8c2f9b6c6652cbd372637c0f9aa3d6823a13#egg=mara_schema
