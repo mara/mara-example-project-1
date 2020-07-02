@@ -17,6 +17,7 @@ geo_location_entity.add_attribute(
 geo_location_entity.add_attribute(
     name='Zip code',
     description='First 5 digits of the zip code',
+    important_field=True,
     column_name='zip_code_prefix')
 geo_location_entity.add_attribute(
     name='Zip code 1st digit',

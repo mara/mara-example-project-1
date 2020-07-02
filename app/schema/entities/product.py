@@ -16,4 +16,5 @@ product_entity.add_attribute(
     name='Category',
     description='Root category of product',
     column_name='category',
+    important_field=True,
     type=Type.ENUM)
