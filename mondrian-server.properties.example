@@ -8,7 +8,7 @@ databaseUrl=jdbc:postgresql://localhost/example_project_1_dwh?user=root&password
 
 
 # absolute path to mondrian schema
-mondrianSchemaFile=/Users/mloetzsch/Projects/mara/mara-example-project-1/app/mondrian/schema.xml
+mondrianSchemaFile=/path/to/project_folder/mondrian_schema.xml
 
 
 # --- Saiku auth / ACL, see README ---
@@ -22,7 +22,7 @@ saikuPassword =
 
 
 # the local directory where saiku user queries are stored
-saikuStorageDir=/Users/mloetzsch/Projects/mara/mara-example-project-1/data/saiku-queries
+saikuStorageDir=/path/to/project_folder/data/saiku-queries
 
 
 

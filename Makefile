@@ -1,8 +1,10 @@
 all:
 	make -j ensure-config ensure-databases
 	make setup-mara
-	make -j load-olist-data setup-metabase
+	make -j load-olist-data setup-metabase setup-mondrian-server
 
+run:
+	make -j run-metabase run-mondrian-server run-flask
 
 # output coloring & timing
 include .scripts/mara-app/init.mk
@@ -19,13 +21,11 @@ include .scripts/databases.mk
 # metabase setup
 include .scripts/mara-metabase/metabase.mk
 
+# mondrian server setup
+include .scripts/mara-mondrian/mondrian_server.mk
+
 load-olist-data:
 	. .venv/bin/activate; flask olist_ecommerce.load-data
 
-# run saiku and mondrian
-run-mondrian-server:
-	java -Dmondrian-server.properties=./mondrian-server.properties -jar packages/mara-mondrian/mara_mondrian/jetty-runner.jar --port 8080 packages/mara-mondrian/mara_mondrian/mondrian-server.war 2>&1
-
-
 cleanup:
-	make -j .cleanup-vitualenv .cleanup-databases .cleanup-metabase .cleanup-config
+	make -j .cleanup-vitualenv .cleanup-databases .cleanup-metabase .cleanup-mondrian-server .cleanup-config
