@@ -63,7 +63,7 @@ SELECT seller_id,
        seller_items.total_freight_value    AS total_freight_value,
        seller_items.avg_days_of_approval   AS avg_days_of_approval
 FROM ec_tmp.seller
-         LEFT JOIN ec_tmp.zip_code USING (zip_code)
+         LEFT JOIN ec_dim_next.zip_code USING (zip_code_id)
          LEFT JOIN seller_items USING (seller_id)
          LEFT JOIN seller_orders USING (seller_id);
 

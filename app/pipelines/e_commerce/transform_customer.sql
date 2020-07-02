@@ -51,7 +51,7 @@ SELECT customer_id,
        customer_items.revenue_lifetime       AS revenue_lifetime,
        customer_items.total_freight_value    AS total_freight_value
 FROM ec_tmp.customer
-         LEFT JOIN ec_tmp.zip_code USING (zip_code)
+         LEFT JOIN ec_dim_next.zip_code USING (zip_code_id)
          LEFT JOIN customer_items USING (customer_id)
          LEFT JOIN customer_orders USING (customer_id);
 

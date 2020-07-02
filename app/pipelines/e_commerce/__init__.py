@@ -61,12 +61,20 @@ pipeline.add(
     upstreams=["preprocess_seller", "preprocess_customer"])
 
 pipeline.add(
+    Task(id="transform_zip_code",
+         description="",
+         commands=[
+             ExecuteSQL(sql_file_name="transform_zip_code.sql")
+         ]),
+    upstreams=["preprocess_zip_code"])
+
+pipeline.add(
     Task(id="transform_seller",
          description="",
          commands=[
              ExecuteSQL(sql_file_name="transform_seller.sql")
          ]),
-    upstreams=["preprocess_zip_code", "preprocess_order_item"])
+    upstreams=["transform_zip_code", "preprocess_order_item"])
 
 pipeline.add(
     Task(id="transform_order",
@@ -82,7 +90,7 @@ pipeline.add(
          commands=[
              ExecuteSQL(sql_file_name="transform_customer.sql")
          ]),
-    upstreams=["preprocess_zip_code", "preprocess_order_item"])
+    upstreams=["transform_zip_code", "preprocess_order_item"])
 
 pipeline.add(
     Task(id="transform_order_item",
@@ -101,14 +109,6 @@ pipeline.add(
     upstreams=["preprocess_product", "preprocess_order_item"])
 
 pipeline.add(
-    Task(id="transform_zip_code",
-         description="",
-         commands=[
-             ExecuteSQL(sql_file_name="transform_zip_code.sql")
-         ]),
-    upstreams=["preprocess_zip_code"])
-
-pipeline.add(
     Task(id="constrain_tables",
          description="Adds foreign key constrains between the dim tables",
          commands=[
@@ -117,8 +117,7 @@ pipeline.add(
     upstreams=["transform_seller",
                "transform_customer",
                "transform_order_item",
-               "transform_order",
-               "transform_zip_code"])
+               "transform_order"])
 
 pipeline.add_final(
     Task(id="replace_schema",
