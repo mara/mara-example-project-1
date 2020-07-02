@@ -5,11 +5,6 @@ from app.schema.entities.customer import customer_entity
 customer_data_set = DataSet(entity=customer_entity, name='Customers')
 
 customer_data_set.add_simple_metric(
-    name='Days since last order',
-    description='Average number of days after the last order fulfillment by this seller',
-    aggregation=Aggregation.AVERAGE,
-    column_name='days_since_last_order')
-customer_data_set.add_simple_metric(
     name='# Orders',
     description='Number of purchases made by this customer',
     aggregation=Aggregation.SUM,
