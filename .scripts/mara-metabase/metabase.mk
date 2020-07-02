@@ -1,4 +1,4 @@
-# running metabase locally
+# run metabase locally
 
 # set variables unless already set earlier
 metabase-directory ?= .metabase
@@ -17,9 +17,16 @@ $(metabase-directory)/metabase-$(metabase-version).jar:
 migrate-metabase-db: $(metabase-directory)/metabase-$(metabase-version).jar
 	cd $(metabase-directory); MB_DB_CONNECTION_URI=$(metabase-metadata-db-connection-uri) java -jar metabase-$(metabase-version).jar migrate up
 
-setup-metabase: migrate-metabase-db
-	source .venv/bin/activate; flask app.metabase.setup
+setup-metabase: migrate-metabase-db .copy-mara-metabase-scripts
+	source .venv/bin/activate; flask mara_metabase.setup
+
+
+# copy scripts from mara-metabase package to project code
+.copy-mara-metabase-scripts:
+	rsync --archive --recursive --itemize-changes  --delete packages/mara-metabase/.scripts/ .scripts/mara-metabase/
 
 
 .cleanup-metabase:
 	rm -rf metabase-directory
+
+
