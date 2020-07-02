@@ -13,7 +13,7 @@ from mara_app import monkey_patch
 from mara_page import acl
 from mara_page import navigation
 import mara_mondrian
-import app.metabase.config
+import mara_metabase.config
 
 import mara_schema
 import olist_ecommerce
@@ -68,7 +68,7 @@ def navigation_root() -> navigation.NavigationEntry:
     return navigation.NavigationEntry(label='Root', children=[
         mara_pipelines.MARA_NAVIGATION_ENTRIES().get('Pipelines'),
         navigation.NavigationEntry(
-            label='Metabase', uri_fn=lambda: app.metabase.config.external_metabase_url(),
+            label='Metabase', uri_fn=lambda: mara_metabase.config.external_metabase_url(),
             icon='bar-chart', description='Company wide dashboards & analyses'),
         mara_data_explorer.MARA_NAVIGATION_ENTRIES().get('Explore'),
         mara_schema.MARA_NAVIGATION_ENTRIES()['Schema'],

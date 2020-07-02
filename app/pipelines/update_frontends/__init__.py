@@ -13,7 +13,7 @@ from mara_page import html
 import etl_tools.initialize_utils
 from mara_data_explorer.config import data_sets
 from app.pipelines.update_frontends.create_table_for_metabase import create_table_for_metabase
-import app.metabase.metadata
+import mara_metabase.metadata
 
 pipeline = Pipeline(
     id="update_frontends",
@@ -83,5 +83,5 @@ pipeline.add(update_frontend_db)
 pipeline.add(
     Task(id='update_metabase_metadata',
          description='Flushes all field value caches in Metabase and updates metadata',
-         commands=[RunFunction(app.metabase.metadata.update_metadata)]),
+         commands=[RunFunction(mara_metabase.metadata.update_metadata)]),
     upstreams=['update_frontend_db'])
