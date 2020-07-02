@@ -12,8 +12,10 @@ import mara_page.acl
 from mara_app import monkey_patch
 from mara_page import acl
 from mara_page import navigation
+import mara_mondrian.config
 import mara_mondrian
 import mara_metabase.config
+import mara_metabase
 
 import mara_schema
 import olist_ecommerce
@@ -48,7 +50,10 @@ def acl_resources():
                                       mara_db.MARA_ACL_RESOURCES().get('DB Schema'),
                                       mara_schema.MARA_ACL_RESOURCES()['Schema']]),
             acl.AclResource(name='Data',
-                            children=mara_data_explorer.MARA_ACL_RESOURCES().values()),
+                            children=[*mara_data_explorer.MARA_ACL_RESOURCES().values(),
+                                      *mara_metabase.MARA_ACL_RESOURCES().values(),
+                                      *mara_mondrian.MARA_ACL_RESOURCES().values()
+                            ]),
             acl.AclResource(name='Admin',
                             children=[mara_app.MARA_ACL_RESOURCES().get('Configuration'),
                                       mara_acl.MARA_ACL_RESOURCES().get('Acl')])]
@@ -67,9 +72,6 @@ monkey_patch.patch(mara_acl.config.whitelisted_uris)(lambda: ['/mara-app/navigat
 def navigation_root() -> navigation.NavigationEntry:
     return navigation.NavigationEntry(label='Root', children=[
         mara_pipelines.MARA_NAVIGATION_ENTRIES().get('Pipelines'),
-        navigation.NavigationEntry(
-            label='Metabase', uri_fn=lambda: mara_metabase.config.external_metabase_url(),
-            icon='bar-chart', description='Company wide dashboards & analyses'),
         mara_data_explorer.MARA_NAVIGATION_ENTRIES().get('Explore'),
         mara_schema.MARA_NAVIGATION_ENTRIES()['Schema'],
         mara_db.MARA_NAVIGATION_ENTRIES().get('DB Schema'),
