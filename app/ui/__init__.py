@@ -71,11 +71,14 @@ monkey_patch.patch(mara_acl.config.whitelisted_uris)(lambda: ['/mara-app/navigat
 @monkey_patch.patch(mara_app.config.navigation_root)
 def navigation_root() -> navigation.NavigationEntry:
     return navigation.NavigationEntry(label='Root', children=[
-        mara_pipelines.MARA_NAVIGATION_ENTRIES().get('Pipelines'),
-        mara_data_explorer.MARA_NAVIGATION_ENTRIES().get('Explore'),
-        mara_schema.MARA_NAVIGATION_ENTRIES()['Schema'],
-        mara_db.MARA_NAVIGATION_ENTRIES().get('DB Schema'),
+        navigation.NavigationEntry(label='Welcome', icon='home', uri_fn=lambda: '/', description='Welcome !'),
+        *mara_pipelines.MARA_NAVIGATION_ENTRIES().values(),
+        *mara_schema.MARA_NAVIGATION_ENTRIES().values(),
+        *mara_metabase.MARA_NAVIGATION_ENTRIES().values(),
+        *mara_data_explorer.MARA_NAVIGATION_ENTRIES().values(),
+        *mara_mondrian.MARA_NAVIGATION_ENTRIES().values(),
+        *mara_db.MARA_NAVIGATION_ENTRIES().values(),
         navigation.NavigationEntry(
             'Settings', icon='cog', description='ACL & Configuration', rank=100,
-            children=[mara_app.MARA_NAVIGATION_ENTRIES().get('Package Configs'),
-                      mara_acl.MARA_NAVIGATION_ENTRIES().get('Acl')])])
+            children=[*mara_app.MARA_NAVIGATION_ENTRIES().values(),
+                      *mara_acl.MARA_NAVIGATION_ENTRIES().values()])])
