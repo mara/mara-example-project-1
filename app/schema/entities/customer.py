@@ -15,8 +15,15 @@ customer_entity.add_attribute(
     important_field=True)
 
 customer_entity.add_attribute(
-    name='Days since last order',
-    description='Average number of days after the last order fulfillment by this seller',
+    name='Duration since first order',
+    description='The number of days since the first order was placed',
+    type=Type.DURATION,
+    column_name='days_since_first_order',
+    accessible_via_entity_link=False)
+
+customer_entity.add_attribute(
+    name='Duration since last order',
+    description='The number of days since the last order was placed',
     type=Type.DURATION,
     column_name='days_since_last_order',
     accessible_via_entity_link=False)
