@@ -25,6 +25,6 @@ SELECT product_id,
        width_cm            AS width
 FROM ec_data.product
          LEFT JOIN ec_tmp.product_category
-                   ON product.product_category_name = product_category.product_category_portuguese;
+                   ON coalesce(product.product_category_name, 'Unknown') = product_category.product_category_portuguese;
 
 SELECT util.add_index('ec_tmp', 'product', column_names := ARRAY ['product_id']);

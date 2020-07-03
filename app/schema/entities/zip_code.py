@@ -9,7 +9,7 @@ zip_code_entity = Entity(
 )
 
 zip_code_entity.add_attribute(
-    name='Geo-location ID',
+    name='Zip code ID',
     description='Unique identifier of a geo-location entry based on the zip code',
     column_name='zip_code_id',
     type=Type.ID,

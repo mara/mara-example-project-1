@@ -4,7 +4,7 @@ from app.schema.entities.order import order_entity
 
 order_data_set = DataSet(entity=order_entity,name='Orders')
 
-order_data_set.include_attributes(['Customer', 'Geo-location'], ['Zip code', 'City'])
+order_data_set.include_attributes(['Customer', 'Zip code'], ['Zip code', 'City'])
 
 order_data_set.add_simple_metric(
     name='# Order items',

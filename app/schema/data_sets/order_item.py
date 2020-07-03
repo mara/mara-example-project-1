@@ -25,6 +25,6 @@ order_item_data_set.exclude_path(['Seller', ('Order', 'Last order')])
 
 order_item_data_set.include_attributes(['Order', 'Customer', ('Order', 'First order')], ['Purchase date'])
 order_item_data_set.include_attributes(['Order', 'Customer', ('Order', 'Last order')], ['Purchase date'])
-order_item_data_set.include_attributes(['Order', 'Customer', 'Geo-location'], ['Zip code', 'City'])
+order_item_data_set.include_attributes(['Order', 'Customer', 'Zip code'], ['Zip code', 'City'])
 
-order_item_data_set.include_attributes(['Seller', 'Geo-location'], ['Zip code', 'City'])
+order_item_data_set.include_attributes(['Seller', 'Zip code'], ['Zip code', 'City'])
