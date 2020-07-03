@@ -41,7 +41,7 @@ WITH customer_items AS (
 INSERT
 INTO ec_dim_next.customer
 SELECT customer_id,
-       zip_code.zip_code_id                  AS zip_code_fk,
+       zip_code::INTEGER                     AS zip_code_fk,
        customer_orders.first_order_id        AS first_order_fk,
        customer_orders.last_order_id         AS last_order_fk,
 
@@ -51,7 +51,6 @@ SELECT customer_id,
        customer_items.revenue_lifetime       AS revenue_lifetime,
        customer_items.total_freight_value    AS total_freight_value
 FROM ec_tmp.customer
-         LEFT JOIN ec_dim_next.zip_code USING (zip_code_id)
          LEFT JOIN customer_items USING (customer_id)
          LEFT JOIN customer_orders USING (customer_id);
 

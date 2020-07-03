@@ -49,7 +49,7 @@ WITH seller_items AS (
 INSERT
 INTO ec_dim_next.seller
 SELECT seller_id,
-       zip_code.zip_code_id                AS zip_code_fk,
+       zip_code::INTEGER                   AS zip_code_fk,
 
        seller_orders.first_order_id        AS first_order_fk,
        seller_orders.last_order_id         AS last_order_fk,
@@ -63,7 +63,6 @@ SELECT seller_id,
        seller_items.total_freight_value    AS total_freight_value,
        seller_items.avg_days_of_approval   AS avg_days_of_approval
 FROM ec_tmp.seller
-         LEFT JOIN ec_dim_next.zip_code USING (zip_code_id)
          LEFT JOIN seller_items USING (seller_id)
          LEFT JOIN seller_orders USING (seller_id);
 

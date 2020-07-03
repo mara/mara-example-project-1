@@ -32,11 +32,19 @@ pipeline.add(
     upstreams=["preprocess_order"])
 
 pipeline.add(
+    Task(id="preprocess_product_category",
+         description="",
+         commands=[
+             ExecuteSQL(sql_file_name="preprocess_product_category.sql")
+         ]))
+
+pipeline.add(
     Task(id="preprocess_product",
          description="",
          commands=[
              ExecuteSQL(sql_file_name="preprocess_product.sql")
-         ]))
+         ]),
+    upstreams=["preprocess_product_category"])
 
 pipeline.add(
     Task(id="preprocess_seller",
@@ -59,6 +67,15 @@ pipeline.add(
              ExecuteSQL(sql_file_name="preprocess_zip_code.sql")
          ]),
     upstreams=["preprocess_seller", "preprocess_customer"])
+
+pipeline.add(
+    Task(id="transform_product_category",
+         description="",
+         commands=[
+             ExecuteSQL(sql_file_name="transform_product_category.sql")
+         ]),
+    upstreams=["preprocess_product_category"]
+)
 
 pipeline.add(
     Task(id="transform_zip_code",
@@ -106,7 +123,7 @@ pipeline.add(
          commands=[
              ExecuteSQL(sql_file_name="transform_product.sql")
          ]),
-    upstreams=["preprocess_product", "preprocess_order_item"])
+    upstreams=["preprocess_product", "preprocess_order_item", "transform_product_category"])
 
 pipeline.add(
     Task(id="constrain_tables",
@@ -117,7 +134,8 @@ pipeline.add(
     upstreams=["transform_seller",
                "transform_customer",
                "transform_order_item",
-               "transform_order"])
+               "transform_order",
+               "transform_product"])
 
 pipeline.add_final(
     Task(id="replace_schema",

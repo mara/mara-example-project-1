@@ -2,7 +2,7 @@ import mara_schema.config
 from mara_app.monkey_patch import patch
 
 
-# @patch(mara_schema.config.data_sets)
+@patch(mara_schema.config.data_sets)
 def _data_sets():
     from app.schema.data_sets.order import order_data_set
     from app.schema.data_sets.order_item import order_item_data_set
