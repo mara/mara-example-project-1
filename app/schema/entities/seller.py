@@ -13,7 +13,7 @@ seller_entity.link_entity(target_entity=order_entity, fk_column='first_order_fk'
                           prefix='First order')
 seller_entity.link_entity(target_entity=order_entity, fk_column='last_order_fk',
                           prefix='Last order')
-seller_entity.link_entity(target_entity=zip_code_entity, fk_column='zip_code_fk')
+seller_entity.link_entity(target_entity=zip_code_entity, prefix='', fk_column='zip_code_fk')
 
 seller_entity.add_attribute(
     name='Seller ID',

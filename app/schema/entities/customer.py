@@ -43,4 +43,5 @@ customer_entity.link_entity(
 
 customer_entity.link_entity(
     target_entity=zip_code_entity,
+    prefix='',
     fk_column='zip_code_fk')
