@@ -6,40 +6,29 @@ from mara_app.monkey_patch import patch
 @patch(mara_data_explorer.config.data_sets)
 def _data_sets():
     from mara_schema.config import data_sets as mt_data_sets
-    from mara_schema.attribute import Attribute
-
-    default_column_names = {
-        'Orders': ['Order ID', 'Status', 'Purchase date', '# Order items',
-                   'Revenue', 'Total freight value'],
-        'Order items': ['Order item ID', 'Product category', 'Order status', 'Order purchase date',
-                        'Order approved date', 'Order delivered customer date', 'Revenue', 'Freight value'],
-        'Sellers': ['Seller ID', 'Last order purchase date', 'Geo-location city', '# Orders', '# Deliveries',
-                    'Revenue (lifetime)'],
-        'Customers': ['Customer ID', 'Geo-location city', 'Last order purchase date', '# Orders', 'Revenue (lifetime)'],
-        'Products': ['Product ID', 'Category', '# Orders', '# Order items', '# Customers', 'Revenue (all time)',
-                     'Total freight value'],
-        'Marketing funnel': ['MQL ID', 'Closed deal ID', 'Seller ID', '# Orders', '# Order items', '# Customers',
-                             'Revenue (all time)']
-    }
 
     result = []
 
     for data_set in mt_data_sets():
         personal_data_column_names = []
+        default_column_names = []
         for path, attributes in data_set.connected_attributes().items():
             for prefixed_name, attribute in attributes.items():
                 if attribute.personal_data:
                     personal_data_column_names.append(prefixed_name)
-        _data_set = mara_data_explorer.data_set.DataSet(
-            id=data_set.name.replace(' ', '-').lower(), name=data_set.name,
-            database_alias='dwh', database_schema='af_dim',
-            database_table=f'{data_set.entity.table_name}_data_set',
-            personal_data_column_names=personal_data_column_names,
-            default_column_names=default_column_names[data_set.name],
-            use_attributes_table=True
-        )
-        result.append(_data_set)
+                if attribute.important_field:
+                    default_column_names.append(prefixed_name)
 
+        result.append(
+            mara_data_explorer.data_set.DataSet(
+                id=data_set.id(),
+                name=data_set.name,
+                database_alias='dwh',
+                database_schema='data_sets',
+                database_table=data_set.id(),
+                personal_data_column_names=personal_data_column_names,
+                default_column_names=default_column_names,
+                use_attributes_table=True))
     return result
 
 

@@ -20,11 +20,13 @@ order_entity.add_attribute(
     name='Order status',
     description='Reference to the order status (delivered, shipped, etc)',
     column_name='status',
+    important_field=True,
     type=Type.ENUM)
 order_entity.add_attribute(
     name='Purchase date',
     description='The Purchase timestamp',
     column_name='purchase_date',
+    important_field=True,
     type=Type.DATE)
 order_entity.add_attribute(
     name='Approved date',

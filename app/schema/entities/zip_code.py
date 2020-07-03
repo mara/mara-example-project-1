@@ -17,6 +17,7 @@ zip_code_entity.add_attribute(
 zip_code_entity.add_attribute(
     name='Zip code',
     description='First 5 digits of the zip code (Brazil has an 8-digit system)',
+    important_field=True,
     column_name='zip_code')
 zip_code_entity.add_attribute(
     name='Zip code 1st digit',
