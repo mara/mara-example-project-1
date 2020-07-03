@@ -32,9 +32,9 @@ def root_pipeline():
         id='mara_example_project_1',
         description='An example pipeline that integrates the Olist e-commerce and marketing funnel data')
 
-    pipeline.add(app.pipelines.initialize_db.pipeline)
-    pipeline.add(app.pipelines.load_data.load_ecommerce_data.pipeline, upstreams=['initialize_db'])
-    pipeline.add(app.pipelines.load_data.load_marketing_data.pipeline, upstreams=['initialize_db'])
+    pipeline.add_initial(app.pipelines.initialize_db.pipeline)
+    pipeline.add(app.pipelines.load_data.load_ecommerce_data.pipeline)
+    pipeline.add(app.pipelines.load_data.load_marketing_data.pipeline)
     pipeline.add(app.pipelines.e_commerce.pipeline, upstreams=['load_ecommerce_data'])
     pipeline.add(app.pipelines.marketing.pipeline,
                  upstreams=['load_marketing_data', 'e_commerce'])
