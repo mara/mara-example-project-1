@@ -1,10 +1,10 @@
 
-/app/local_setup.py
-/mondrian-server.properties
+/.venv
 /packages
 /data
-/.venv
 /.metabase
+/.mondrian-server
+/app/local_setup.py
 
 *.pyc
 /.idea

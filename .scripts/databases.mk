@@ -8,6 +8,7 @@ metabase-metadata-db := example_project_1_metabase_metadata
 
 databases := dwh-db mara-db olist-db metabase-data-db metabase-metadata-db
 
+mondrian-server-db := $(dwh-db)
 
 ensure-databases: $(addprefix .ensure-database-, $(databases))
 
