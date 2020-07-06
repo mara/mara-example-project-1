@@ -10,7 +10,7 @@ CREATE TABLE m_tmp.deal
     sdr_id                        TEXT NOT NULL,            --Sales Development Representative id
     sr_id                         TEXT NOT NULL,            --Sales Representative
 
-    won_date                      TIMESTAMP WITH TIME ZONE, --Date the deal was closed.
+    deal_date                     TIMESTAMP WITH TIME ZONE, --Date the deal was closed.
     business_segment              TEXT,                     --Lead business segment. Informed on contact.
     lead_type                     TEXT,                     --Lead type. Informed on contact.
     lead_behaviour_profile        TEXT,                     --Lead behaviour profile. SDR identify it on contact
@@ -32,7 +32,7 @@ SELECT nextval('m_tmp.deal_id') AS deal_id,
        sdr_id,
        sr_id,
 
-       won_date,
+       won_date                 AS deal_date,
        business_segment         AS business_segment,
        lead_type                AS lead_type,
        lead_behaviour_profile   AS lead_behaviour_profile,
