@@ -20,7 +20,7 @@ mara-mondrian-scripts-dir := $(dir $(lastword $(MAKEFILE_LIST)))
 
 # run mondrian server
 run-mondrian-server: $(mondrian-server-properties-file)
-	java -Dmondrian-server.properties=$(mondrian-server-properties-file) \
+	java -Dmondrian-server.properties=$(mondrian-server-properties-file) -Dlog4j.logLevel=INFO \
 	   -jar $(mara-mondrian-package-dir)/jetty-runner.jar \
 	   --port 8080 \
 	   $(mara-mondrian-package-dir)/mondrian-server.war 2>&1
