@@ -32,11 +32,19 @@ pipeline.add(
     upstreams=["preprocess_order"])
 
 pipeline.add(
+    Task(id="preprocess_product_category",
+         description="",
+         commands=[
+             ExecuteSQL(sql_file_name="preprocess_product_category.sql")
+         ]))
+
+pipeline.add(
     Task(id="preprocess_product",
          description="",
          commands=[
              ExecuteSQL(sql_file_name="preprocess_product.sql")
-         ]))
+         ]),
+    upstreams=["preprocess_product_category"])
 
 pipeline.add(
     Task(id="preprocess_seller",
@@ -53,12 +61,29 @@ pipeline.add(
          ]))
 
 pipeline.add(
-    Task(id="preprocess_geo_location",
+    Task(id="preprocess_zip_code",
          description="",
          commands=[
-             ExecuteSQL(sql_file_name="preprocess_geo_location.sql")
+             ExecuteSQL(sql_file_name="preprocess_zip_code.sql")
          ]),
     upstreams=["preprocess_seller", "preprocess_customer"])
+
+pipeline.add(
+    Task(id="transform_product_category",
+         description="",
+         commands=[
+             ExecuteSQL(sql_file_name="transform_product_category.sql")
+         ]),
+    upstreams=["preprocess_product_category"]
+)
+
+pipeline.add(
+    Task(id="transform_zip_code",
+         description="",
+         commands=[
+             ExecuteSQL(sql_file_name="transform_zip_code.sql")
+         ]),
+    upstreams=["preprocess_zip_code"])
 
 pipeline.add(
     Task(id="transform_seller",
@@ -66,7 +91,7 @@ pipeline.add(
          commands=[
              ExecuteSQL(sql_file_name="transform_seller.sql")
          ]),
-    upstreams=["preprocess_geo_location", "preprocess_order_item"])
+    upstreams=["transform_zip_code", "preprocess_order_item"])
 
 pipeline.add(
     Task(id="transform_order",
@@ -82,7 +107,7 @@ pipeline.add(
          commands=[
              ExecuteSQL(sql_file_name="transform_customer.sql")
          ]),
-    upstreams=["preprocess_geo_location", "preprocess_order_item"])
+    upstreams=["transform_zip_code", "preprocess_order_item"])
 
 pipeline.add(
     Task(id="transform_order_item",
@@ -98,15 +123,7 @@ pipeline.add(
          commands=[
              ExecuteSQL(sql_file_name="transform_product.sql")
          ]),
-    upstreams=["preprocess_product", "preprocess_order_item"])
-
-pipeline.add(
-    Task(id="transform_geo_location",
-         description="",
-         commands=[
-             ExecuteSQL(sql_file_name="transform_geo_location.sql")
-         ]),
-    upstreams=["preprocess_geo_location"])
+    upstreams=["preprocess_product", "preprocess_order_item", "transform_product_category"])
 
 pipeline.add(
     Task(id="constrain_tables",
@@ -118,7 +135,7 @@ pipeline.add(
                "transform_customer",
                "transform_order_item",
                "transform_order",
-               "transform_geo_location"])
+               "transform_product"])
 
 pipeline.add_final(
     Task(id="replace_schema",

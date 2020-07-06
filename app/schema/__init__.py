@@ -4,18 +4,18 @@ from mara_app.monkey_patch import patch
 
 @patch(mara_schema.config.data_sets)
 def _data_sets():
-    from app.schema.data_sets.order import order_data_set
-    from app.schema.data_sets.order_item import order_item_data_set
-    from app.schema.data_sets.seller import seller_data_set
-    from app.schema.data_sets.customer import customer_data_set
-    from app.schema.data_sets.product import product_data_set
+    from app.schema.data_sets.orders import orders_data_set
+    from app.schema.data_sets.order_items import order_items_data_set
+    from app.schema.data_sets.sellers import sellers_data_set
+    from app.schema.data_sets.customers import customers_data_set
+    from app.schema.data_sets.products import products_data_set
     from app.schema.data_sets.marketing_funnel import marketing_funnel_data_set
 
     return [
-        order_data_set,
-        order_item_data_set,
-        seller_data_set,
-        customer_data_set,
-        product_data_set,
+        orders_data_set,
+        order_items_data_set,
+        sellers_data_set,
+        customers_data_set,
+        products_data_set,
         marketing_funnel_data_set
     ]
