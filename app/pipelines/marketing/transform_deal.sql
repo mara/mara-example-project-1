@@ -19,14 +19,14 @@ CREATE TABLE m_dim_next.closed_deal
   business_type                 m_dim_next.BUSINESS_TYPE          NOT NULL,             --Type of business (reseller/manufacturer etc.)
 
   declared_product_catalog_size DOUBLE PRECISION,                                       --Lead declared catalog size. Informed on contact.
-  declared_monthly_revenue      DOUBLE PRECISION,                                       --Lead declared estimated monthly revenue. Informed on contact.
+  declared_monthly_revenue      DOUBLE PRECISION                                       --Lead declared estimated monthly revenue. Informed on contact.
 
-  number_of_orders              INTEGER,
-  number_of_order_items         INTEGER,
-  number_of_deliveries          INTEGER,
-  number_of_customers           INTEGER,
-  revenue_lifetime              DOUBLE PRECISION,
-  total_freight_value           DOUBLE PRECISION
+--   number_of_orders              INTEGER,
+--   number_of_order_items         INTEGER,
+--   number_of_deliveries          INTEGER,
+--   number_of_customers           INTEGER,
+--   revenue_lifetime              DOUBLE PRECISION,
+--   total_freight_value           DOUBLE PRECISION
 );
 
 INSERT INTO m_dim_next.closed_deal
@@ -65,21 +65,21 @@ SELECT closed_deal_id                                           AS closed_deal_i
                 'Unknown') :: m_dim_next.BUSINESS_TYPE          AS business_type,
 
        coalesce(declared_product_catalog_size, 0)               AS declared_product_catalog_size,
-       coalesce(declared_monthly_revenue, 0)                    AS declared_monthly_revenue,
+       coalesce(declared_monthly_revenue, 0)                    AS declared_monthly_revenue
 
-       seller.number_of_orders,
-       seller.number_of_order_items,
-       seller.number_of_deliveries,
-       seller.number_of_customers,
-       seller.revenue_lifetime,
-       seller.total_freight_value
+--        seller.number_of_orders,
+--        seller.number_of_order_items,
+--        seller.number_of_deliveries,
+--        seller.number_of_customers,
+--        seller.revenue_lifetime,
+--        seller.total_freight_value
 FROM m_tmp.closed_deal
      LEFT JOIN ec_dim.seller using (seller_id);
 
 SELECT util.add_index('m_dim_next', 'closed_deal',
-                      column_names := ARRAY ['closed_deal_id', 'marketing_qualified_lead_fk', 'seller_fk']);
+                      column_names := ARRAY ['marketing_qualified_lead_fk', 'seller_fk']);
 
-CREATE OR REPLACE FUNCTION m_tmp.constrain_closed_deal()
+CREATE OR REPLACE FUNCTION m_tmp.constrain_deal()
   RETURNS VOID AS
 $$
 SELECT util.add_fk('m_dim_next', 'closed_deal', 'm_dim_next', 'marketing_qualified_lead');

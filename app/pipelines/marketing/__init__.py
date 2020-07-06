@@ -27,7 +27,7 @@ pipeline.add(
     Task(id="preprocess_closed_deal",
          description="",
          commands=[
-             ExecuteSQL(sql_file_name="preprocess_closed_deal.sql")
+             ExecuteSQL(sql_file_name="preprocess_deal.sql")
          ]))
 
 pipeline.add(
@@ -39,10 +39,10 @@ pipeline.add(
     upstreams=["preprocess_marketing_qualified_lead", "preprocess_closed_deal"])
 
 pipeline.add(
-    Task(id="transform_closed_deal",
+    Task(id="transform_deal",
          description="",
          commands=[
-             ExecuteSQL(sql_file_name="transform_closed_deal.sql", echo_queries=False)
+             ExecuteSQL(sql_file_name="transform_deal.sql", echo_queries=False)
          ]),
     upstreams=["transform_smaller_dimensions"])
 
@@ -55,20 +55,12 @@ pipeline.add(
     upstreams=["transform_smaller_dimensions"])
 
 pipeline.add(
-    Task(id="transform_marketing_funnel",
-         description="",
-         commands=[
-             ExecuteSQL(sql_file_name="transform_marketing_funnel.sql")
-         ]),
-    upstreams=["transform_marketing_qualified_lead", "transform_closed_deal"])
-
-pipeline.add(
     Task(id="constrain_tables",
          description="Adds foreign key constrains between the dim tables",
          commands=[
              ExecuteSQL(sql_file_name="constrain_tables.sql", echo_queries=False)
          ]),
-    upstreams=["transform_marketing_funnel"])
+    upstreams=["transform_marketing_qualified_lead", "transform_deal"])
 
 pipeline.add_final(
     Task(id="replace_schema",

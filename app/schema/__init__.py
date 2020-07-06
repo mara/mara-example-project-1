@@ -9,7 +9,7 @@ def _data_sets():
     from app.schema.data_sets.sellers import sellers_data_set
     from app.schema.data_sets.customers import customers_data_set
     from app.schema.data_sets.products import products_data_set
-    from app.schema.data_sets.marketing_funnel import marketing_funnel_data_set
+    from app.schema.data_sets.deal import deals_data_set
 
     return [
         orders_data_set,
@@ -17,5 +17,5 @@ def _data_sets():
         sellers_data_set,
         customers_data_set,
         products_data_set,
-        marketing_funnel_data_set
+        deals_data_set
     ]

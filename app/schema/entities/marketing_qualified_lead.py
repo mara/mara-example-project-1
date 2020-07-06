@@ -15,6 +15,12 @@ marketing_qualified_lead_entity.add_attribute(
     high_cardinality=True)
 
 marketing_qualified_lead_entity.add_attribute(
+    name='Is closed deal',
+    description='If the qualified lead was turned into a closed deal',
+    column_name='is_closed_deal',
+    type=Type.ENUM)
+
+marketing_qualified_lead_entity.add_attribute(
     name='First contact date',
     description='Date of the first contact solicitation',
     column_name='first_contact_date',
