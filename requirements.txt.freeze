@@ -19,10 +19,10 @@ Mako==1.1.3
 -e git+https://github.com/mara/mara-acl.git@751066101c1cac484edd2984fd0eace283f6332d#egg=mara_acl
 -e git+https://github.com/mara/mara-app.git@c4ec0fa40644f569b5a898d5e7c566dad466fdfb#egg=mara_app
 -e git+https://github.com/mara/mara-data-explorer.git@77803fcf07516aae163bb709c9f4b8105896e0bb#egg=mara_data_explorer
--e git+https://github.com/mara/mara-db.git@88ff6db19b5e290811aae9d618aa15a2a9aebc68#egg=mara_db
+-e git+https://github.com/mara/mara-db.git@817bf658e918bf8dfd0c34236404eada5f0e28fd#egg=mara_db
 -e git+https://github.com/mara/mara-etl-tools.git@55bb4e8729af44bd8ccb88f9cb95dd3eef81ecee#egg=mara_etl_tools
--e git+ssh://git@github.com/mara/mara-metabase.git@4183a79ddcb58c15068595ad7877fbe2e7e03542#egg=mara_metabase
--e git+ssh://git@github.com/mara/mara-mondrian.git@5a4ed3866cb00f500baeb81a25d2e3f8ff2b7acb#egg=mara_mondrian
+-e git+ssh://git@github.com/mara/mara-metabase.git@6753d7b11eb897e0a4c3bbde783188b67cd3d41e#egg=mara_metabase
+-e git+ssh://git@github.com/mara/mara-mondrian.git@f97f32f50754a2143898cba3cc2f23ea6c2bab21#egg=mara_mondrian
 -e git+https://github.com/mara/mara-page.git@c499a6c44aaa638c1515c3a857e5f68cad8b84c9#egg=mara_page
 -e git+https://github.com/mara/mara-pipelines.git@ab41e916be81969212f2f0e95a6b0e5794dd800d#egg=mara_pipelines
 -e git+https://github.com/mara/mara-schema.git@3b8c8c2f9b6c6652cbd372637c0f9aa3d6823a13#egg=mara_schema

@@ -1,7 +1,7 @@
 # mara
 -e git+https://github.com/mara/mara-app.git@2.2.0#egg=mara-app
 -e git+https://github.com/mara/mara-acl.git@2.0.0#egg=mara-acl
--e git+https://github.com/mara/mara-db.git@4.6.0#egg=mara-db
+-e git+https://github.com/mara/mara-db.git@4.6.1#egg=mara-db
 -e git+https://github.com/mara/mara-page.git@1.5.1#egg=mara-page
 
 -e git+https://github.com/mara/mara-pipelines.git@3.0.0#egg=mara-pipelines
