@@ -33,6 +33,7 @@ deal_entity.add_attribute(
     name='Deal date',
     description='The date when the marketing qualified lead was closed and became a seller',
     column_name='deal_date',
+    important_field=True,
     type=Type.DATE)
 
 deal_entity.add_attribute(
@@ -41,6 +42,7 @@ deal_entity.add_attribute(
                 '"car_accessories". Provided by the lead on the sign up at a landing page or the first contact '
                 'with a Sales Development Representative',
     column_name='business_segment',
+    important_field=True,
     type=Type.ENUM)
 
 deal_entity.add_attribute(
@@ -49,6 +51,7 @@ deal_entity.add_attribute(
                 ' "online_medium". Provided by the lead on the sign up at a landing page or the first contact '
                 'with a Sales Development Representative',
     column_name='lead_type',
+    important_field=True,
     type=Type.ENUM)
 
 deal_entity.add_attribute(
@@ -57,6 +60,7 @@ deal_entity.add_attribute(
                 '(https://en.wikipedia.org/wiki/DISC_assessment). '
                 'Identified by the Sales Development Representative on the first contact with the lead',
     column_name='lead_behaviour_profile',
+    important_field=True,
     type=Type.ENUM)
 
 deal_entity.add_attribute(

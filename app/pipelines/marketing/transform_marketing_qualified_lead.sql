@@ -2,12 +2,12 @@ DROP TABLE IF EXISTS m_dim_next.marketing_qualified_lead CASCADE;
 CREATE TABLE m_dim_next.marketing_qualified_lead
 (
 
-    marketing_qualified_lead_id TEXT                      NOT NULL PRIMARY KEY, --Marketing Qualified Lead id
-    is_closed_deal              m_dim_next.IS_CLOSED_DEAL NOT NULL,
+    marketing_qualified_lead_id TEXT                           NOT NULL PRIMARY KEY, --Marketing Qualified Lead id
+    is_closed_deal              m_dim_next.IS_CLOSED_DEAL      NOT NULL,
 
-    first_contact_date          TIMESTAMP WITH TIME ZONE  NOT NULL,             --Date of the first contact solicitation.
-    landing_page_id             m_dim_next.LANDING_PAGE   NOT NULL,             --Landing page id where the lead was acquired
-    origin                      m_dim_next.ORIGIN         NOT NULL              --Type of media where the lead was acquired
+    first_contact_date          TIMESTAMP WITH TIME ZONE       NOT NULL,             --Date of the first contact solicitation.
+    landing_page_id             m_dim_next.LANDING_PAGE        NOT NULL,             --Landing page id where the lead was acquired
+    advertising_channel         m_dim_next.ADVERTISING_CHANNEL NOT NULL              --Type of media where the lead was acquired
 
 );
 
@@ -20,7 +20,7 @@ SELECT mql.marketing_qualified_lead_id                                AS marketi
 
        first_contact_date                                             AS first_contact_date,
        landing_page_id :: m_dim_next.LANDING_PAGE                     AS landing_page_id,
-       origin :: m_dim_next.ORIGIN                                    AS origin
+       advertising_channel :: m_dim_next.ADVERTISING_CHANNEL          AS advertising_channel
 FROM m_tmp.marketing_qualified_lead mql
          LEFT JOIN m_tmp.deal ON mql.marketing_qualified_lead_id = deal.marketing_qualified_lead_id
 

@@ -1,8 +1,8 @@
 SELECT util.create_enum('m_dim_next.LANDING_PAGE',
                         (SELECT array_agg(DISTINCT landing_page_id) FROM m_tmp.marketing_qualified_lead));
 
-SELECT util.create_enum('m_dim_next.ORIGIN',
-                        (SELECT array_agg(DISTINCT origin) FROM m_tmp.marketing_qualified_lead));
+SELECT util.create_enum('m_dim_next.ADVERTISING_CHANNEL',
+                        (SELECT array_agg(DISTINCT advertising_channel) FROM m_tmp.marketing_qualified_lead));
 
 SELECT util.create_enum('m_dim_next.BUSINESS_SEGMENT',
                         (SELECT array_agg(DISTINCT coalesce(business_segment, 'Unknown')) FROM m_tmp.deal));
