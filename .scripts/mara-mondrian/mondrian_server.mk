@@ -29,5 +29,5 @@ mondrian-server-properties-config:
 .copy-mara-mondrian-scripts:
 	rsync --archive --recursive --itemize-changes  --delete packages/mara-mondrian/.scripts/ .scripts/mara-mondrian/
 
-.cleanup-mondrian:
+.cleanup-mondrian-server:
 	rm -f mondrian-server.properties
