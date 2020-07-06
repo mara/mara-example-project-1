@@ -5,7 +5,7 @@ from mara_pipelines.pipelines import Pipeline, Task
 
 pipeline = Pipeline(
     id="marketing",
-    description="Builds the marketing-funnel cube based on Olist sellers' marketing funnel and e-commerce data",
+    description="Builds the Leads cube based on marketing and e-commerce data",
     base_path=pathlib.Path(__file__).parent,
     labels={"Schema": "m_dim"})
 
@@ -17,17 +17,10 @@ pipeline.add_initial(
          ]))
 
 pipeline.add(
-    Task(id="preprocess_marketing_qualified_lead",
-         description="Pre-process the marketing qualified leads that are eligible to sell their products at Olist",
+    Task(id="preprocess_lead",
+         description="Preprocess the marketing leads",
          commands=[
-             ExecuteSQL(sql_file_name="preprocess_marketing_qualified_lead.sql")
-         ]))
-
-pipeline.add(
-    Task(id="preprocess_closed_deal",
-         description="",
-         commands=[
-             ExecuteSQL(sql_file_name="preprocess_deal.sql")
+             ExecuteSQL(sql_file_name="preprocess_lead.sql")
          ]))
 
 pipeline.add(
@@ -36,21 +29,13 @@ pipeline.add(
          commands=[
              ExecuteSQL(sql_file_name="transform_smaller_dimensions.sql")
          ]),
-    upstreams=["preprocess_marketing_qualified_lead", "preprocess_closed_deal"])
+    upstreams=["preprocess_lead"])
 
 pipeline.add(
-    Task(id="transform_deal",
+    Task(id="transform_lead",
          description="",
          commands=[
-             ExecuteSQL(sql_file_name="transform_deal.sql", echo_queries=False)
-         ]),
-    upstreams=["transform_smaller_dimensions"])
-
-pipeline.add(
-    Task(id="transform_marketing_qualified_lead",
-         description="",
-         commands=[
-             ExecuteSQL(sql_file_name="transform_marketing_qualified_lead.sql", echo_queries=False)
+             ExecuteSQL(sql_file_name="transform_lead.sql", echo_queries=False)
          ]),
     upstreams=["transform_smaller_dimensions"])
 
@@ -60,7 +45,7 @@ pipeline.add(
          commands=[
              ExecuteSQL(sql_file_name="constrain_tables.sql", echo_queries=False)
          ]),
-    upstreams=["transform_marketing_qualified_lead", "transform_deal"])
+    upstreams=["transform_lead"])
 
 pipeline.add_final(
     Task(id="replace_schema",

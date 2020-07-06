@@ -1,1 +1,1 @@
-SELECT m_tmp.constrain_deal();
+SELECT m_tmp.constrain_lead();

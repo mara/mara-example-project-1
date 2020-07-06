@@ -20,22 +20,6 @@ zip_code_entity.add_attribute(
     important_field=True,
     column_name='zip_code')
 zip_code_entity.add_attribute(
-    name='Zip code 1st digit',
-    description='First digit of the zip code',
-    column_name='zip_code_digit_1')
-zip_code_entity.add_attribute(
-    name='Zip code 2nd digit',
-    description='First 2 digits of the zip code',
-    column_name='zip_code_digit_2')
-zip_code_entity.add_attribute(
-    name='Zip code 3rd digit',
-    description='First 3 digits of the zip code',
-    column_name='zip_code_digit_3')
-zip_code_entity.add_attribute(
-    name='Zip code 4th digit',
-    description='First 4 digits of the zip code',
-    column_name='zip_code_digit_4')
-zip_code_entity.add_attribute(
     name='Latitude',
     description='Latitude coordinate',
     column_name='latitude',

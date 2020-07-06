@@ -12,7 +12,9 @@ product_entity.add_attribute(
     column_name='product_id',
     type=Type.ID,
     high_cardinality=True)
-
-from .product_category import product_category_entity
-
-product_entity.link_entity(target_entity=product_category_entity)
+product_entity.add_attribute(
+    name='Product category',
+    description='The category name describing the group of products (e.g. "health_beuty" or "computers_accessories',
+    column_name='product_category',
+    important_field=True,
+    type=Type.ENUM)
