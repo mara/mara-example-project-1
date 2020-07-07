@@ -50,4 +50,4 @@ $(mondrian-server-properties-file): $(mondrian-server-directory)
 	rsync --archive --recursive --itemize-changes  --delete $(mara-mondrian-package-dir)/.scripts/ $(mara-mondrian-scripts-dir)
 
 .cleanup-mondrian-server:
-	rm -rvf $(mondrian-server-directory)
+	rm -rf $(mondrian-server-directory)
