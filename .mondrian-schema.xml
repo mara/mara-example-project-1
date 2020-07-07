@@ -17,7 +17,7 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Payment date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="payment_date_fk">
+    <Dimension name="Payment date" type="TimeDimension" description="The date when the customer's payment was approved by the seller" foreignKey="payment_date_fk">
       <Hierarchy allMemberName="All payment dates" hasAll="true" name="By month">
         <Table schema="time" name="day"/>
         <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
@@ -78,7 +78,7 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Customer first order payment date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="customer_first_order_payment_date_fk">
+    <Dimension name="Customer first order payment date" type="TimeDimension" description="The date when the customer's payment was approved by the seller" foreignKey="customer_first_order_payment_date_fk">
       <Hierarchy allMemberName="All customer first order payment dates" hasAll="true" name="By month">
         <Table schema="time" name="day"/>
         <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
@@ -163,7 +163,7 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Seller first order payment date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="seller_first_order_payment_date_fk">
+    <Dimension name="Seller first order payment date" type="TimeDimension" description="The date when the customer's payment was approved by the seller" foreignKey="seller_first_order_payment_date_fk">
       <Hierarchy allMemberName="All seller first order payment dates" hasAll="true" name="By month">
         <Table schema="time" name="day"/>
         <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
@@ -224,7 +224,7 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Seller first order customer first order payment date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="seller_first_order_customer_first_order_payment_date_fk">
+    <Dimension name="Seller first order customer first order payment date" type="TimeDimension" description="The date when the customer's payment was approved by the seller" foreignKey="seller_first_order_customer_first_order_payment_date_fk">
       <Hierarchy allMemberName="All seller first order customer first order payment dates" hasAll="true" name="By month">
         <Table schema="time" name="day"/>
         <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
@@ -303,7 +303,7 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Seller last order payment date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="seller_last_order_payment_date_fk">
+    <Dimension name="Seller last order payment date" type="TimeDimension" description="The date when the customer's payment was approved by the seller" foreignKey="seller_last_order_payment_date_fk">
       <Hierarchy allMemberName="All seller last order payment dates" hasAll="true" name="By month">
         <Table schema="time" name="day"/>
         <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
@@ -364,7 +364,7 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Seller last order customer first order payment date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="seller_last_order_customer_first_order_payment_date_fk">
+    <Dimension name="Seller last order customer first order payment date" type="TimeDimension" description="The date when the customer's payment was approved by the seller" foreignKey="seller_last_order_customer_first_order_payment_date_fk">
       <Hierarchy allMemberName="All seller last order customer first order payment dates" hasAll="true" name="By month">
         <Table schema="time" name="day"/>
         <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
@@ -476,7 +476,7 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="First order payment date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="first_order_payment_date_fk">
+    <Dimension name="First order payment date" type="TimeDimension" description="The date when the customer's payment was approved by the seller" foreignKey="first_order_payment_date_fk">
       <Hierarchy allMemberName="All first order payment dates" hasAll="true" name="By month">
         <Table schema="time" name="day"/>
         <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
@@ -537,7 +537,7 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="First order customer first order payment date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="first_order_customer_first_order_payment_date_fk">
+    <Dimension name="First order customer first order payment date" type="TimeDimension" description="The date when the customer's payment was approved by the seller" foreignKey="first_order_customer_first_order_payment_date_fk">
       <Hierarchy allMemberName="All first order customer first order payment dates" hasAll="true" name="By month">
         <Table schema="time" name="day"/>
         <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
@@ -616,7 +616,7 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Last order payment date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="last_order_payment_date_fk">
+    <Dimension name="Last order payment date" type="TimeDimension" description="The date when the customer's payment was approved by the seller" foreignKey="last_order_payment_date_fk">
       <Hierarchy allMemberName="All last order payment dates" hasAll="true" name="By month">
         <Table schema="time" name="day"/>
         <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
@@ -677,7 +677,7 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Last order customer first order payment date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="last_order_customer_first_order_payment_date_fk">
+    <Dimension name="Last order customer first order payment date" type="TimeDimension" description="The date when the customer's payment was approved by the seller" foreignKey="last_order_customer_first_order_payment_date_fk">
       <Hierarchy allMemberName="All last order customer first order payment dates" hasAll="true" name="By month">
         <Table schema="time" name="day"/>
         <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
@@ -820,7 +820,7 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="First order payment date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="first_order_payment_date_fk">
+    <Dimension name="First order payment date" type="TimeDimension" description="The date when the customer's payment was approved by the seller" foreignKey="first_order_payment_date_fk">
       <Hierarchy allMemberName="All first order payment dates" hasAll="true" name="By month">
         <Table schema="time" name="day"/>
         <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
@@ -1019,7 +1019,7 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Seller first order payment date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="seller_first_order_payment_date_fk">
+    <Dimension name="Seller first order payment date" type="TimeDimension" description="The date when the customer's payment was approved by the seller" foreignKey="seller_first_order_payment_date_fk">
       <Hierarchy allMemberName="All seller first order payment dates" hasAll="true" name="By month">
         <Table schema="time" name="day"/>
         <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
@@ -1080,7 +1080,7 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Seller first order customer first order payment date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="seller_first_order_customer_first_order_payment_date_fk">
+    <Dimension name="Seller first order customer first order payment date" type="TimeDimension" description="The date when the customer's payment was approved by the seller" foreignKey="seller_first_order_customer_first_order_payment_date_fk">
       <Hierarchy allMemberName="All seller first order customer first order payment dates" hasAll="true" name="By month">
         <Table schema="time" name="day"/>
         <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
@@ -1159,7 +1159,7 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Seller last order payment date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="seller_last_order_payment_date_fk">
+    <Dimension name="Seller last order payment date" type="TimeDimension" description="The date when the customer's payment was approved by the seller" foreignKey="seller_last_order_payment_date_fk">
       <Hierarchy allMemberName="All seller last order payment dates" hasAll="true" name="By month">
         <Table schema="time" name="day"/>
         <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
@@ -1220,7 +1220,7 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Seller last order customer first order payment date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="seller_last_order_customer_first_order_payment_date_fk">
+    <Dimension name="Seller last order customer first order payment date" type="TimeDimension" description="The date when the customer's payment was approved by the seller" foreignKey="seller_last_order_customer_first_order_payment_date_fk">
       <Hierarchy allMemberName="All seller last order customer first order payment dates" hasAll="true" name="By month">
         <Table schema="time" name="day"/>
         <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>

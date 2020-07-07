@@ -8,7 +8,7 @@ CREATE TABLE ec_tmp.order
     status                        TEXT,                     --Reference to the order status (delivered, shipped, etc).
 
     order_date                    TIMESTAMP WITH TIME ZONE, --Shows the purchase timestamp.
-    payment_date                  TIMESTAMP WITH TIME ZONE, --Shows the payment approval timestamp.
+    payment_approval_date         TIMESTAMP WITH TIME ZONE, --Shows the payment approval timestamp.
     delivery_date                 TIMESTAMP WITH TIME ZONE, --Shows the actual order delivery date to the customer.
 
     payment_approval_time_in_days INTEGER,                  -- date-diff of order_date, order_approved_at
@@ -22,7 +22,7 @@ SELECT order_id,
        order_status                               AS status,
 
        order_purchase_timestamp                   AS order_date,
-       order_approved_at                          AS payment_date,
+       order_approved_at                          AS payment_approval_date,
        order_delivered_customer_date              AS delivery_date,
        DATE_PART('day', order_approved_at -
                         order_purchase_timestamp) AS payment_approval_time_in_days,

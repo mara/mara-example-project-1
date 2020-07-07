@@ -12,7 +12,7 @@ CREATE TABLE ec_dim_next.order
     status                ec_dim_next.STATUS,        --Reference to the order status (delivered, shipped, etc).
 
     order_date            TIMESTAMP WITH TIME ZONE,  --Shows the purchase timestamp.
-    payment_date          TIMESTAMP WITH TIME ZONE,  --Shows the payment approval timestamp.
+    payment_approval_date TIMESTAMP WITH TIME ZONE,  --Shows the payment approval timestamp.
     delivery_date         TIMESTAMP WITH TIME ZONE,  --Shows the actual order delivery date to the customer.
 
     delivery_time_in_days INTEGER,                   -- date-diff of order_date, delivery_date
@@ -24,8 +24,8 @@ CREATE TABLE ec_dim_next.order
 
 WITH items AS (
     SELECT order_id,
-           count(*)           AS number_of_items,
-           sum(product_revenue)       AS product_revenue,
+           count(*)              AS number_of_items,
+           sum(product_revenue)  AS product_revenue,
            sum(shipping_revenue) AS shipping_revenue
     FROM ec_tmp.order_item
     GROUP BY order_id
@@ -39,7 +39,7 @@ SELECT order_id,
        status::ec_dim_next.STATUS AS status,
 
        order_date,
-       payment_date,
+       payment_approval_date,
        delivery_date,
        delivery_time_in_days,
 

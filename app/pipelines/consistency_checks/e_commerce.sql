@@ -29,8 +29,8 @@ SELECT util.assert_equal(
                'SELECT count(*) FROM ec_dim.order_item');
 
 SELECT util.assert_not_found(
-               'There should not be any orders with order_date greater than payment_date',
-               'select * from ec_dim."order" where order_date::DATE > payment_date::DATE;');
+               'There should not be any orders with order_date greater than payment_approval_date',
+               'select * from ec_dim."order" where order_date::DATE > payment_approval_date::DATE;');
 
 SELECT util.assert_almost_equal(
                'The total amount of lifetime revenue should be equal among customer and order-item dim tables',
