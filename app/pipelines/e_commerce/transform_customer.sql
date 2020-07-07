@@ -19,8 +19,8 @@ WITH customer_items AS (
     SELECT customer_id,
            count(*)                 AS number_of_items,
            count(DISTINCT order_id) AS number_of_orders,
-           sum(revenue)             AS revenue_lifetime,
-           sum(freight_value)       AS total_freight_value
+           sum(product_revenue)     AS revenue_lifetime,
+           sum(shipping_revenue)    AS total_freight_value
     FROM ec_tmp.order_item
     GROUP BY customer_id
 )
@@ -28,15 +28,15 @@ WITH customer_items AS (
     SELECT DISTINCT order_item.customer_id,
                     first_value(order_id)
                     OVER (PARTITION BY order_item.customer_id
-                        ORDER BY "order".purchase_date ASC)                  AS first_order_id,
+                        ORDER BY "order".order_date ASC)                     AS first_order_id,
                     first_value(order_id)
                     OVER (PARTITION BY order_item.customer_id
-                        ORDER BY "order".purchase_date DESC)                 AS last_order_id,
+                        ORDER BY "order".order_date DESC)                    AS last_order_id,
                     now() :: DATE
-                        - MIN("order".purchase_date)
+                        - MIN("order".order_date)
                           OVER (PARTITION BY order_item.customer_id) :: DATE AS days_since_first_order,
                     now() :: DATE
-                        - MAX("order".purchase_date)
+                        - MAX("order".order_date)
                           OVER (PARTITION BY order_item.customer_id) :: DATE AS days_since_last_order
     FROM ec_tmp.order_item
              LEFT JOIN ec_tmp.order USING (order_id)

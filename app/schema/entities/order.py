@@ -14,7 +14,7 @@ order_entity.add_attribute(
     high_cardinality=True)
 order_entity.add_attribute(
     name='Order status',
-    description='The current status of the order (delivered, shipped, etc)',
+    description='The current status of the order (created, approved, shipped, etc)',
     column_name='status',
     important_field=True,
     accessible_via_entity_link=False,
@@ -22,30 +22,26 @@ order_entity.add_attribute(
 order_entity.add_attribute(
     name='Order date',
     description='The date when the order was placed (stored in the backend)',
-    column_name='purchase_date',
+    column_name='order_date',
     important_field=True,
     type=Type.DATE)
 order_entity.add_attribute(
-    name='Approval date',
+    name='Payment date',
     description='The date when the customer\'s payment was approved',
-    column_name='approved_date',
-    type=Type.DATE)
-order_entity.add_attribute(
-    name='Shipping date',
-    description='The date when the order was shipped, i.e., handed to the logistic partner',
-    column_name='delivered_carrier_date',
+    column_name='payment_date',
     type=Type.DATE)
 order_entity.add_attribute(
     name='Delivery date',
     description='The date when the order was delivered to the customer',
-    column_name='delivered_customer_date',
+    column_name='delivery_date',
     type=Type.DATE)
 order_entity.add_attribute(
-    name='Estimated delivery date',
-    description='The estimated delivery date communicated to the customer at the time of order placement',
-    column_name='estimated_delivery_date',
-    type=Type.DATE)
+    name='Delivery time in days',
+    description='The number of days from placing the order to delivery to the customer',
+    column_name='delivery_time_in_days',
+    type=Type.DURATION)
 
 from .customer import customer_entity
 
-order_entity.link_entity(target_entity=customer_entity, fk_column='customer_fk', prefix='Customer')
+order_entity.link_entity(target_entity=customer_entity,
+                         description='The customer who placed the order')

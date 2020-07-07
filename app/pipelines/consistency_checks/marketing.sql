@@ -11,7 +11,7 @@ SELECT util.assert_almost_equal(
                'The total amount of lifetime revenue should be equal among order_item and lead dim tables',
                0.001,
                'SELECT sum(revenue_lifetime) FROM m_dim.lead',
-               'SELECT sum(revenue) ' ||
+               'SELECT sum(product_revenue) ' ||
                'FROM ec_dim.order_item ' ||
                'INNER JOIN m_dim.lead USING (seller_fk)'
            );

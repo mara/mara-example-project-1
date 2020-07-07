@@ -8,20 +8,20 @@ DROP TABLE IF EXISTS ec_dim_next.product CASCADE;
 
 CREATE TABLE ec_dim_next.product
 (
-    product_id            TEXT NOT NULL PRIMARY KEY,    --unique product identifier
+    product_id                TEXT NOT NULL PRIMARY KEY,    --unique product identifier
 
-    product_category      ec_dim_next.PRODUCT_CATEGORY, --root category of product, in Portuguese.
+    product_category          ec_dim_next.PRODUCT_CATEGORY, --root category of product, in Portuguese.
 
-    number_of_photos      INTEGER,                      --number of product published photos
-    weight                INTEGER,                      --product weight measured in grams.
-    length                INTEGER,                      --product length measured in centimeters.
-    height                INTEGER,                      --product height measured in centimeters.
-    width                 INTEGER,                      --product width measured in centimeters.
+    number_of_photos          INTEGER,                      --number of product published photos
+    weight                    INTEGER,                      --product weight measured in grams.
+    length                    INTEGER,                      --product length measured in centimeters.
+    height                    INTEGER,                      --product height measured in centimeters.
+    width                     INTEGER,                      --product width measured in centimeters.
 
-    number_of_order_items INTEGER,
-    revenue_all_time      DOUBLE PRECISION,
-    total_freight_value   DOUBLE PRECISION,
-    avg_days_of_delivery  DOUBLE PRECISION
+    number_of_order_items     INTEGER,
+    revenue_all_time          DOUBLE PRECISION,
+    total_freight_value       DOUBLE PRECISION,
+    avg_delivery_time_in_days DOUBLE PRECISION
 );
 
 WITH product_items AS (
@@ -29,9 +29,9 @@ WITH product_items AS (
            count(*)                               AS number_of_items,
            count(DISTINCT order_item.order_id)    AS number_of_orders,
            count(DISTINCT order_item.customer_id) AS number_of_customers,
-           sum(revenue)                           AS revenue_all_time,
-           sum(freight_value)                     AS freight_value_all_time,
-           avg("order".days_of_delivery)          AS avg_days_of_delivery
+           sum(product_revenue)                   AS revenue_all_time,
+           sum(shipping_revenue)                  AS freight_value_all_time,
+           avg("order".delivery_time_in_days)     AS avg_delivery_time_in_days
     FROM ec_tmp.order_item
              LEFT JOIN ec_tmp.order USING (order_id)
     GROUP BY product_id
@@ -49,10 +49,10 @@ SELECT product_id,
        height,
        width,
 
-       product_items.number_of_items          AS number_of_order_items,
-       product_items.revenue_all_time         AS revenue_all_time,
-       product_items.freight_value_all_time   AS freight_value_all_time,
-       product_items.avg_days_of_delivery     AS avg_days_of_delivery
+       product_items.number_of_items                  AS number_of_order_items,
+       product_items.revenue_all_time                 AS revenue_all_time,
+       product_items.freight_value_all_time           AS freight_value_all_time,
+       product_items.avg_delivery_time_in_days        AS avg_delivery_time_in_days
 FROM ec_tmp.product
          LEFT JOIN product_items USING (product_id);
 

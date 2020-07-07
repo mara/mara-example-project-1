@@ -29,19 +29,19 @@ SELECT util.assert_equal(
                'SELECT count(*) FROM ec_dim.order_item');
 
 SELECT util.assert_not_found(
-               'There should not be any orders with purchase_date greater than approved_date',
-               'select * from ec_dim."order" where purchase_date::DATE > approved_date::DATE;');
+               'There should not be any orders with order_date greater than payment_date',
+               'select * from ec_dim."order" where order_date::DATE > payment_date::DATE;');
 
 SELECT util.assert_almost_equal(
                'The total amount of lifetime revenue should be equal among customer and order-item dim tables',
                0.001,
                'SELECT sum(revenue_lifetime) FROM ec_dim.customer',
-               'SELECT sum(revenue) FROM ec_dim.order_item'
+               'SELECT sum(product_revenue) FROM ec_dim.order_item'
            );
 
 SELECT util.assert_almost_equal(
                'The total amount of lifetime revenue should be equal among seller and order-item dim tables',
                0.001,
                'SELECT sum(revenue_lifetime) FROM ec_dim.seller',
-               'SELECT sum(revenue) FROM ec_dim.order_item'
+               'SELECT sum(product_revenue) FROM ec_dim.order_item'
            );
