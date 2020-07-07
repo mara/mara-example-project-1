@@ -11,7 +11,7 @@
 -e git+ssh://git@github.com/mara/mara-mondrian.git@master#egg=mara-mondrian
 -e git+ssh://git@github.com/mara/mara-metabase.git@master#egg=mara-metabase
 
--e git+ssh://git@github.com/mara/olist-ecommerce-data.git@master#egg=olist-ecommerce-data
+-e git+ssh://git@github.com/mara/mara-olist-ecommerce-data.git@master#egg=mara-olist-ecommerce-data
 
 
 # running flask
