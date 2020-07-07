@@ -19,7 +19,7 @@ Mako==1.1.3
 -e git+https://github.com/mara/mara-db.git@817bf658e918bf8dfd0c34236404eada5f0e28fd#egg=mara_db
 -e git+https://github.com/mara/mara-etl-tools.git@55bb4e8729af44bd8ccb88f9cb95dd3eef81ecee#egg=mara_etl_tools
 -e git+ssh://git@github.com/mara/mara-metabase.git@b9f0f9b30cffb9013a50ab39192030b0fa1d0ae1#egg=mara_metabase
--e git+ssh://git@github.com/mara/mara-mondrian.git@634174366a7912fc6c7277704f7dee3d337ad79a#egg=mara_mondrian
+-e git+ssh://git@github.com/mara/mara-mondrian.git@20e786043766e0c833d52e2fc97a870b3058f5d5#egg=mara_mondrian
 -e git+https://github.com/mara/mara-page.git@c499a6c44aaa638c1515c3a857e5f68cad8b84c9#egg=mara_page
 -e git+https://github.com/mara/mara-pipelines.git@ab41e916be81969212f2f0e95a6b0e5794dd800d#egg=mara_pipelines
 -e git+https://github.com/mara/mara-schema.git@3b8c8c2f9b6c6652cbd372637c0f9aa3d6823a13#egg=mara_schema
