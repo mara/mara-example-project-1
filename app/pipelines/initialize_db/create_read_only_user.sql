@@ -1,28 +1,20 @@
-CREATE OR REPLACE FUNCTION util.ensure_user_exists(user_name TEXT)
-  RETURNS VOID AS
-$$
-BEGIN
-  IF NOT EXISTS(SELECT *
-                FROM pg_catalog.pg_user
-                WHERE usename = user_name)
-  THEN
-    EXECUTE 'CREATE ROLE ' || user_name || ' LOGIN';
-  END IF;
-END
-$$
-  LANGUAGE plpgsql;
-
-
 
 
 DO $$
   DECLARE
     schema_name TEXT;
   BEGIN
-    PERFORM util.ensure_user_exists('dwh_read_only');
+      -- create a role that has read-only access to the DWH
+      IF NOT EXISTS(SELECT *
+                    FROM pg_catalog.pg_user
+                    WHERE usename = 'dwh_read_only')
+      THEN
+          EXECUTE 'CREATE ROLE dwh_read_only LOGIN';
+      END IF;
 
-    -- grant read only permission on all tables in all existing schemas
-    FOR schema_name IN SELECT nspname
+
+      -- grant read only permission on all tables in all existing schemas
+      FOR schema_name IN SELECT nspname
                        FROM pg_namespace
       LOOP
         EXECUTE 'GRANT USAGE ON SCHEMA ' || schema_name || ' to dwh_read_only';

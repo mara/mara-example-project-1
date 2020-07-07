@@ -14,13 +14,17 @@ def databases():
         # for Mara meta data
         'mara': mara_db.dbs.PostgreSQLDB(user='root', host='localhost', database='example_project_1_mara'),
 
-        # Metabase queries data from this database, data sets are copied there from DWH
-        'metabase-data': mara_db.dbs.PostgreSQLDB(user='root', host='127.0.0.1',
-                                                  database='example_project_1_metabase_data'),
-
         # for Metabase meta data
         'metabase-metadata': mara_db.dbs.PostgreSQLDB(user='root', host='127.0.0.1',
                                                       database='example_project_1_metabase_metadata'),
+
+        # read-only connection for Metabase to query the data set tables
+        'metabase-data-read': mara_db.dbs.PostgreSQLDB(user='metabase', host='127.0.0.1',
+                                                       database='example_project_1_metabase_data'),
+
+        # The ETL writes data for Metabase using this connection
+        'metabase-data-write': mara_db.dbs.PostgreSQLDB(user='root', host='127.0.0.1',
+                                                        database='example_project_1_metabase_data'),
 
         # The e-commerce example data set
         'olist': mara_db.dbs.PostgreSQLDB(user='root', host='localhost', database='olist_ecommerce')

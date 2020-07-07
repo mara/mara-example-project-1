@@ -26,18 +26,14 @@ CREATE SCHEMA util;
 
 DROP SCHEMA IF EXISTS metabase_next CASCADE;
 CREATE SCHEMA metabase_next;
-""", echo_queries=False, db_alias='metabase-data'),
-
-            ExecuteSQL(sql_file_name=str(initialize_db.pipeline.base_path() / 'create_read_only_user.sql'),
-                       db_alias='metabase-data'),
-
+""", echo_queries=False, db_alias='metabase-data-write'),
             ExecuteSQL(
                 sql_file_name=str(
                     initialize_db.pipeline.nodes['initialize_utils'].base_path() / 'schema_switching.sql'),
-                db_alias='metabase-data'),
+                db_alias='metabase-data-write'),
             ExecuteSQL(
                 sql_file_name=str(initialize_db.pipeline.nodes['initialize_utils'].base_path() / 'cstore_fdw.sql'),
-                db_alias='metabase-data')
+                db_alias='metabase-data-write')
         ]))
 
 for data_set in data_sets():
@@ -48,7 +44,7 @@ for data_set in data_sets():
 
 
     def create_cstore_table(data_set):
-        return create_cstore_table_for_query(query(data_set), 'metabase_next', data_set.name, 'metabase-data')
+        return create_cstore_table_for_query(query(data_set), 'metabase_next', data_set.name, 'metabase-data-write')
 
 
     pipeline.add(
@@ -61,4 +57,4 @@ for data_set in data_sets():
 """,
                       source_db_alias='dwh',
                       target_table=f'metabase_next."{data_set.name}"',
-                      target_db_alias='metabase-data')]))
+                      target_db_alias='metabase-data-write')]))

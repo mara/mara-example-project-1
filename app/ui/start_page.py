@@ -104,7 +104,7 @@ def start_page():
                     body=[
                         html.asynchronous_content(
                             flask.url_for('mara_db.draw_schema', db_alias=mara_pipelines.config.default_db_alias(),
-                                          schemas='ec_dim'))
+                                          schemas='ec_dim') + '?hide-columns=True')
                     ]
                 )
             ]

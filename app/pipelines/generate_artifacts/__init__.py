@@ -24,6 +24,10 @@ pipeline.add(mondrian_pipeline)
 pipeline.add_final(
     Task(id='replace_schemas',
          description='Replaces the frontend schemas with their next versions',
-         commands=[ExecuteSQL(sql_statement=f"SELECT util.replace_schema('{schema}', '{schema}_next')", db_alias=db_alias)
-                   for db_alias, schema in [('metabase-data', 'metabase'), ('dwh', 'data_sets'), ('dwh', 'mondrian')]]))
+         commands=[
+             ExecuteSQL(sql_file_name='switch_metabase_schema.sql', db_alias='metabase-data-write'),
+
+             ExecuteSQL(sql_statement=f"SELECT util.replace_schema('data_sets', 'data_sets_next')", db_alias='dwh'),
+             ExecuteSQL(sql_statement=f"SELECT util.replace_schema('mondrian', 'mondrian_next')", db_alias='dwh')
+         ]))
 
