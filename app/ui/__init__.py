@@ -64,7 +64,7 @@ monkey_patch.patch(mara_page.acl.current_user_email)(mara_acl.users.current_user
 monkey_patch.patch(mara_page.acl.current_user_has_permissions)(mara_acl.permissions.current_user_has_permissions)
 monkey_patch.patch(mara_page.acl.user_has_permissions)(mara_acl.permissions.user_has_permissions)
 
-monkey_patch.patch(mara_acl.config.whitelisted_uris)(lambda: ['/mara-app/navigation-bar'])
+monkey_patch.patch(mara_acl.config.whitelisted_uris)(lambda: ['/mara-app/navigation-bar', '/mondrian/saiku/authorize'])
 
 
 # navigation bar (other navigation entries will be automatically added)
