@@ -1,34 +1,34 @@
 SELECT util.create_enum(
-           'ec_dim_next.STATUS',
-           (SELECT array_agg(DISTINCT status) FROM ec_tmp.order));
+               'ec_dim_next.STATUS',
+               (SELECT array_agg(DISTINCT status) FROM ec_tmp.order));
 
 DROP TABLE IF EXISTS ec_dim_next.order CASCADE;
 
 CREATE TABLE ec_dim_next.order
 (
-  order_id                TEXT NOT NULL PRIMARY KEY, --unique identifier of the order.
-  customer_fk             TEXT NOT NULL,             --key to the customer table. Each order has a unique customer_id.
+    order_id              TEXT NOT NULL PRIMARY KEY, --unique identifier of the order.
+    customer_fk           TEXT NOT NULL,             --key to the customer table. Each order has a unique customer_id.
 
-  status                  ec_dim_next.STATUS,        --Reference to the order status (delivered, shipped, etc).
+    status                ec_dim_next.STATUS,        --Reference to the order status (delivered, shipped, etc).
 
-  purchase_date           TIMESTAMP WITH TIME ZONE,  --Shows the purchase timestamp.
-  approved_date           TIMESTAMP WITH TIME ZONE,  --Shows the payment approval timestamp.
-  delivered_carrier_date  TIMESTAMP WITH TIME ZONE,  --Shows the order posting timestamp. When it was handled to the logistic partner.
-  delivered_customer_date TIMESTAMP WITH TIME ZONE,  --Shows the actual order delivery date to the customer.
-  estimated_delivery_date TIMESTAMP WITH TIME ZONE,  --Shows the estimated delivery date that was informed to customer at the purchase moment.
+    order_date            TIMESTAMP WITH TIME ZONE,  --Shows the purchase timestamp.
+    payment_date          TIMESTAMP WITH TIME ZONE,  --Shows the payment approval timestamp.
+    delivery_date         TIMESTAMP WITH TIME ZONE,  --Shows the actual order delivery date to the customer.
 
-  number_of_items         INTEGER,
-  revenue                 DOUBLE PRECISION,
-  total_freight_value     DOUBLE PRECISION
+    delivery_time_in_days INTEGER,                   -- date-diff of order_date, delivery_date
+
+    number_of_items       INTEGER,
+    product_revenue       DOUBLE PRECISION,
+    shipping_revenue      DOUBLE PRECISION
 );
 
 WITH items AS (
-  SELECT order_id,
-         count(*)           AS number_of_items,
-         sum(revenue)       AS revenue,
-         sum(freight_value) AS total_freight_value
-  FROM ec_tmp.order_item
-  GROUP BY order_id
+    SELECT order_id,
+           count(*)           AS number_of_items,
+           sum(product_revenue)       AS product_revenue,
+           sum(shipping_revenue) AS shipping_revenue
+    FROM ec_tmp.order_item
+    GROUP BY order_id
 )
 
 INSERT
@@ -38,23 +38,22 @@ SELECT order_id,
 
        status::ec_dim_next.STATUS AS status,
 
-       purchase_date,
-       approved_date,
-       delivered_carrier_date,
-       delivered_customer_date,
-       estimated_delivery_date,
+       order_date,
+       payment_date,
+       delivery_date,
+       delivery_time_in_days,
 
        items.number_of_items      AS number_of_items,
-       items.revenue              AS revenue,
-       items.total_freight_value  AS total_freight_value
+       items.product_revenue      AS product_revenue,
+       items.shipping_revenue     AS shipping_revenue
 FROM ec_tmp.order
-     LEFT JOIN items USING (order_id);
+         LEFT JOIN items USING (order_id);
 
 SELECT util.add_index('ec_dim_next', 'order', column_names := ARRAY ['customer_fk']);
 
 CREATE OR REPLACE FUNCTION ec_tmp.constrain_orders()
-  RETURNS VOID AS
+    RETURNS VOID AS
 $$
 SELECT util.add_fk('ec_dim_next', 'order', 'ec_dim_next', 'customer');
 $$
-  LANGUAGE SQL;
+    LANGUAGE sql;

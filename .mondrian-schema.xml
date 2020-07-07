@@ -1,28 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <Schema name="Mondrian">
-  <Cube name="Order items" description="Items purchased within each order made at Olist Store" defaultMeasure="# Order items">
+  <Cube name="Order items" description="Individual products sold as part of an order" defaultMeasure="# Order items">
     <Table schema="mondrian" name="order_items"/>
-    <Dimension name="Shipping limit date" type="TimeDimension" description="The Seller shipping limit date for handling the order over to the logistic partner" foreignKey="shipping_limit_date_fk">
-      <Hierarchy allMemberName="All shipping limit dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All shipping limit dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Product category" description="The category name describing the group of products (e.g. &quot;health_beuty&quot; or &quot;computers_accessories" foreignKey="product_fk">
-      <Hierarchy allMemberName="All Product category" hasAll="true" primaryKey="product_id">
-        <Table name="product" schema="ec_dim"/>
-        <Level name="Product category" column="product_category" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
     <Dimension name="Order date" type="TimeDimension" description="The date when the order was placed (stored in the backend)" foreignKey="order_date_fk">
       <Hierarchy allMemberName="All order dates" hasAll="true" name="By month">
         <Table schema="time" name="day"/>
@@ -38,30 +17,15 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Approval date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="approval_date_fk">
-      <Hierarchy allMemberName="All approval dates" hasAll="true" name="By month">
+    <Dimension name="Payment date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="payment_date_fk">
+      <Hierarchy allMemberName="All payment dates" hasAll="true" name="By month">
         <Table schema="time" name="day"/>
         <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
         <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
         <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
-      <Hierarchy allMemberName="All approval dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Shipping date" type="TimeDimension" description="The date when the order was shipped, i.e., handed to the logistic partner" foreignKey="shipping_date_fk">
-      <Hierarchy allMemberName="All shipping dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All shipping dates" hasAll="true" name="By week">
+      <Hierarchy allMemberName="All payment dates" hasAll="true" name="By week">
         <Table schema="time" name="day"/>
         <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
         <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
@@ -83,19 +47,20 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Estimated delivery date" type="TimeDimension" description="The estimated delivery date communicated to the customer at the time of order placement" foreignKey="estimated_delivery_date_fk">
-      <Hierarchy allMemberName="All estimated delivery dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+    <Dimension name="Delivery time in days" type="StandardDimension" description="The number of days from placing the order to delivery to the customer" foreignKey="delivery_time_in_days_fk">
+      <Hierarchy allMemberName="All delivery time in dayss" hasAll="true" name="By month">
+        <Table schema="time" name="duration"/>
+        <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Months" column="months" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Half years" column="half_years" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
       </Hierarchy>
-      <Hierarchy allMemberName="All estimated delivery dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      <Hierarchy allMemberName="All delivery time in dayss" hasAll="true" name="By week">
+        <Table schema="time" name="duration"/>
+        <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Weeks" column="weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Four weeks" column="four_weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
     <Dimension name="Customer first order date" type="TimeDimension" description="The date when the order was placed (stored in the backend)" foreignKey="customer_first_order_date_fk">
@@ -113,19 +78,50 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Customer last order date" type="TimeDimension" description="The date when the order was placed (stored in the backend)" foreignKey="customer_last_order_date_fk">
-      <Hierarchy allMemberName="All customer last order dates" hasAll="true" name="By month">
+    <Dimension name="Customer first order payment date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="customer_first_order_payment_date_fk">
+      <Hierarchy allMemberName="All customer first order payment dates" hasAll="true" name="By month">
         <Table schema="time" name="day"/>
         <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
         <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
         <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
-      <Hierarchy allMemberName="All customer last order dates" hasAll="true" name="By week">
+      <Hierarchy allMemberName="All customer first order payment dates" hasAll="true" name="By week">
         <Table schema="time" name="day"/>
         <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
         <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
+    <Dimension name="Customer first order delivery date" type="TimeDimension" description="The date when the order was delivered to the customer" foreignKey="customer_first_order_delivery_date_fk">
+      <Hierarchy allMemberName="All customer first order delivery dates" hasAll="true" name="By month">
+        <Table schema="time" name="day"/>
+        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
+        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
+        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
+        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      </Hierarchy>
+      <Hierarchy allMemberName="All customer first order delivery dates" hasAll="true" name="By week">
+        <Table schema="time" name="day"/>
+        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
+        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
+        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
+    <Dimension name="Customer first order delivery time in days" type="StandardDimension" description="The number of days from placing the order to delivery to the customer" foreignKey="customer_first_order_delivery_time_in_days_fk">
+      <Hierarchy allMemberName="All customer first order delivery time in dayss" hasAll="true" name="By month">
+        <Table schema="time" name="duration"/>
+        <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Months" column="months" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Half years" column="half_years" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
+      </Hierarchy>
+      <Hierarchy allMemberName="All customer first order delivery time in dayss" hasAll="true" name="By week">
+        <Table schema="time" name="duration"/>
+        <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Weeks" column="weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Four weeks" column="four_weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
     <Dimension name="Customer zip code" description="First 5 digits of the zip code (Brazil has an 8-digit system)" foreignKey="order_customer_zip_code_fk">
@@ -140,6 +136,298 @@
         <Level name="Customer city" column="city" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
+    <Dimension name="Customer state" description="State name" foreignKey="order_customer_zip_code_fk">
+      <Hierarchy allMemberName="All Customer state" hasAll="true" primaryKey="zip_code_id">
+        <Table name="zip_code" schema="ec_dim"/>
+        <Level name="Customer state" column="state" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
+    <Dimension name="Product category" description="The category name describing the group of products (e.g. &quot;health_beuty&quot; or &quot;computers_accessories" foreignKey="product_fk">
+      <Hierarchy allMemberName="All Product category" hasAll="true" primaryKey="product_id">
+        <Table name="product" schema="ec_dim"/>
+        <Level name="Product category" column="product_category" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
+    <Dimension name="Seller first order date" type="TimeDimension" description="The date when the order was placed (stored in the backend)" foreignKey="seller_first_order_date_fk">
+      <Hierarchy allMemberName="All seller first order dates" hasAll="true" name="By month">
+        <Table schema="time" name="day"/>
+        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
+        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
+        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
+        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      </Hierarchy>
+      <Hierarchy allMemberName="All seller first order dates" hasAll="true" name="By week">
+        <Table schema="time" name="day"/>
+        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
+        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
+        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
+    <Dimension name="Seller first order payment date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="seller_first_order_payment_date_fk">
+      <Hierarchy allMemberName="All seller first order payment dates" hasAll="true" name="By month">
+        <Table schema="time" name="day"/>
+        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
+        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
+        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
+        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      </Hierarchy>
+      <Hierarchy allMemberName="All seller first order payment dates" hasAll="true" name="By week">
+        <Table schema="time" name="day"/>
+        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
+        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
+        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
+    <Dimension name="Seller first order delivery date" type="TimeDimension" description="The date when the order was delivered to the customer" foreignKey="seller_first_order_delivery_date_fk">
+      <Hierarchy allMemberName="All seller first order delivery dates" hasAll="true" name="By month">
+        <Table schema="time" name="day"/>
+        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
+        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
+        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
+        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      </Hierarchy>
+      <Hierarchy allMemberName="All seller first order delivery dates" hasAll="true" name="By week">
+        <Table schema="time" name="day"/>
+        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
+        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
+        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
+    <Dimension name="Seller first order delivery time in days" type="StandardDimension" description="The number of days from placing the order to delivery to the customer" foreignKey="seller_first_order_delivery_time_in_days_fk">
+      <Hierarchy allMemberName="All seller first order delivery time in dayss" hasAll="true" name="By month">
+        <Table schema="time" name="duration"/>
+        <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Months" column="months" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Half years" column="half_years" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
+      </Hierarchy>
+      <Hierarchy allMemberName="All seller first order delivery time in dayss" hasAll="true" name="By week">
+        <Table schema="time" name="duration"/>
+        <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Weeks" column="weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Four weeks" column="four_weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
+    <Dimension name="Seller first order customer first order date" type="TimeDimension" description="The date when the order was placed (stored in the backend)" foreignKey="seller_first_order_customer_first_order_date_fk">
+      <Hierarchy allMemberName="All seller first order customer first order dates" hasAll="true" name="By month">
+        <Table schema="time" name="day"/>
+        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
+        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
+        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
+        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      </Hierarchy>
+      <Hierarchy allMemberName="All seller first order customer first order dates" hasAll="true" name="By week">
+        <Table schema="time" name="day"/>
+        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
+        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
+        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
+    <Dimension name="Seller first order customer first order payment date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="seller_first_order_customer_first_order_payment_date_fk">
+      <Hierarchy allMemberName="All seller first order customer first order payment dates" hasAll="true" name="By month">
+        <Table schema="time" name="day"/>
+        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
+        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
+        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
+        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      </Hierarchy>
+      <Hierarchy allMemberName="All seller first order customer first order payment dates" hasAll="true" name="By week">
+        <Table schema="time" name="day"/>
+        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
+        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
+        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
+    <Dimension name="Seller first order customer first order delivery date" type="TimeDimension" description="The date when the order was delivered to the customer" foreignKey="seller_first_order_customer_first_order_delivery_date_fk">
+      <Hierarchy allMemberName="All seller first order customer first order delivery dates" hasAll="true" name="By month">
+        <Table schema="time" name="day"/>
+        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
+        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
+        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
+        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      </Hierarchy>
+      <Hierarchy allMemberName="All seller first order customer first order delivery dates" hasAll="true" name="By week">
+        <Table schema="time" name="day"/>
+        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
+        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
+        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
+    <Dimension name="Seller first order customer first order delivery time in days" type="StandardDimension" description="The number of days from placing the order to delivery to the customer" foreignKey="seller_first_order_customer_first_order_delivery_time_in_days_fk">
+      <Hierarchy allMemberName="All seller first order customer first order delivery time in dayss" hasAll="true" name="By month">
+        <Table schema="time" name="duration"/>
+        <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Months" column="months" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Half years" column="half_years" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
+      </Hierarchy>
+      <Hierarchy allMemberName="All seller first order customer first order delivery time in dayss" hasAll="true" name="By week">
+        <Table schema="time" name="duration"/>
+        <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Weeks" column="weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Four weeks" column="four_weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
+    <Dimension name="Seller first order customer zip code" description="First 5 digits of the zip code (Brazil has an 8-digit system)" foreignKey="seller_first_order_customer_zip_code_fk">
+      <Hierarchy allMemberName="All Seller first order customer zip code" hasAll="true" primaryKey="zip_code_id">
+        <Table name="zip_code" schema="ec_dim"/>
+        <Level name="Seller first order customer zip code" column="zip_code" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
+    <Dimension name="Seller first order customer city" description="City name" foreignKey="seller_first_order_customer_zip_code_fk">
+      <Hierarchy allMemberName="All Seller first order customer city" hasAll="true" primaryKey="zip_code_id">
+        <Table name="zip_code" schema="ec_dim"/>
+        <Level name="Seller first order customer city" column="city" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
+    <Dimension name="Seller first order customer state" description="State name" foreignKey="seller_first_order_customer_zip_code_fk">
+      <Hierarchy allMemberName="All Seller first order customer state" hasAll="true" primaryKey="zip_code_id">
+        <Table name="zip_code" schema="ec_dim"/>
+        <Level name="Seller first order customer state" column="state" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
+    <Dimension name="Seller last order date" type="TimeDimension" description="The date when the order was placed (stored in the backend)" foreignKey="seller_last_order_date_fk">
+      <Hierarchy allMemberName="All seller last order dates" hasAll="true" name="By month">
+        <Table schema="time" name="day"/>
+        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
+        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
+        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
+        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      </Hierarchy>
+      <Hierarchy allMemberName="All seller last order dates" hasAll="true" name="By week">
+        <Table schema="time" name="day"/>
+        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
+        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
+        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
+    <Dimension name="Seller last order payment date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="seller_last_order_payment_date_fk">
+      <Hierarchy allMemberName="All seller last order payment dates" hasAll="true" name="By month">
+        <Table schema="time" name="day"/>
+        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
+        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
+        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
+        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      </Hierarchy>
+      <Hierarchy allMemberName="All seller last order payment dates" hasAll="true" name="By week">
+        <Table schema="time" name="day"/>
+        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
+        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
+        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
+    <Dimension name="Seller last order delivery date" type="TimeDimension" description="The date when the order was delivered to the customer" foreignKey="seller_last_order_delivery_date_fk">
+      <Hierarchy allMemberName="All seller last order delivery dates" hasAll="true" name="By month">
+        <Table schema="time" name="day"/>
+        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
+        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
+        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
+        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      </Hierarchy>
+      <Hierarchy allMemberName="All seller last order delivery dates" hasAll="true" name="By week">
+        <Table schema="time" name="day"/>
+        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
+        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
+        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
+    <Dimension name="Seller last order delivery time in days" type="StandardDimension" description="The number of days from placing the order to delivery to the customer" foreignKey="seller_last_order_delivery_time_in_days_fk">
+      <Hierarchy allMemberName="All seller last order delivery time in dayss" hasAll="true" name="By month">
+        <Table schema="time" name="duration"/>
+        <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Months" column="months" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Half years" column="half_years" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
+      </Hierarchy>
+      <Hierarchy allMemberName="All seller last order delivery time in dayss" hasAll="true" name="By week">
+        <Table schema="time" name="duration"/>
+        <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Weeks" column="weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Four weeks" column="four_weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
+    <Dimension name="Seller last order customer first order date" type="TimeDimension" description="The date when the order was placed (stored in the backend)" foreignKey="seller_last_order_customer_first_order_date_fk">
+      <Hierarchy allMemberName="All seller last order customer first order dates" hasAll="true" name="By month">
+        <Table schema="time" name="day"/>
+        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
+        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
+        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
+        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      </Hierarchy>
+      <Hierarchy allMemberName="All seller last order customer first order dates" hasAll="true" name="By week">
+        <Table schema="time" name="day"/>
+        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
+        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
+        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
+    <Dimension name="Seller last order customer first order payment date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="seller_last_order_customer_first_order_payment_date_fk">
+      <Hierarchy allMemberName="All seller last order customer first order payment dates" hasAll="true" name="By month">
+        <Table schema="time" name="day"/>
+        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
+        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
+        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
+        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      </Hierarchy>
+      <Hierarchy allMemberName="All seller last order customer first order payment dates" hasAll="true" name="By week">
+        <Table schema="time" name="day"/>
+        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
+        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
+        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
+    <Dimension name="Seller last order customer first order delivery date" type="TimeDimension" description="The date when the order was delivered to the customer" foreignKey="seller_last_order_customer_first_order_delivery_date_fk">
+      <Hierarchy allMemberName="All seller last order customer first order delivery dates" hasAll="true" name="By month">
+        <Table schema="time" name="day"/>
+        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
+        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
+        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
+        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      </Hierarchy>
+      <Hierarchy allMemberName="All seller last order customer first order delivery dates" hasAll="true" name="By week">
+        <Table schema="time" name="day"/>
+        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
+        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
+        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
+    <Dimension name="Seller last order customer first order delivery time in days" type="StandardDimension" description="The number of days from placing the order to delivery to the customer" foreignKey="seller_last_order_customer_first_order_delivery_time_in_days_fk">
+      <Hierarchy allMemberName="All seller last order customer first order delivery time in dayss" hasAll="true" name="By month">
+        <Table schema="time" name="duration"/>
+        <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Months" column="months" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Half years" column="half_years" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
+      </Hierarchy>
+      <Hierarchy allMemberName="All seller last order customer first order delivery time in dayss" hasAll="true" name="By week">
+        <Table schema="time" name="duration"/>
+        <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Weeks" column="weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Four weeks" column="four_weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
+    <Dimension name="Seller last order customer zip code" description="First 5 digits of the zip code (Brazil has an 8-digit system)" foreignKey="seller_last_order_customer_zip_code_fk">
+      <Hierarchy allMemberName="All Seller last order customer zip code" hasAll="true" primaryKey="zip_code_id">
+        <Table name="zip_code" schema="ec_dim"/>
+        <Level name="Seller last order customer zip code" column="zip_code" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
+    <Dimension name="Seller last order customer city" description="City name" foreignKey="seller_last_order_customer_zip_code_fk">
+      <Hierarchy allMemberName="All Seller last order customer city" hasAll="true" primaryKey="zip_code_id">
+        <Table name="zip_code" schema="ec_dim"/>
+        <Level name="Seller last order customer city" column="city" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
+    <Dimension name="Seller last order customer state" description="State name" foreignKey="seller_last_order_customer_zip_code_fk">
+      <Hierarchy allMemberName="All Seller last order customer state" hasAll="true" primaryKey="zip_code_id">
+        <Table name="zip_code" schema="ec_dim"/>
+        <Level name="Seller last order customer state" column="state" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
     <Dimension name="Seller zip code" description="First 5 digits of the zip code (Brazil has an 8-digit system)" foreignKey="seller_zip_code_fk">
       <Hierarchy allMemberName="All Seller zip code" hasAll="true" primaryKey="zip_code_id">
         <Table name="zip_code" schema="ec_dim"/>
@@ -152,6 +440,12 @@
         <Level name="Seller city" column="city" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
+    <Dimension name="Seller state" description="State name" foreignKey="seller_zip_code_fk">
+      <Hierarchy allMemberName="All Seller state" hasAll="true" primaryKey="zip_code_id">
+        <Table name="zip_code" schema="ec_dim"/>
+        <Level name="Seller state" column="state" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
     <Measure name="# Order items" description="The number of ordered products" column="_order_items" aggregator="count" formatString="Standard" datatype="Integer"/>
     <Measure name="# Orders" description="The number of valid orders (orders with an invoice)" column="_orders" aggregator="distinct-count" formatString="Standard" datatype="Integer"/>
     <Measure name="Product revenue" description="The price of the ordered products as shown in the cart" column="product_revenue" aggregator="sum" formatString="Standard" datatype="Numeric"/>
@@ -160,8 +454,8 @@
       <Formula>[Measures].[Product revenue] + [Measures].[Shipping revenue]</Formula>
       <CalculatedMemberProperty name="FORMAT_STRING" value="Standard"/>
     </CalculatedMember>
-    <CalculatedMember name="Avg. revenue per order item" dimension="Measures" description="The average revenue made in this order per order item">
-      <Formula>[Measures].[Revenue] / [Measures].[# Order items]</Formula>
+    <CalculatedMember name="AOV" dimension="Measures" description="The average revenue per order. Attention: not meaningful when split by product">
+      <Formula>[Measures].[Revenue] / [Measures].[# Orders]</Formula>
       <CalculatedMemberProperty name="FORMAT_STRING" value="Standard"/>
     </CalculatedMember>
   </Cube>
@@ -182,30 +476,15 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="First order approval date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="first_order_approval_date_fk">
-      <Hierarchy allMemberName="All first order approval dates" hasAll="true" name="By month">
+    <Dimension name="First order payment date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="first_order_payment_date_fk">
+      <Hierarchy allMemberName="All first order payment dates" hasAll="true" name="By month">
         <Table schema="time" name="day"/>
         <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
         <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
         <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
-      <Hierarchy allMemberName="All first order approval dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="First order shipping date" type="TimeDimension" description="The date when the order was shipped, i.e., handed to the logistic partner" foreignKey="first_order_shipping_date_fk">
-      <Hierarchy allMemberName="All first order shipping dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All first order shipping dates" hasAll="true" name="By week">
+      <Hierarchy allMemberName="All first order payment dates" hasAll="true" name="By week">
         <Table schema="time" name="day"/>
         <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
         <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
@@ -227,19 +506,20 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="First order estimated delivery date" type="TimeDimension" description="The estimated delivery date communicated to the customer at the time of order placement" foreignKey="first_order_estimated_delivery_date_fk">
-      <Hierarchy allMemberName="All first order estimated delivery dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+    <Dimension name="First order delivery time in days" type="StandardDimension" description="The number of days from placing the order to delivery to the customer" foreignKey="first_order_delivery_time_in_days_fk">
+      <Hierarchy allMemberName="All first order delivery time in dayss" hasAll="true" name="By month">
+        <Table schema="time" name="duration"/>
+        <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Months" column="months" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Half years" column="half_years" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
       </Hierarchy>
-      <Hierarchy allMemberName="All first order estimated delivery dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      <Hierarchy allMemberName="All first order delivery time in dayss" hasAll="true" name="By week">
+        <Table schema="time" name="duration"/>
+        <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Weeks" column="weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Four weeks" column="four_weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
     <Dimension name="First order customer first order date" type="TimeDimension" description="The date when the order was placed (stored in the backend)" foreignKey="first_order_customer_first_order_date_fk">
@@ -257,30 +537,15 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="First order customer first order approval date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="first_order_customer_first_order_approval_date_fk">
-      <Hierarchy allMemberName="All first order customer first order approval dates" hasAll="true" name="By month">
+    <Dimension name="First order customer first order payment date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="first_order_customer_first_order_payment_date_fk">
+      <Hierarchy allMemberName="All first order customer first order payment dates" hasAll="true" name="By month">
         <Table schema="time" name="day"/>
         <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
         <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
         <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
-      <Hierarchy allMemberName="All first order customer first order approval dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="First order customer first order shipping date" type="TimeDimension" description="The date when the order was shipped, i.e., handed to the logistic partner" foreignKey="first_order_customer_first_order_shipping_date_fk">
-      <Hierarchy allMemberName="All first order customer first order shipping dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All first order customer first order shipping dates" hasAll="true" name="By week">
+      <Hierarchy allMemberName="All first order customer first order payment dates" hasAll="true" name="By week">
         <Table schema="time" name="day"/>
         <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
         <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
@@ -302,94 +567,20 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="First order customer first order estimated delivery date" type="TimeDimension" description="The estimated delivery date communicated to the customer at the time of order placement" foreignKey="first_order_customer_first_order_estimated_delivery_date_fk">
-      <Hierarchy allMemberName="All first order customer first order estimated delivery dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+    <Dimension name="First order customer first order delivery time in days" type="StandardDimension" description="The number of days from placing the order to delivery to the customer" foreignKey="first_order_customer_first_order_delivery_time_in_days_fk">
+      <Hierarchy allMemberName="All first order customer first order delivery time in dayss" hasAll="true" name="By month">
+        <Table schema="time" name="duration"/>
+        <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Months" column="months" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Half years" column="half_years" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
       </Hierarchy>
-      <Hierarchy allMemberName="All first order customer first order estimated delivery dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="First order customer last order date" type="TimeDimension" description="The date when the order was placed (stored in the backend)" foreignKey="first_order_customer_last_order_date_fk">
-      <Hierarchy allMemberName="All first order customer last order dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All first order customer last order dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="First order customer last order approval date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="first_order_customer_last_order_approval_date_fk">
-      <Hierarchy allMemberName="All first order customer last order approval dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All first order customer last order approval dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="First order customer last order shipping date" type="TimeDimension" description="The date when the order was shipped, i.e., handed to the logistic partner" foreignKey="first_order_customer_last_order_shipping_date_fk">
-      <Hierarchy allMemberName="All first order customer last order shipping dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All first order customer last order shipping dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="First order customer last order delivery date" type="TimeDimension" description="The date when the order was delivered to the customer" foreignKey="first_order_customer_last_order_delivery_date_fk">
-      <Hierarchy allMemberName="All first order customer last order delivery dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All first order customer last order delivery dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="First order customer last order estimated delivery date" type="TimeDimension" description="The estimated delivery date communicated to the customer at the time of order placement" foreignKey="first_order_customer_last_order_estimated_delivery_date_fk">
-      <Hierarchy allMemberName="All first order customer last order estimated delivery dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All first order customer last order estimated delivery dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      <Hierarchy allMemberName="All first order customer first order delivery time in dayss" hasAll="true" name="By week">
+        <Table schema="time" name="duration"/>
+        <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Weeks" column="weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Four weeks" column="four_weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
     <Dimension name="First order customer zip code" description="First 5 digits of the zip code (Brazil has an 8-digit system)" foreignKey="first_order_customer_zip_code_fk">
@@ -425,30 +616,15 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Last order approval date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="last_order_approval_date_fk">
-      <Hierarchy allMemberName="All last order approval dates" hasAll="true" name="By month">
+    <Dimension name="Last order payment date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="last_order_payment_date_fk">
+      <Hierarchy allMemberName="All last order payment dates" hasAll="true" name="By month">
         <Table schema="time" name="day"/>
         <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
         <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
         <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
-      <Hierarchy allMemberName="All last order approval dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Last order shipping date" type="TimeDimension" description="The date when the order was shipped, i.e., handed to the logistic partner" foreignKey="last_order_shipping_date_fk">
-      <Hierarchy allMemberName="All last order shipping dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All last order shipping dates" hasAll="true" name="By week">
+      <Hierarchy allMemberName="All last order payment dates" hasAll="true" name="By week">
         <Table schema="time" name="day"/>
         <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
         <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
@@ -470,19 +646,20 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Last order estimated delivery date" type="TimeDimension" description="The estimated delivery date communicated to the customer at the time of order placement" foreignKey="last_order_estimated_delivery_date_fk">
-      <Hierarchy allMemberName="All last order estimated delivery dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+    <Dimension name="Last order delivery time in days" type="StandardDimension" description="The number of days from placing the order to delivery to the customer" foreignKey="last_order_delivery_time_in_days_fk">
+      <Hierarchy allMemberName="All last order delivery time in dayss" hasAll="true" name="By month">
+        <Table schema="time" name="duration"/>
+        <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Months" column="months" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Half years" column="half_years" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
       </Hierarchy>
-      <Hierarchy allMemberName="All last order estimated delivery dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      <Hierarchy allMemberName="All last order delivery time in dayss" hasAll="true" name="By week">
+        <Table schema="time" name="duration"/>
+        <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Weeks" column="weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Four weeks" column="four_weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
     <Dimension name="Last order customer first order date" type="TimeDimension" description="The date when the order was placed (stored in the backend)" foreignKey="last_order_customer_first_order_date_fk">
@@ -500,30 +677,15 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Last order customer first order approval date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="last_order_customer_first_order_approval_date_fk">
-      <Hierarchy allMemberName="All last order customer first order approval dates" hasAll="true" name="By month">
+    <Dimension name="Last order customer first order payment date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="last_order_customer_first_order_payment_date_fk">
+      <Hierarchy allMemberName="All last order customer first order payment dates" hasAll="true" name="By month">
         <Table schema="time" name="day"/>
         <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
         <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
         <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
-      <Hierarchy allMemberName="All last order customer first order approval dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Last order customer first order shipping date" type="TimeDimension" description="The date when the order was shipped, i.e., handed to the logistic partner" foreignKey="last_order_customer_first_order_shipping_date_fk">
-      <Hierarchy allMemberName="All last order customer first order shipping dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All last order customer first order shipping dates" hasAll="true" name="By week">
+      <Hierarchy allMemberName="All last order customer first order payment dates" hasAll="true" name="By week">
         <Table schema="time" name="day"/>
         <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
         <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
@@ -545,94 +707,20 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Last order customer first order estimated delivery date" type="TimeDimension" description="The estimated delivery date communicated to the customer at the time of order placement" foreignKey="last_order_customer_first_order_estimated_delivery_date_fk">
-      <Hierarchy allMemberName="All last order customer first order estimated delivery dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+    <Dimension name="Last order customer first order delivery time in days" type="StandardDimension" description="The number of days from placing the order to delivery to the customer" foreignKey="last_order_customer_first_order_delivery_time_in_days_fk">
+      <Hierarchy allMemberName="All last order customer first order delivery time in dayss" hasAll="true" name="By month">
+        <Table schema="time" name="duration"/>
+        <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Months" column="months" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Half years" column="half_years" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
       </Hierarchy>
-      <Hierarchy allMemberName="All last order customer first order estimated delivery dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Last order customer last order date" type="TimeDimension" description="The date when the order was placed (stored in the backend)" foreignKey="last_order_customer_last_order_date_fk">
-      <Hierarchy allMemberName="All last order customer last order dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All last order customer last order dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Last order customer last order approval date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="last_order_customer_last_order_approval_date_fk">
-      <Hierarchy allMemberName="All last order customer last order approval dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All last order customer last order approval dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Last order customer last order shipping date" type="TimeDimension" description="The date when the order was shipped, i.e., handed to the logistic partner" foreignKey="last_order_customer_last_order_shipping_date_fk">
-      <Hierarchy allMemberName="All last order customer last order shipping dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All last order customer last order shipping dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Last order customer last order delivery date" type="TimeDimension" description="The date when the order was delivered to the customer" foreignKey="last_order_customer_last_order_delivery_date_fk">
-      <Hierarchy allMemberName="All last order customer last order delivery dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All last order customer last order delivery dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Last order customer last order estimated delivery date" type="TimeDimension" description="The estimated delivery date communicated to the customer at the time of order placement" foreignKey="last_order_customer_last_order_estimated_delivery_date_fk">
-      <Hierarchy allMemberName="All last order customer last order estimated delivery dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All last order customer last order estimated delivery dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      <Hierarchy allMemberName="All last order customer first order delivery time in dayss" hasAll="true" name="By week">
+        <Table schema="time" name="duration"/>
+        <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Weeks" column="weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Four weeks" column="four_weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
     <Dimension name="Last order customer zip code" description="First 5 digits of the zip code (Brazil has an 8-digit system)" foreignKey="last_order_customer_zip_code_fk">
@@ -732,30 +820,15 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="First order approval date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="first_order_approval_date_fk">
-      <Hierarchy allMemberName="All first order approval dates" hasAll="true" name="By month">
+    <Dimension name="First order payment date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="first_order_payment_date_fk">
+      <Hierarchy allMemberName="All first order payment dates" hasAll="true" name="By month">
         <Table schema="time" name="day"/>
         <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
         <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
         <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
-      <Hierarchy allMemberName="All first order approval dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="First order shipping date" type="TimeDimension" description="The date when the order was shipped, i.e., handed to the logistic partner" foreignKey="first_order_shipping_date_fk">
-      <Hierarchy allMemberName="All first order shipping dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All first order shipping dates" hasAll="true" name="By week">
+      <Hierarchy allMemberName="All first order payment dates" hasAll="true" name="By week">
         <Table schema="time" name="day"/>
         <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
         <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
@@ -777,94 +850,20 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="First order estimated delivery date" type="TimeDimension" description="The estimated delivery date communicated to the customer at the time of order placement" foreignKey="first_order_estimated_delivery_date_fk">
-      <Hierarchy allMemberName="All first order estimated delivery dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+    <Dimension name="First order delivery time in days" type="StandardDimension" description="The number of days from placing the order to delivery to the customer" foreignKey="first_order_delivery_time_in_days_fk">
+      <Hierarchy allMemberName="All first order delivery time in dayss" hasAll="true" name="By month">
+        <Table schema="time" name="duration"/>
+        <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Months" column="months" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Half years" column="half_years" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
       </Hierarchy>
-      <Hierarchy allMemberName="All first order estimated delivery dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="First order customer last order date" type="TimeDimension" description="The date when the order was placed (stored in the backend)" foreignKey="first_order_customer_last_order_date_fk">
-      <Hierarchy allMemberName="All first order customer last order dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All first order customer last order dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="First order customer last order approval date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="first_order_customer_last_order_approval_date_fk">
-      <Hierarchy allMemberName="All first order customer last order approval dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All first order customer last order approval dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="First order customer last order shipping date" type="TimeDimension" description="The date when the order was shipped, i.e., handed to the logistic partner" foreignKey="first_order_customer_last_order_shipping_date_fk">
-      <Hierarchy allMemberName="All first order customer last order shipping dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All first order customer last order shipping dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="First order customer last order delivery date" type="TimeDimension" description="The date when the order was delivered to the customer" foreignKey="first_order_customer_last_order_delivery_date_fk">
-      <Hierarchy allMemberName="All first order customer last order delivery dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All first order customer last order delivery dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="First order customer last order estimated delivery date" type="TimeDimension" description="The estimated delivery date communicated to the customer at the time of order placement" foreignKey="first_order_customer_last_order_estimated_delivery_date_fk">
-      <Hierarchy allMemberName="All first order customer last order estimated delivery dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All first order customer last order estimated delivery dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      <Hierarchy allMemberName="All first order delivery time in dayss" hasAll="true" name="By week">
+        <Table schema="time" name="duration"/>
+        <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Weeks" column="weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Four weeks" column="four_weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
     <Dimension name="First order customer zip code" description="First 5 digits of the zip code (Brazil has an 8-digit system)" foreignKey="first_order_customer_zip_code_fk">
@@ -883,174 +882,6 @@
       <Hierarchy allMemberName="All First order customer state" hasAll="true" primaryKey="zip_code_id">
         <Table name="zip_code" schema="ec_dim"/>
         <Level name="First order customer state" column="state" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Last order date" type="TimeDimension" description="The date when the order was placed (stored in the backend)" foreignKey="last_order_date_fk">
-      <Hierarchy allMemberName="All last order dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All last order dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Last order approval date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="last_order_approval_date_fk">
-      <Hierarchy allMemberName="All last order approval dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All last order approval dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Last order shipping date" type="TimeDimension" description="The date when the order was shipped, i.e., handed to the logistic partner" foreignKey="last_order_shipping_date_fk">
-      <Hierarchy allMemberName="All last order shipping dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All last order shipping dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Last order delivery date" type="TimeDimension" description="The date when the order was delivered to the customer" foreignKey="last_order_delivery_date_fk">
-      <Hierarchy allMemberName="All last order delivery dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All last order delivery dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Last order estimated delivery date" type="TimeDimension" description="The estimated delivery date communicated to the customer at the time of order placement" foreignKey="last_order_estimated_delivery_date_fk">
-      <Hierarchy allMemberName="All last order estimated delivery dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All last order estimated delivery dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Last order customer first order date" type="TimeDimension" description="The date when the order was placed (stored in the backend)" foreignKey="last_order_customer_first_order_date_fk">
-      <Hierarchy allMemberName="All last order customer first order dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All last order customer first order dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Last order customer first order approval date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="last_order_customer_first_order_approval_date_fk">
-      <Hierarchy allMemberName="All last order customer first order approval dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All last order customer first order approval dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Last order customer first order shipping date" type="TimeDimension" description="The date when the order was shipped, i.e., handed to the logistic partner" foreignKey="last_order_customer_first_order_shipping_date_fk">
-      <Hierarchy allMemberName="All last order customer first order shipping dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All last order customer first order shipping dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Last order customer first order delivery date" type="TimeDimension" description="The date when the order was delivered to the customer" foreignKey="last_order_customer_first_order_delivery_date_fk">
-      <Hierarchy allMemberName="All last order customer first order delivery dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All last order customer first order delivery dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Last order customer first order estimated delivery date" type="TimeDimension" description="The estimated delivery date communicated to the customer at the time of order placement" foreignKey="last_order_customer_first_order_estimated_delivery_date_fk">
-      <Hierarchy allMemberName="All last order customer first order estimated delivery dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All last order customer first order estimated delivery dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Last order customer zip code" description="First 5 digits of the zip code (Brazil has an 8-digit system)" foreignKey="last_order_customer_zip_code_fk">
-      <Hierarchy allMemberName="All Last order customer zip code" hasAll="true" primaryKey="zip_code_id">
-        <Table name="zip_code" schema="ec_dim"/>
-        <Level name="Last order customer zip code" column="zip_code" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Last order customer city" description="City name" foreignKey="last_order_customer_zip_code_fk">
-      <Hierarchy allMemberName="All Last order customer city" hasAll="true" primaryKey="zip_code_id">
-        <Table name="zip_code" schema="ec_dim"/>
-        <Level name="Last order customer city" column="city" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Last order customer state" description="State name" foreignKey="last_order_customer_zip_code_fk">
-      <Hierarchy allMemberName="All Last order customer state" hasAll="true" primaryKey="zip_code_id">
-        <Table name="zip_code" schema="ec_dim"/>
-        <Level name="Last order customer state" column="state" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
     <Dimension name="Zip code" description="First 5 digits of the zip code (Brazil has an 8-digit system)" foreignKey="zip_code_fk">
@@ -1188,30 +1019,15 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Seller first order approval date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="seller_first_order_approval_date_fk">
-      <Hierarchy allMemberName="All seller first order approval dates" hasAll="true" name="By month">
+    <Dimension name="Seller first order payment date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="seller_first_order_payment_date_fk">
+      <Hierarchy allMemberName="All seller first order payment dates" hasAll="true" name="By month">
         <Table schema="time" name="day"/>
         <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
         <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
         <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
-      <Hierarchy allMemberName="All seller first order approval dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Seller first order shipping date" type="TimeDimension" description="The date when the order was shipped, i.e., handed to the logistic partner" foreignKey="seller_first_order_shipping_date_fk">
-      <Hierarchy allMemberName="All seller first order shipping dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All seller first order shipping dates" hasAll="true" name="By week">
+      <Hierarchy allMemberName="All seller first order payment dates" hasAll="true" name="By week">
         <Table schema="time" name="day"/>
         <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
         <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
@@ -1233,19 +1049,20 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Seller first order estimated delivery date" type="TimeDimension" description="The estimated delivery date communicated to the customer at the time of order placement" foreignKey="seller_first_order_estimated_delivery_date_fk">
-      <Hierarchy allMemberName="All seller first order estimated delivery dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+    <Dimension name="Seller first order delivery time in days" type="StandardDimension" description="The number of days from placing the order to delivery to the customer" foreignKey="seller_first_order_delivery_time_in_days_fk">
+      <Hierarchy allMemberName="All seller first order delivery time in dayss" hasAll="true" name="By month">
+        <Table schema="time" name="duration"/>
+        <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Months" column="months" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Half years" column="half_years" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
       </Hierarchy>
-      <Hierarchy allMemberName="All seller first order estimated delivery dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      <Hierarchy allMemberName="All seller first order delivery time in dayss" hasAll="true" name="By week">
+        <Table schema="time" name="duration"/>
+        <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Weeks" column="weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Four weeks" column="four_weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
     <Dimension name="Seller first order customer first order date" type="TimeDimension" description="The date when the order was placed (stored in the backend)" foreignKey="seller_first_order_customer_first_order_date_fk">
@@ -1263,30 +1080,15 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Seller first order customer first order approval date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="seller_first_order_customer_first_order_approval_date_fk">
-      <Hierarchy allMemberName="All seller first order customer first order approval dates" hasAll="true" name="By month">
+    <Dimension name="Seller first order customer first order payment date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="seller_first_order_customer_first_order_payment_date_fk">
+      <Hierarchy allMemberName="All seller first order customer first order payment dates" hasAll="true" name="By month">
         <Table schema="time" name="day"/>
         <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
         <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
         <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
-      <Hierarchy allMemberName="All seller first order customer first order approval dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Seller first order customer first order shipping date" type="TimeDimension" description="The date when the order was shipped, i.e., handed to the logistic partner" foreignKey="seller_first_order_customer_first_order_shipping_date_fk">
-      <Hierarchy allMemberName="All seller first order customer first order shipping dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All seller first order customer first order shipping dates" hasAll="true" name="By week">
+      <Hierarchy allMemberName="All seller first order customer first order payment dates" hasAll="true" name="By week">
         <Table schema="time" name="day"/>
         <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
         <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
@@ -1308,94 +1110,20 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Seller first order customer first order estimated delivery date" type="TimeDimension" description="The estimated delivery date communicated to the customer at the time of order placement" foreignKey="seller_first_order_customer_first_order_estimated_delivery_date_fk">
-      <Hierarchy allMemberName="All seller first order customer first order estimated delivery dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+    <Dimension name="Seller first order customer first order delivery time in days" type="StandardDimension" description="The number of days from placing the order to delivery to the customer" foreignKey="seller_first_order_customer_first_order_delivery_time_in_days_fk">
+      <Hierarchy allMemberName="All seller first order customer first order delivery time in dayss" hasAll="true" name="By month">
+        <Table schema="time" name="duration"/>
+        <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Months" column="months" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Half years" column="half_years" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
       </Hierarchy>
-      <Hierarchy allMemberName="All seller first order customer first order estimated delivery dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Seller first order customer last order date" type="TimeDimension" description="The date when the order was placed (stored in the backend)" foreignKey="seller_first_order_customer_last_order_date_fk">
-      <Hierarchy allMemberName="All seller first order customer last order dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All seller first order customer last order dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Seller first order customer last order approval date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="seller_first_order_customer_last_order_approval_date_fk">
-      <Hierarchy allMemberName="All seller first order customer last order approval dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All seller first order customer last order approval dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Seller first order customer last order shipping date" type="TimeDimension" description="The date when the order was shipped, i.e., handed to the logistic partner" foreignKey="seller_first_order_customer_last_order_shipping_date_fk">
-      <Hierarchy allMemberName="All seller first order customer last order shipping dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All seller first order customer last order shipping dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Seller first order customer last order delivery date" type="TimeDimension" description="The date when the order was delivered to the customer" foreignKey="seller_first_order_customer_last_order_delivery_date_fk">
-      <Hierarchy allMemberName="All seller first order customer last order delivery dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All seller first order customer last order delivery dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Seller first order customer last order estimated delivery date" type="TimeDimension" description="The estimated delivery date communicated to the customer at the time of order placement" foreignKey="seller_first_order_customer_last_order_estimated_delivery_date_fk">
-      <Hierarchy allMemberName="All seller first order customer last order estimated delivery dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All seller first order customer last order estimated delivery dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      <Hierarchy allMemberName="All seller first order customer first order delivery time in dayss" hasAll="true" name="By week">
+        <Table schema="time" name="duration"/>
+        <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Weeks" column="weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Four weeks" column="four_weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
     <Dimension name="Seller first order customer zip code" description="First 5 digits of the zip code (Brazil has an 8-digit system)" foreignKey="seller_first_order_customer_zip_code_fk">
@@ -1431,30 +1159,15 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Seller last order approval date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="seller_last_order_approval_date_fk">
-      <Hierarchy allMemberName="All seller last order approval dates" hasAll="true" name="By month">
+    <Dimension name="Seller last order payment date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="seller_last_order_payment_date_fk">
+      <Hierarchy allMemberName="All seller last order payment dates" hasAll="true" name="By month">
         <Table schema="time" name="day"/>
         <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
         <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
         <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
-      <Hierarchy allMemberName="All seller last order approval dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Seller last order shipping date" type="TimeDimension" description="The date when the order was shipped, i.e., handed to the logistic partner" foreignKey="seller_last_order_shipping_date_fk">
-      <Hierarchy allMemberName="All seller last order shipping dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All seller last order shipping dates" hasAll="true" name="By week">
+      <Hierarchy allMemberName="All seller last order payment dates" hasAll="true" name="By week">
         <Table schema="time" name="day"/>
         <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
         <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
@@ -1476,19 +1189,20 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Seller last order estimated delivery date" type="TimeDimension" description="The estimated delivery date communicated to the customer at the time of order placement" foreignKey="seller_last_order_estimated_delivery_date_fk">
-      <Hierarchy allMemberName="All seller last order estimated delivery dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+    <Dimension name="Seller last order delivery time in days" type="StandardDimension" description="The number of days from placing the order to delivery to the customer" foreignKey="seller_last_order_delivery_time_in_days_fk">
+      <Hierarchy allMemberName="All seller last order delivery time in dayss" hasAll="true" name="By month">
+        <Table schema="time" name="duration"/>
+        <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Months" column="months" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Half years" column="half_years" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
       </Hierarchy>
-      <Hierarchy allMemberName="All seller last order estimated delivery dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      <Hierarchy allMemberName="All seller last order delivery time in dayss" hasAll="true" name="By week">
+        <Table schema="time" name="duration"/>
+        <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Weeks" column="weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Four weeks" column="four_weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
     <Dimension name="Seller last order customer first order date" type="TimeDimension" description="The date when the order was placed (stored in the backend)" foreignKey="seller_last_order_customer_first_order_date_fk">
@@ -1506,30 +1220,15 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Seller last order customer first order approval date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="seller_last_order_customer_first_order_approval_date_fk">
-      <Hierarchy allMemberName="All seller last order customer first order approval dates" hasAll="true" name="By month">
+    <Dimension name="Seller last order customer first order payment date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="seller_last_order_customer_first_order_payment_date_fk">
+      <Hierarchy allMemberName="All seller last order customer first order payment dates" hasAll="true" name="By month">
         <Table schema="time" name="day"/>
         <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
         <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
         <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
-      <Hierarchy allMemberName="All seller last order customer first order approval dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Seller last order customer first order shipping date" type="TimeDimension" description="The date when the order was shipped, i.e., handed to the logistic partner" foreignKey="seller_last_order_customer_first_order_shipping_date_fk">
-      <Hierarchy allMemberName="All seller last order customer first order shipping dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All seller last order customer first order shipping dates" hasAll="true" name="By week">
+      <Hierarchy allMemberName="All seller last order customer first order payment dates" hasAll="true" name="By week">
         <Table schema="time" name="day"/>
         <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
         <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
@@ -1551,94 +1250,20 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Seller last order customer first order estimated delivery date" type="TimeDimension" description="The estimated delivery date communicated to the customer at the time of order placement" foreignKey="seller_last_order_customer_first_order_estimated_delivery_date_fk">
-      <Hierarchy allMemberName="All seller last order customer first order estimated delivery dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+    <Dimension name="Seller last order customer first order delivery time in days" type="StandardDimension" description="The number of days from placing the order to delivery to the customer" foreignKey="seller_last_order_customer_first_order_delivery_time_in_days_fk">
+      <Hierarchy allMemberName="All seller last order customer first order delivery time in dayss" hasAll="true" name="By month">
+        <Table schema="time" name="duration"/>
+        <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Months" column="months" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Half years" column="half_years" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
       </Hierarchy>
-      <Hierarchy allMemberName="All seller last order customer first order estimated delivery dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Seller last order customer last order date" type="TimeDimension" description="The date when the order was placed (stored in the backend)" foreignKey="seller_last_order_customer_last_order_date_fk">
-      <Hierarchy allMemberName="All seller last order customer last order dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All seller last order customer last order dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Seller last order customer last order approval date" type="TimeDimension" description="The date when the customer's payment was approved" foreignKey="seller_last_order_customer_last_order_approval_date_fk">
-      <Hierarchy allMemberName="All seller last order customer last order approval dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All seller last order customer last order approval dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Seller last order customer last order shipping date" type="TimeDimension" description="The date when the order was shipped, i.e., handed to the logistic partner" foreignKey="seller_last_order_customer_last_order_shipping_date_fk">
-      <Hierarchy allMemberName="All seller last order customer last order shipping dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All seller last order customer last order shipping dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Seller last order customer last order delivery date" type="TimeDimension" description="The date when the order was delivered to the customer" foreignKey="seller_last_order_customer_last_order_delivery_date_fk">
-      <Hierarchy allMemberName="All seller last order customer last order delivery dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All seller last order customer last order delivery dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Seller last order customer last order estimated delivery date" type="TimeDimension" description="The estimated delivery date communicated to the customer at the time of order placement" foreignKey="seller_last_order_customer_last_order_estimated_delivery_date_fk">
-      <Hierarchy allMemberName="All seller last order customer last order estimated delivery dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All seller last order customer last order estimated delivery dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      <Hierarchy allMemberName="All seller last order customer first order delivery time in dayss" hasAll="true" name="By week">
+        <Table schema="time" name="duration"/>
+        <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Weeks" column="weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Four weeks" column="four_weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
     <Dimension name="Seller last order customer zip code" description="First 5 digits of the zip code (Brazil has an 8-digit system)" foreignKey="seller_last_order_customer_zip_code_fk">
