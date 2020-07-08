@@ -28,3 +28,11 @@ FROM ec_data.product
          LEFT JOIN ec_data.product_category_name_translation USING (product_category_name);
 
 SELECT util.add_index('ec_tmp', 'product', column_names := ARRAY ['product_id']);
+
+ANALYZE ec_tmp.product;
+
+SELECT util.create_enum(
+               'ec_dim_next.PRODUCT_CATEGORY',
+               (SELECT array_agg(DISTINCT product_category)
+                FROM ec_tmp.product
+                WHERE product_category IS NOT NULL));

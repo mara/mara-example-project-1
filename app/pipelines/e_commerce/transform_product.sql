@@ -1,9 +1,3 @@
-SELECT util.create_enum(
-               'ec_dim_next.PRODUCT_CATEGORY',
-               (SELECT array_agg(DISTINCT product_category)
-                FROM ec_tmp.product
-                WHERE product_category IS NOT NULL));
-
 DROP TABLE IF EXISTS ec_dim_next.product CASCADE;
 
 CREATE TABLE ec_dim_next.product

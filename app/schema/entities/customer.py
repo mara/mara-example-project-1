@@ -28,6 +28,13 @@ customer_entity.add_attribute(
     column_name='days_since_last_order',
     accessible_via_entity_link=False)
 
+customer_entity.add_attribute(
+    name='Favourite product category',
+    description='The category of the most purchased product (by revenue) of the customer',
+    type=Type.ENUM,
+    column_name='favourite_product_category',
+    accessible_via_entity_link=False)
+
 from .zip_code import zip_code_entity
 from .order import order_entity
 

@@ -718,6 +718,11 @@
         <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
+    <Dimension name="Favourite product category" description="The category of the most purchased product (by revenue) of the customer">
+      <Hierarchy allMemberName="All Favourite product category" hasAll="true">
+        <Level name="Favourite product category" column="favourite_product_category" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
     <Dimension name="First order date" type="TimeDimension" description="The date when the order was placed (stored in the backend)" foreignKey="first_order_date_fk">
       <Hierarchy allMemberName="All first order dates" hasAll="true" name="By month">
         <Table schema="time" name="day"/>
