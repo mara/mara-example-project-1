@@ -3,7 +3,7 @@ from mara_schema.attribute import Type
 
 lead_entity = Entity(
     name='Lead',
-    description="Leads that made contact through filling a request of contact on a landing page. Can become"
+    description="Leads that made contact through filling a request of contact on a landing page. Can become "
                 "sellers if they close a deal with a Sales Representative",
     schema_name='m_dim',
     table_name='lead')

@@ -11,9 +11,7 @@ zip_code_entity = Entity(
 zip_code_entity.add_attribute(
     name='Zip code ID',
     description='Unique identifier of a geo-location entry based on the zip code',
-    column_name='zip_code_id',
-    type=Type.ID,
-    high_cardinality=True)
+    column_name='zip_code_id')
 zip_code_entity.add_attribute(
     name='Zip code',
     description='First 5 digits of the zip code (Brazil has an 8-digit system)',
@@ -22,18 +20,18 @@ zip_code_entity.add_attribute(
 zip_code_entity.add_attribute(
     name='Latitude',
     description='Latitude coordinate',
-    column_name='latitude',
-    high_cardinality=True)
+    column_name='latitude')
 zip_code_entity.add_attribute(
     name='Longitude',
     description='Longitude coordinate',
-    column_name='longitude',
-    high_cardinality=True)
+    column_name='longitude')
 zip_code_entity.add_attribute(
     name='City',
     description='City name',
-    column_name='city')
+    column_name='city',
+    important_field=True)
 zip_code_entity.add_attribute(
     name='State',
     description='State name',
-    column_name='state')
+    column_name='state',
+    important_field=True)

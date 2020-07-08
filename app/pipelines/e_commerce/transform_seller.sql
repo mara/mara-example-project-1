@@ -7,13 +7,11 @@ CREATE TABLE ec_dim_next.seller
     first_order_fk               TEXT,
     last_order_fk                TEXT,
 
-    days_since_last_order        INTEGER,
     number_of_orders             INTEGER,
     number_of_order_items        INTEGER,
     number_of_deliveries         INTEGER,
-    number_of_customers          INTEGER,
-    revenue_lifetime             DOUBLE PRECISION,
-    total_freight_value          DOUBLE PRECISION,
+    product_revenue              DOUBLE PRECISION,
+    shipping_revenue             DOUBLE PRECISION,
     avg_days_of_payment_approval DOUBLE PRECISION
 );
 
@@ -24,8 +22,8 @@ WITH seller_items AS (
            count(DISTINCT order_item.order_id)
            FILTER ( WHERE delivery_date IS NOT NULL ) AS number_of_deliveries,
            count(DISTINCT order_item.customer_id)     AS number_of_customers,
-           sum(product_revenue)                       AS revenue_lifetime,
-           sum(shipping_revenue)                      AS total_freight_value,
+           sum(product_revenue)                       AS product_revenue,
+           sum(shipping_revenue)                      AS shipping_revenue,
            avg(payment_approval_time_in_days)         AS avg_days_of_payment_approval
     FROM ec_tmp.order_item
              LEFT JOIN ec_tmp.order USING (order_id)
@@ -35,13 +33,10 @@ WITH seller_items AS (
     SELECT DISTINCT seller_id,
                     first_value(order_id)
                     OVER (PARTITION BY seller_id
-                        ORDER BY "order".order_date ASC)     AS first_order_id,
+                        ORDER BY "order".order_date ASC)  AS first_order_id,
                     first_value(order_id)
                     OVER (PARTITION BY seller_id
-                        ORDER BY "order".order_date DESC)    AS last_order_id,
-                    now() :: DATE
-                        - MAX("order".order_date)
-                          OVER (PARTITION BY seller_id) :: DATE AS days_since_last_order
+                        ORDER BY "order".order_date DESC) AS last_order_id
     FROM ec_tmp.order_item
              LEFT JOIN ec_tmp.order USING (order_id)
 )
@@ -54,13 +49,11 @@ SELECT seller_id,
        seller_orders.first_order_id              AS first_order_fk,
        seller_orders.last_order_id               AS last_order_fk,
 
-       seller_orders.days_since_last_order       AS days_since_last_order,
        seller_items.number_of_orders             AS number_of_orders,
        seller_items.number_of_items              AS number_of_order_items,
        seller_items.number_of_deliveries         AS number_of_deliveries,
-       seller_items.number_of_customers          AS number_of_customers,
-       seller_items.revenue_lifetime             AS revenue_lifetime,
-       seller_items.total_freight_value          AS total_freight_value,
+       seller_items.product_revenue              AS product_revenue,
+       seller_items.shipping_revenue             AS shipping_revenue,
        seller_items.avg_days_of_payment_approval AS avg_days_of_payment_approval
 FROM ec_tmp.seller
          LEFT JOIN seller_items USING (seller_id)

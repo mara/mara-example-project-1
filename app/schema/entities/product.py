@@ -14,7 +14,7 @@ product_entity.add_attribute(
     high_cardinality=True)
 product_entity.add_attribute(
     name='Product category',
-    description='The category name describing the group of products (e.g. "health_beuty" or "computers_accessories',
+    description='The category name describing the group of products (e.g. "health_beuty", "computers_accessories", etc.',
     column_name='product_category',
     important_field=True,
     type=Type.ENUM)

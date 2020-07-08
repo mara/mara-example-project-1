@@ -8,14 +8,20 @@ products_data_set.add_simple_metric(
     name='# Order items',
     description='How many times this product has been sold (at the time of the last DWH import)',
     aggregation=Aggregation.SUM,
-    column_name='number_of_order_items')
+    column_name='number_of_order_items',
+    important_field=True)
 products_data_set.add_simple_metric(
-    name='Revenue (all time)',
-    description='The revenue generated from the product since the beginning it has been sold',
+    name='Product revenue',
+    description='The lifetime revenue generated from this product',
     aggregation=Aggregation.SUM,
-    column_name='revenue_all_time')
+    column_name='product_revenue')
 products_data_set.add_simple_metric(
-    name='Total shipping value',
-    description='Total shipping value payed for this product since the beginning it has been sold',
+    name='Shipping revenue',
+    description='The lifetime revenue generated from delivery fees for this product',
     aggregation=Aggregation.SUM,
-    column_name='total_freight_value')
+    column_name='shipping_revenue')
+products_data_set.add_composed_metric(
+    name='Revenue',
+    description='The total revenue generated from this product',
+    formula='[Product revenue] + [Shipping revenue]',
+    important_field=True)

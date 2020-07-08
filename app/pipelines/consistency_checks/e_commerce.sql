@@ -35,13 +35,13 @@ SELECT util.assert_not_found(
 SELECT util.assert_almost_equal(
                'The total amount of lifetime revenue should be equal among customer and order-item dim tables',
                0.001,
-               'SELECT sum(revenue_lifetime) FROM ec_dim.customer',
+               'SELECT sum(product_revenue) FROM ec_dim.customer',
                'SELECT sum(product_revenue) FROM ec_dim.order_item'
            );
 
 SELECT util.assert_almost_equal(
                'The total amount of lifetime revenue should be equal among seller and order-item dim tables',
                0.001,
-               'SELECT sum(revenue_lifetime) FROM ec_dim.seller',
+               'SELECT sum(product_revenue) FROM ec_dim.seller',
                'SELECT sum(product_revenue) FROM ec_dim.order_item'
            );

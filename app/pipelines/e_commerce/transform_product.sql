@@ -19,19 +19,17 @@ CREATE TABLE ec_dim_next.product
     width                     INTEGER,                      --product width measured in centimeters.
 
     number_of_order_items     INTEGER,
-    revenue_all_time          DOUBLE PRECISION,
-    total_freight_value       DOUBLE PRECISION,
+    product_revenue           DOUBLE PRECISION,
+    shipping_revenue          DOUBLE PRECISION,
     avg_delivery_time_in_days DOUBLE PRECISION
 );
 
 WITH product_items AS (
     SELECT product_id,
-           count(*)                               AS number_of_items,
-           count(DISTINCT order_item.order_id)    AS number_of_orders,
-           count(DISTINCT order_item.customer_id) AS number_of_customers,
-           sum(product_revenue)                   AS revenue_all_time,
-           sum(shipping_revenue)                  AS freight_value_all_time,
-           avg("order".delivery_time_in_days)     AS avg_delivery_time_in_days
+           count(*)                           AS number_of_items,
+           sum(product_revenue)               AS product_revenue,
+           sum(shipping_revenue)              AS shipping_revenue,
+           avg("order".delivery_time_in_days) AS avg_delivery_time_in_days
     FROM ec_tmp.order_item
              LEFT JOIN ec_tmp.order USING (order_id)
     GROUP BY product_id
@@ -50,8 +48,8 @@ SELECT product_id,
        width,
 
        product_items.number_of_items                  AS number_of_order_items,
-       product_items.revenue_all_time                 AS revenue_all_time,
-       product_items.freight_value_all_time           AS freight_value_all_time,
+       product_items.product_revenue                  AS product_revenue,
+       product_items.shipping_revenue                 AS shipping_revenue,
        product_items.avg_delivery_time_in_days        AS avg_delivery_time_in_days
 FROM ec_tmp.product
          LEFT JOIN product_items USING (product_id);

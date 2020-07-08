@@ -28,8 +28,8 @@ CREATE TABLE m_dim_next.lead
     number_of_orders              INTEGER,
     number_of_order_items         INTEGER,
     number_of_deliveries          INTEGER,
-    revenue_lifetime              DOUBLE PRECISION,
-    total_shipping_value          DOUBLE PRECISION
+    product_revenue               DOUBLE PRECISION,
+    shipping_revenue              DOUBLE PRECISION
 );
 
 INSERT INTO m_dim_next.lead
@@ -81,8 +81,8 @@ SELECT lead_id                                                        AS lead_id
        seller.number_of_orders,
        seller.number_of_order_items,
        seller.number_of_deliveries,
-       seller.revenue_lifetime,
-       seller.total_freight_value                                     AS total_shipping_value
+       seller.product_revenue                                         AS product_revenue,
+       seller.shipping_revenue                                        AS shipping_revenue
 FROM m_tmp.lead
          LEFT JOIN ec_dim.seller USING (seller_id);
 

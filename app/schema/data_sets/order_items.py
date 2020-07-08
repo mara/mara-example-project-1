@@ -4,7 +4,7 @@ from app.schema.entities.order_item import order_item_entity
 
 order_items_data_set = DataSet(entity=order_item_entity, name='Order items')
 
-order_items_data_set.include_attributes(['Order', 'Customer', 'Order'],
+order_items_data_set.include_attributes(['Order'],
                                         ['Order date', 'Payment date', 'Delivery date', 'Delivery time in days'])
 order_items_data_set.include_attributes(['Order', 'Customer', 'Zip code'], ['Zip code', 'City', 'State'])
 order_items_data_set.include_attributes(['Seller', 'Zip code'], ['Zip code', 'City', 'State'])
@@ -31,7 +31,7 @@ order_items_data_set.add_simple_metric(
 
 order_items_data_set.add_simple_metric(
     name='Shipping revenue',
-    description='Revenue generated based on the price of the items and delivery fee',
+    description='Revenue generated based on the delivery fee',
     aggregation=Aggregation.SUM,
     column_name='shipping_revenue')
 
