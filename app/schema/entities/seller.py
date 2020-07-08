@@ -3,7 +3,7 @@ from mara_schema.attribute import Type
 
 seller_entity = Entity(
     name='Seller',
-    description='Merchants that are selling their products through the Olist department store',
+    description='Merchants that are selling products',
     schema_name='ec_dim')
 
 seller_entity.add_attribute(

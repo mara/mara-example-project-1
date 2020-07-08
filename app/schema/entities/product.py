@@ -3,7 +3,7 @@ from mara_schema.attribute import Type
 
 product_entity = Entity(
     name='Product',
-    description='Products that were at least once sold',
+    description='Products that were at least sold once',
     schema_name='ec_dim')
 
 product_entity.add_attribute(
