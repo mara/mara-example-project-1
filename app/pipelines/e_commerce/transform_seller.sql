@@ -5,7 +5,6 @@ CREATE TABLE ec_dim_next.seller
     seller_id                    TEXT    NOT NULL PRIMARY KEY, -- seller unique identifier
     zip_code_fk                  INTEGER NOT NULL,             -- integer representation of a zip_code_prefix
     first_order_fk               TEXT,
-    last_order_fk                TEXT,
 
     number_of_orders             INTEGER,
     number_of_order_items        INTEGER,
@@ -33,10 +32,7 @@ WITH seller_items AS (
     SELECT DISTINCT seller_id,
                     first_value(order_id)
                     OVER (PARTITION BY seller_id
-                        ORDER BY "order".order_date ASC)  AS first_order_id,
-                    first_value(order_id)
-                    OVER (PARTITION BY seller_id
-                        ORDER BY "order".order_date DESC) AS last_order_id
+                        ORDER BY "order".order_date ASC)  AS first_order_id
     FROM ec_tmp.order_item
              LEFT JOIN ec_tmp.order USING (order_id)
 )
@@ -47,7 +43,7 @@ SELECT seller_id,
        zip_code::INTEGER                         AS zip_code_fk,
 
        seller_orders.first_order_id              AS first_order_fk,
-       seller_orders.last_order_id               AS last_order_fk,
+
 
        seller_items.number_of_orders             AS number_of_orders,
        seller_items.number_of_items              AS number_of_order_items,

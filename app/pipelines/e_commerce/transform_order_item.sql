@@ -26,7 +26,7 @@ SELECT order_item_id,
 FROM ec_tmp.order_item;
 
 SELECT util.add_index('ec_dim_next', 'order_item',
-                      column_names := ARRAY ['order_fk', 'product_fk', 'seller_fk']);
+                      column_names := ARRAY ['order_fk', 'customer_fk', 'product_fk', 'seller_fk']);
 
 CREATE OR REPLACE FUNCTION ec_tmp.constrain_order_item()
     RETURNS VOID AS
