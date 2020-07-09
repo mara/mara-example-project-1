@@ -17,9 +17,9 @@ SELECT util.assert_almost_equal(
            );
 
 SELECT util.assert_equal(
-               'The total number of items should be equal among order_item and lead dim tables',
-               'SELECT sum(number_of_order_items) FROM m_dim.lead',
-               'SELECT count(*) ' ||
-               'FROM ec_dim.order_item ' ||
-               'INNER JOIN m_dim.lead USING (seller_fk)'
+               'The total number orders should be equal among order_item and lead dim tables',
+               'SELECT sum(number_of_orders) FROM m_dim.lead',
+               'SELECT sum(seller.number_of_orders) ' ||
+               'FROM ec_dim.seller ' ||
+               'INNER JOIN m_dim.lead on seller.seller_id = lead.seller_fk'
            );

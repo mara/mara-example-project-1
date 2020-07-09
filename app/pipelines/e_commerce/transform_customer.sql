@@ -11,14 +11,12 @@ CREATE TABLE ec_dim_next.customer
     days_since_first_order     INTEGER,
     days_since_last_order      INTEGER,
     number_of_orders           INTEGER,
-    number_of_order_items      INTEGER,
     product_revenue            DOUBLE PRECISION,
     shipping_revenue           DOUBLE PRECISION
 );
 
 WITH customer_items AS (
     SELECT customer_id,
-           count(*)                 AS number_of_items,
            count(DISTINCT order_id) AS number_of_orders,
            sum(product_revenue)     AS product_revenue,
            sum(shipping_revenue)    AS shipping_revenue
@@ -66,7 +64,6 @@ SELECT customer_id,
        customer_orders.days_since_first_order                                              AS days_since_first_order,
        customer_orders.days_since_last_order                                               AS days_since_last_order,
        customer_items.number_of_orders                                                     AS number_of_orders,
-       customer_items.number_of_items                                                      AS number_of_order_items,
        customer_items.product_revenue                                                      AS product_revenue,
        customer_items.shipping_revenue                                                     AS shipping_revenue
 FROM ec_tmp.customer

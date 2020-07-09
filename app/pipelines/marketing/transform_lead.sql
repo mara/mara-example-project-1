@@ -26,7 +26,6 @@ CREATE TABLE m_dim_next.lead
     advertising_channel           m_dim_next.ADVERTISING_CHANNEL    NOT NULL,             --Type of media where the lead was acquired
 
     number_of_orders              INTEGER,
-    number_of_order_items         INTEGER,
     number_of_deliveries          INTEGER,
     product_revenue               DOUBLE PRECISION,
     shipping_revenue              DOUBLE PRECISION
@@ -79,7 +78,6 @@ SELECT lead_id                                                        AS lead_id
        advertising_channel :: m_dim_next.ADVERTISING_CHANNEL          AS advertising_channel,
 
        seller.number_of_orders,
-       seller.number_of_order_items,
        seller.number_of_deliveries,
        seller.product_revenue                                         AS product_revenue,
        seller.shipping_revenue                                        AS shipping_revenue

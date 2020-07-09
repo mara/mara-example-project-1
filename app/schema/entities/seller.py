@@ -11,8 +11,8 @@ seller_entity.add_attribute(
     description='The ID of the seller as defined in the backend',
     column_name='seller_id',
     type=Type.ID,
-    personal_data=True,
-    high_cardinality=True)
+    high_cardinality=True,
+    important_field=True)
 
 from .zip_code import zip_code_entity
 from .order import order_entity
