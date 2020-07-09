@@ -62,6 +62,5 @@ CREATE OR REPLACE FUNCTION ec_tmp.constrain_sellers()
 $$
 SELECT util.add_fk('ec_dim_next', 'seller', 'ec_dim_next', 'zip_code');
 SELECT util.add_fk('ec_dim_next', 'seller', 'first_order_fk', 'ec_dim_next', 'order');
-SELECT util.add_fk('ec_dim_next', 'seller', 'last_order_fk', 'ec_dim_next', 'order');
 $$
     LANGUAGE sql;
