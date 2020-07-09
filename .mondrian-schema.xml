@@ -448,6 +448,7 @@
     </Dimension>
     <Measure name="# Order items" description="The number of ordered products" column="_order_items" aggregator="count" formatString="Standard" datatype="Integer"/>
     <Measure name="# Orders" description="The number of valid orders (orders with an invoice)" column="_orders" aggregator="distinct-count" formatString="Standard" datatype="Integer"/>
+    <Measure name="# First orders" description="The number of first orders (orders with an invoice)" column="_first_orders" aggregator="distinct-count" formatString="Standard" datatype="Integer"/>
     <Measure name="Product revenue" description="The price of the ordered products as shown in the cart" column="product_revenue" aggregator="sum" formatString="Standard" datatype="Numeric"/>
     <Measure name="Shipping revenue" description="Revenue generated based on the delivery fee" column="shipping_revenue" aggregator="sum" formatString="Standard" datatype="Numeric"/>
     <CalculatedMember name="Revenue" dimension="Measures" description="The total cart value of the order">
@@ -459,7 +460,7 @@
       <CalculatedMemberProperty name="FORMAT_STRING" value="Standard"/>
     </CalculatedMember>
   </Cube>
-  <Cube name="Sellers" description="Merchants that are selling their products through the Olist department store" defaultMeasure="# Orders">
+  <Cube name="Sellers" description="Merchants that are selling products" defaultMeasure="# Orders">
     <Table schema="mondrian" name="sellers"/>
     <Dimension name="First order date" type="TimeDimension" description="The date when the order was placed (stored in the backend)" foreignKey="first_order_date_fk">
       <Hierarchy allMemberName="All first order dates" hasAll="true" name="By month">
@@ -1088,7 +1089,7 @@
       <CalculatedMemberProperty name="FORMAT_STRING" value="Standard"/>
     </CalculatedMember>
   </Cube>
-  <Cube name="Products" description="Products that were at least once sold" defaultMeasure="# Order items">
+  <Cube name="Products" description="Products that were at least sold once" defaultMeasure="# Order items">
     <Table schema="mondrian" name="products"/>
     <Dimension name="Product category" description="The category name describing the group of products (e.g. &quot;health_beuty&quot;, &quot;computers_accessories&quot;, etc.">
       <Hierarchy allMemberName="All Product category" hasAll="true">
