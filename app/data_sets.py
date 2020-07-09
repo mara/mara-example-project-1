@@ -19,6 +19,10 @@ def _data_sets():
                 if attribute.important_field:
                     default_column_names.append(prefixed_name)
 
+        for metric in data_set.metrics.values():
+            if metric.important_field:
+                default_column_names.append(metric.name)
+
         result.append(
             mara_data_explorer.data_set.DataSet(
                 id=data_set.id(),
