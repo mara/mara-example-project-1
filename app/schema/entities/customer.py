@@ -11,8 +11,7 @@ customer_entity.add_attribute(
     description='The ID of the customer as defined in the backend',
     column_name='customer_id',
     type=Type.ID,
-    high_cardinality=True,
-    important_field=True)
+    high_cardinality=True)
 
 customer_entity.add_attribute(
     name='Duration since first order',
