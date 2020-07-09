@@ -14,8 +14,8 @@ seller_entity.add_attribute(
     personal_data=True,
     high_cardinality=True)
 
-from app.schema.entities.zip_code import zip_code_entity
-from app.schema.entities.order import order_entity
+from .zip_code import zip_code_entity
+from .order import order_entity
 
 seller_entity.link_entity(target_entity=order_entity, fk_column='first_order_fk',
                           prefix='First order',
