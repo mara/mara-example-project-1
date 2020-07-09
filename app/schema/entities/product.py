@@ -12,6 +12,7 @@ product_entity.add_attribute(
     column_name='product_id',
     type=Type.ID,
     high_cardinality=True)
+
 product_entity.add_attribute(
     name='Product category',
     description='The category name describing the group of products (e.g. "health_beuty", "computers_accessories", etc.',
