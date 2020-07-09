@@ -4,10 +4,17 @@ from ..entities.order_item import order_item_entity
 
 order_items_data_set = DataSet(entity=order_item_entity, name='Order items')
 
+order_items_data_set.exclude_path(['Order', 'Customer', ('Order', 'First order')])
+order_items_data_set.exclude_path(['Order', 'Customer', ('Order', 'Last order')])
+order_items_data_set.exclude_path(['Seller', ('Order', 'First order')])
+
 order_items_data_set.include_attributes(['Order'],
                                         ['Order date', 'Payment date', 'Delivery date', 'Delivery time in days'])
 order_items_data_set.include_attributes(['Order', 'Customer', 'Zip code'], ['Zip code', 'City', 'State'])
+order_items_data_set.include_attributes(['Product'], ['Product category'])
 order_items_data_set.include_attributes(['Seller', 'Zip code'], ['Zip code', 'City', 'State'])
+
+# order_items_data_set.exclude_attributes([])
 
 order_items_data_set.add_simple_metric(
     name='# Order items',
