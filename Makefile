@@ -22,7 +22,7 @@ include .scripts/databases.mk
 include .scripts/mara-metabase/metabase.mk
 
 # mondrian server setup
-include .scripts/mara-mondrian/mondrian_server.mk
+include .scripts/mara-mondrian/mondrian-server.mk
 
 load-olist-data:
 	. .venv/bin/activate; flask olist_ecommerce.load-data
