@@ -8,8 +8,8 @@ order_items_data_set.exclude_path(['Order', 'Customer', ('Order', 'Last order')]
 order_items_data_set.exclude_path(['Seller', ('Order', 'First order')])
 
 order_items_data_set.include_attributes(['Order'],
-                                        ['Order date', 'Payment approval date', 'Delivery date', 'Delivery time in days',
-                                         '# Days since first order'])
+                                        ['Order date', 'Order status', 'Payment approval date', 'Delivery date',
+                                         'Delivery time in days', '# Days since first order'])
 order_items_data_set.include_attributes(['Order', 'Customer', ('Order', 'First order')], ['Order date'])
 order_items_data_set.include_attributes(['Order', 'Customer', 'Zip code'], ['Zip code', 'City', 'State'])
 order_items_data_set.include_attributes(['Seller', 'Zip code'], ['Zip code', 'City', 'State'])

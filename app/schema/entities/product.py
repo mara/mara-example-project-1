@@ -20,3 +20,28 @@ product_entity.add_attribute(
     column_name='product_category',
     important_field=True,
     type=Type.ENUM)
+
+product_entity.add_attribute(
+    name='Weight',
+    description='The weight of the product measured in grams',
+    column_name='weight')
+
+product_entity.add_attribute(
+    name='Length',
+    description='The length of the product measured in centimeters',
+    column_name='length')
+
+product_entity.add_attribute(
+    name='Height',
+    description='The height of the product measured in centimeters',
+    column_name='height')
+
+product_entity.add_attribute(
+    name='Width',
+    description='The width of the product measured in centimeters',
+    column_name='width')
+
+product_entity.add_attribute(
+    name='Number of photos',
+    description='The number of published photos of this product on the store',
+    column_name='number_of_photos')

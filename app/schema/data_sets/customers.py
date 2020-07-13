@@ -22,7 +22,7 @@ customers_data_set.add_simple_metric(
 
 customers_data_set.add_simple_metric(
     name='Revenue (lifetime)',
-    description='The lifetime revenue generated from items purchased by this customer',
+    description='The lifetime revenue generated from products purchased by this customer',
     aggregation=Aggregation.SUM,
     column_name='lifetime_revenue',
     important_field=True)

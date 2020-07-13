@@ -9,8 +9,7 @@ CREATE TABLE ec_dim_next.seller
     lifetime_number_of_orders      INTEGER,
     lifetime_number_of_order_items INTEGER,
     lifetime_number_of_deliveries  INTEGER,
-    lifetime_sales                 DOUBLE PRECISION,
-    avg_days_of_payment_approval   DOUBLE PRECISION
+    lifetime_sales                 DOUBLE PRECISION
 );
 
 WITH seller_items AS (
@@ -19,8 +18,7 @@ WITH seller_items AS (
            count(DISTINCT order_item.order_id)          AS lifetime_number_of_orders,
            count(DISTINCT order_item.order_id)
            FILTER ( WHERE delivery_date IS NOT NULL )   AS lifetime_number_of_deliveries,
-           sum(product_revenue) + sum(shipping_revenue) AS lifetime_sales,
-           avg(payment_approval_time_in_days)           AS avg_days_of_payment_approval
+           sum(product_revenue) + sum(shipping_revenue) AS lifetime_sales
     FROM ec_tmp.order_item
              LEFT JOIN ec_tmp.order USING (order_id)
     GROUP BY seller_id
@@ -45,8 +43,7 @@ SELECT seller_id,
        seller_items.lifetime_number_of_orders      AS lifetime_number_of_orders,
        seller_items.lifetime_number_of_order_items AS lifetime_number_of_order_items,
        seller_items.lifetime_number_of_deliveries  AS lifetime_number_of_deliveries,
-       seller_items.lifetime_sales                 AS lifetime_sales,
-       seller_items.avg_days_of_payment_approval   AS avg_days_of_payment_approval
+       seller_items.lifetime_sales                 AS lifetime_sales
 FROM ec_tmp.seller
          LEFT JOIN seller_items USING (seller_id)
          LEFT JOIN seller_orders USING (seller_id);

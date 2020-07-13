@@ -14,18 +14,17 @@ order_entity.add_attribute(
     high_cardinality=True)
 
 order_entity.add_attribute(
-    name='Order status',
-    description='The current status of the order (created, approved, shipped, etc)',
-    column_name='status',
-    important_field=True,
-    type=Type.ENUM)
-
-order_entity.add_attribute(
     name='Order date',
     description='The date when the order was placed (stored in the backend)',
     column_name='order_date',
     important_field=True,
     type=Type.DATE)
+
+order_entity.add_attribute(
+    name='Order status',
+    description='The current status of the order (created, approved, shipped, etc)',
+    column_name='status',
+    type=Type.ENUM)
 
 order_entity.add_attribute(
     name='Payment approval date',
@@ -48,7 +47,7 @@ order_entity.add_attribute(
 
 order_entity.add_attribute(
     name='# Days since first order',
-    description='The number of days from the first order of the customer',
+    description='The number of days from the first order of the customer to the placement of this order',
     column_name='days_since_first_order',
     type=Type.DURATION)
 
