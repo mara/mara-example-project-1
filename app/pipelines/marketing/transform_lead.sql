@@ -28,7 +28,8 @@ CREATE TABLE m_dim_next.lead
     number_of_orders              INTEGER,
     number_of_deliveries          INTEGER,
     product_revenue               DOUBLE PRECISION,
-    shipping_revenue              DOUBLE PRECISION
+    shipping_revenue              DOUBLE PRECISION,
+    days_to_closing_deal          INTEGER
 );
 
 INSERT INTO m_dim_next.lead
@@ -80,7 +81,8 @@ SELECT lead_id                                                        AS lead_id
        seller.number_of_orders,
        seller.number_of_deliveries,
        seller.product_revenue                                         AS product_revenue,
-       seller.shipping_revenue                                        AS shipping_revenue
+       seller.shipping_revenue                                        AS shipping_revenue,
+       days_to_closing_deal                                           AS days_to_closing_deal
 FROM m_tmp.lead
          LEFT JOIN ec_dim.seller USING (seller_id);
 

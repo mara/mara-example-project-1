@@ -116,6 +116,14 @@ lead_entity.add_attribute(
     column_name='business_type',
     type=Type.ENUM)
 
+lead_entity.add_attribute(
+    name='Duration in days to closing the deal',
+    description='The number of days it took from first contact with the lead '
+                'to closing the deal by a Sales Representative and the lead becoming a seller',
+    column_name='days_to_closing_deal',
+    type=Type.DURATION
+)
+
 from .seller import seller_entity
 
 lead_entity.link_entity(target_entity=seller_entity, fk_column='seller_fk')

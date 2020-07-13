@@ -7,9 +7,9 @@ leads_data_set = DataSet(entity=lead_entity, name='Leads')
 leads_data_set.exclude_path(['Seller', ('Order', 'First order'), 'Customer'])
 
 leads_data_set.include_attributes(['Seller', ('Order', 'First order')],
-                                      ['Order date'])
+                                  ['Order date'])
 leads_data_set.include_attributes(['Seller', 'Zip code'],
-                                      ['Zip code', 'City', 'State'])
+                                  ['Zip code', 'City', 'State'])
 
 leads_data_set.add_simple_metric(
     name='# Orders',

@@ -23,7 +23,8 @@ CREATE TABLE m_tmp.lead
 
     first_contact_date            TIMESTAMP WITH TIME ZONE NOT NULL, --Date of the first contact solicitation.
     landing_page_id               TEXT                     NOT NULL, --Landing page id where the lead was acquired
-    advertising_channel           TEXT                     NOT NULL  --Type of media where the lead was acquired
+    advertising_channel           TEXT                     NOT NULL, --Type of media where the lead was acquired
+    days_to_closing_deal          INTEGER
 );
 
 INSERT INTO m_tmp.lead
@@ -44,7 +45,9 @@ SELECT mql_id                                       AS lead_id,
        declared_monthly_revenue,
        first_contact_date::TIMESTAMP WITH TIME ZONE AS first_contact_date,
        landing_page_id,
-       COALESCE(origin, 'Unknown')                  AS advertising_channel
+       COALESCE(origin, 'Unknown')                  AS advertising_channel,
+       DATE_PART('day', won_datet -
+                        first_contact_date)         AS days_to_closing_deal
 FROM m_data.marketing_qualified_lead
          LEFT JOIN m_data.closed_deal USING (mql_id);
 
