@@ -105,15 +105,15 @@
         <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="# Days since first order" type="StandardDimension" description="The number of days from the first order of the customer to the placement of this order" foreignKey="_days_since_first_order_fk">
-      <Hierarchy allMemberName="All # days since first orders" hasAll="true" name="By month">
+    <Dimension name="Duration since first order" type="StandardDimension" description="The number of days from the first order of the customer to the placement of this order" foreignKey="duration_since_first_order_fk">
+      <Hierarchy allMemberName="All duration since first orders" hasAll="true" name="By month">
         <Table schema="time" name="duration"/>
         <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
         <Level name="Months" column="months" type="Integer" levelType="Regular" uniqueMembers="true"/>
         <Level name="Half years" column="half_years" type="Integer" levelType="Regular" uniqueMembers="true"/>
         <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
       </Hierarchy>
-      <Hierarchy allMemberName="All # days since first orders" hasAll="true" name="By week">
+      <Hierarchy allMemberName="All duration since first orders" hasAll="true" name="By week">
         <Table schema="time" name="duration"/>
         <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
         <Level name="Weeks" column="weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
@@ -232,15 +232,15 @@
   </Cube>
   <Cube name="Customers" description="People that made at least one order" defaultMeasure="# Orders (lifetime)">
     <Table schema="mondrian" name="customers"/>
-    <Dimension name="# Days since first order" type="StandardDimension" description="The number of days since the first order was placed" foreignKey="_days_since_first_order_fk">
-      <Hierarchy allMemberName="All # days since first orders" hasAll="true" name="By month">
+    <Dimension name="Duration since first order" type="StandardDimension" description="The number of days since the first order was placed" foreignKey="duration_since_first_order_fk">
+      <Hierarchy allMemberName="All duration since first orders" hasAll="true" name="By month">
         <Table schema="time" name="duration"/>
         <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
         <Level name="Months" column="months" type="Integer" levelType="Regular" uniqueMembers="true"/>
         <Level name="Half years" column="half_years" type="Integer" levelType="Regular" uniqueMembers="true"/>
         <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
       </Hierarchy>
-      <Hierarchy allMemberName="All # days since first orders" hasAll="true" name="By week">
+      <Hierarchy allMemberName="All duration since first orders" hasAll="true" name="By week">
         <Table schema="time" name="duration"/>
         <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
         <Level name="Weeks" column="weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
@@ -248,15 +248,15 @@
         <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="# Days since last order" type="StandardDimension" description="The number of days since the last order was placed" foreignKey="_days_since_last_order_fk">
-      <Hierarchy allMemberName="All # days since last orders" hasAll="true" name="By month">
+    <Dimension name="Duration since last order" type="StandardDimension" description="The number of days since the last order was placed" foreignKey="duration_since_last_order_fk">
+      <Hierarchy allMemberName="All duration since last orders" hasAll="true" name="By month">
         <Table schema="time" name="duration"/>
         <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
         <Level name="Months" column="months" type="Integer" levelType="Regular" uniqueMembers="true"/>
         <Level name="Half years" column="half_years" type="Integer" levelType="Regular" uniqueMembers="true"/>
         <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
       </Hierarchy>
-      <Hierarchy allMemberName="All # days since last orders" hasAll="true" name="By week">
+      <Hierarchy allMemberName="All duration since last orders" hasAll="true" name="By week">
         <Table schema="time" name="duration"/>
         <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
         <Level name="Weeks" column="weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>

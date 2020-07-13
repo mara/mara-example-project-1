@@ -46,7 +46,7 @@ order_entity.add_attribute(
     type=Type.DURATION)
 
 order_entity.add_attribute(
-    name='# Days since first order',
+    name='Duration since first order',
     description='The number of days from the first order of the customer to the placement of this order',
     column_name='days_since_first_order',
     type=Type.DURATION)
