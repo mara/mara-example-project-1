@@ -19,7 +19,7 @@ leads_data_set.add_simple_metric(
     important_field=True)
 
 leads_data_set.add_simple_metric(
-    name='# Deliveries',
+    name='# Deliveries (lifetime)',
     description='Number of orders fulfilled by this seller that were already delivered to the customer',
     aggregation=Aggregation.SUM,
     column_name='lifetime_number_of_deliveries')

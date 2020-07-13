@@ -399,7 +399,7 @@
       </Hierarchy>
     </Dimension>
     <Measure name="# Orders (lifetime)" description="Number of orders with at-least one product fulfilled by this seller" column="_orders_lifetime_" aggregator="sum" formatString="Standard" datatype="Numeric"/>
-    <Measure name="# Deliveries" description="Number of orders fulfilled by this seller that were already delivered to the customer" column="_deliveries" aggregator="sum" formatString="Standard" datatype="Numeric"/>
+    <Measure name="# Deliveries (lifetime)" description="Number of orders fulfilled by this seller that were already delivered to the customer" column="_deliveries_lifetime_" aggregator="sum" formatString="Standard" datatype="Numeric"/>
     <Measure name="Lifetime sales" description="The lifetime revenue generated from products sold by this seller" column="lifetime_sales" aggregator="sum" formatString="Standard" datatype="Numeric"/>
     <CalculatedMember name="AOV" dimension="Measures" description="The average revenue per order. Attention: not meaningful when split by product">
       <Formula>[Measures].[Lifetime sales] / [Measures].[# Orders (lifetime)]</Formula>

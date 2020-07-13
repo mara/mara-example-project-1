@@ -33,7 +33,7 @@ order_items_data_set.add_simple_metric(
 order_items_data_set.add_simple_metric(
     name='# First orders',
     description='The number of first orders (orders with an invoice)',
-    column_name='first_order_id',
+    column_name='is_first_order_id',
     aggregation=Aggregation.DISTINCT_COUNT,
     important_field=True)
 
