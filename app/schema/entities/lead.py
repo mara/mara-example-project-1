@@ -117,7 +117,7 @@ lead_entity.add_attribute(
     type=Type.ENUM)
 
 lead_entity.add_attribute(
-    name='Duration in days to closing the deal',
+    name='Duration to closing the deal',
     description='The number of days it took from first contact with the lead '
                 'to closing the deal by a Sales Representative and the lead becoming a seller',
     column_name='days_to_closing_deal',
