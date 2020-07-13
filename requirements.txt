@@ -9,7 +9,7 @@
 -e git+https://github.com/mara/mara-schema.git@master#egg=mara-schema
 -e git+https://github.com/mara/mara-data-explorer.git@3.0.0#egg=mara-data-explorer
 -e git+https://github.com/mara/mara-mondrian.git@1.0.1#egg=mara-mondrian
--e git+https://github.com/mara/mara-metabase.git@1.0.0#egg=mara-metabase
+-e git+https://github.com/mara/mara-metabase.git@1.0.1#egg=mara-metabase
 
 -e git+ssh://git@github.com/mara/mara-olist-ecommerce-data.git@master#egg=mara-olist-ecommerce-data
 
@@ -18,4 +18,5 @@
 gunicorn
 Flask>=1.0.2
 
-
+# temporarily pin until https://github.com/kvesteri/sqlalchemy-utils/issues/462 is fixed
+SQLAlchemy-Utils==0.36.7
