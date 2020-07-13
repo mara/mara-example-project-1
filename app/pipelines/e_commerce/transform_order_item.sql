@@ -9,7 +9,6 @@ CREATE TABLE ec_dim_next.order_item
     seller_fk           TEXT             NOT NULL,             -- seller unique identifier
     is_first_order_id   TEXT,
 
-    shipping_limit_date TIMESTAMP WITH TIME ZONE,              -- Shows the seller shipping limit date for handling the order over to the logistic partner.
     product_revenue     DOUBLE PRECISION NOT NULL,             -- item price
     shipping_revenue    DOUBLE PRECISION NOT NULL              -- item freight value item (if an order has more than one item the freight value is split between items)
 );
@@ -31,7 +30,6 @@ SELECT order_item_id,
                            ORDER BY "order".order_date ASC)
            ELSE NULL END      AS is_first_order_id,
 
-       shipping_limit_date,
        product_revenue,
        shipping_revenue
 FROM ec_tmp.order_item
