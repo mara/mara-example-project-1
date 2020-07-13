@@ -17,15 +17,15 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Payment date" type="TimeDimension" description="The date when the customer's payment was approved by the seller" foreignKey="payment_date_fk">
-      <Hierarchy allMemberName="All payment dates" hasAll="true" name="By month">
+    <Dimension name="Payment approval date" type="TimeDimension" description="The date when the customer's payment was approved by the seller" foreignKey="payment_approval_date_fk">
+      <Hierarchy allMemberName="All payment approval dates" hasAll="true" name="By month">
         <Table schema="time" name="day"/>
         <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
         <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
         <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
-      <Hierarchy allMemberName="All payment dates" hasAll="true" name="By week">
+      <Hierarchy allMemberName="All payment approval dates" hasAll="true" name="By week">
         <Table schema="time" name="day"/>
         <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
         <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
@@ -119,7 +119,7 @@
       <CalculatedMemberProperty name="FORMAT_STRING" value="Standard"/>
     </CalculatedMember>
   </Cube>
-  <Cube name="Sellers" description="Merchants that are selling products" defaultMeasure="# Orders">
+  <Cube name="Sellers" description="Merchants that are selling products" defaultMeasure="# Orders (lifetime)">
     <Table schema="mondrian" name="sellers"/>
     <Dimension name="First order date" type="TimeDimension" description="The date when the order was placed (stored in the backend)" foreignKey="first_order_date_fk">
       <Hierarchy allMemberName="All first order dates" hasAll="true" name="By month">
@@ -154,21 +154,16 @@
         <Level name="State" column="state" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Measure name="# Orders" description="Number of orders with at-least one product fulfilled by this seller" column="_orders" aggregator="sum" formatString="Standard" datatype="Numeric"/>
-    <Measure name="# Order items" description="Number of products sold by this seller" column="_order_items" aggregator="sum" formatString="Standard" datatype="Numeric"/>
-    <Measure name="# Deliveries" description="Number of orders that were already delivered to the customer" column="_deliveries" aggregator="sum" formatString="Standard" datatype="Numeric"/>
-    <Measure name="Product revenue" description="The lifetime revenue generated from products sold by this seller" column="product_revenue" aggregator="sum" formatString="Standard" datatype="Numeric"/>
-    <Measure name="Shipping revenue" description="The lifetime revenue generated from delivery fees by this seller" column="shipping_revenue" aggregator="sum" formatString="Standard" datatype="Numeric"/>
-    <CalculatedMember name="Revenue" dimension="Measures" description="The total revenue generated from this seller">
-      <Formula>[Measures].[Product revenue] + [Measures].[Shipping revenue]</Formula>
-      <CalculatedMemberProperty name="FORMAT_STRING" value="Standard"/>
-    </CalculatedMember>
+    <Measure name="# Orders (lifetime)" description="Number of orders with at-least one product fulfilled by this seller" column="_orders_lifetime_" aggregator="sum" formatString="Standard" datatype="Numeric"/>
+    <Measure name="# Order items (lifetime)" description="Number of products sold by this seller" column="_order_items_lifetime_" aggregator="sum" formatString="Standard" datatype="Numeric"/>
+    <Measure name="# Deliveries (lifetime)" description="Number of orders that were already delivered to the customer" column="_deliveries_lifetime_" aggregator="sum" formatString="Standard" datatype="Numeric"/>
+    <Measure name="Lifetime Sales" description="The lifetime revenue generated from products sold by this seller" column="lifetime_sales" aggregator="sum" formatString="Standard" datatype="Numeric"/>
     <CalculatedMember name="AOV" dimension="Measures" description="The average revenue per order. Attention: not meaningful when split by product">
-      <Formula>[Measures].[Revenue] / [Measures].[# Orders]</Formula>
+      <Formula>[Measures].[Lifetime Sales] / [Measures].[# Orders (lifetime)]</Formula>
       <CalculatedMemberProperty name="FORMAT_STRING" value="Standard"/>
     </CalculatedMember>
   </Cube>
-  <Cube name="Customers" description="People that made at least one order" defaultMeasure="# Orders">
+  <Cube name="Customers" description="People that made at least one order" defaultMeasure="# Orders (lifetime)">
     <Table schema="mondrian" name="customers"/>
     <Dimension name="Duration since first order" type="StandardDimension" description="The number of days since the first order was placed" foreignKey="duration_since_first_order_fk">
       <Hierarchy allMemberName="All duration since first orders" hasAll="true" name="By month">
@@ -255,34 +250,24 @@
         <Level name="State" column="state" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Measure name="# Orders" description="Number of orders placed by this customer" column="_orders" aggregator="sum" formatString="Standard" datatype="Numeric"/>
-    <Measure name="Product revenue" description="The lifetime revenue generated from items purchased by this customer" column="product_revenue" aggregator="sum" formatString="Standard" datatype="Numeric"/>
-    <Measure name="Shipping revenue" description="The lifetime revenue generated from delivery fees payed by this customer" column="shipping_revenue" aggregator="sum" formatString="Standard" datatype="Numeric"/>
-    <CalculatedMember name="CLV" dimension="Measures" description="The lifetime revenue generated from items purchased and delivery fees payed by this customer">
-      <Formula>[Measures].[Product revenue] + [Measures].[Shipping revenue]</Formula>
-      <CalculatedMemberProperty name="FORMAT_STRING" value="Standard"/>
-    </CalculatedMember>
+    <Measure name="# Orders (lifetime)" description="Number of orders placed by this customer" column="_orders_lifetime_" aggregator="sum" formatString="Standard" datatype="Numeric"/>
+    <Measure name="Revenue (lifetime)" description="The lifetime revenue generated from items purchased by this customer" column="revenue_lifetime_" aggregator="sum" formatString="Standard" datatype="Numeric"/>
     <CalculatedMember name="AOV" dimension="Measures" description="The average revenue per order of the customer">
-      <Formula>[Measures].[CLV] / [Measures].[# Orders]</Formula>
+      <Formula>[Measures].[Revenue (lifetime)] / [Measures].[# Orders (lifetime)]</Formula>
       <CalculatedMemberProperty name="FORMAT_STRING" value="Standard"/>
     </CalculatedMember>
   </Cube>
-  <Cube name="Products" description="Products that were at least sold once" defaultMeasure="# Order items">
+  <Cube name="Products" description="Products that were at least sold once" defaultMeasure="# Order items (lifetime)">
     <Table schema="mondrian" name="products"/>
     <Dimension name="Product category" description="The category name describing the group of products (e.g. &quot;health_beauty&quot;, &quot;computers_accessories&quot;, etc.">
       <Hierarchy allMemberName="All Product category" hasAll="true">
         <Level name="Product category" column="product_category" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Measure name="# Order items" description="How many times this product has been sold (at the time of the last DWH import)" column="_order_items" aggregator="sum" formatString="Standard" datatype="Numeric"/>
-    <Measure name="Product revenue" description="The lifetime revenue generated from this product" column="product_revenue" aggregator="sum" formatString="Standard" datatype="Numeric"/>
-    <Measure name="Shipping revenue" description="The lifetime revenue generated from delivery fees for this product" column="shipping_revenue" aggregator="sum" formatString="Standard" datatype="Numeric"/>
-    <CalculatedMember name="Revenue" dimension="Measures" description="The total revenue generated from this product">
-      <Formula>[Measures].[Product revenue] + [Measures].[Shipping revenue]</Formula>
-      <CalculatedMemberProperty name="FORMAT_STRING" value="Standard"/>
-    </CalculatedMember>
+    <Measure name="# Order items (lifetime)" description="How many times this product has been sold (at the time of the last DWH import)" column="_order_items_lifetime_" aggregator="sum" formatString="Standard" datatype="Numeric"/>
+    <Measure name="Revenue (lifetime)" description="The lifetime revenue generated from this product" column="revenue_lifetime_" aggregator="sum" formatString="Standard" datatype="Numeric"/>
   </Cube>
-  <Cube name="Leads" description="Leads that made contact through filling a request of contact on a landing page. Can become sellers if they close a deal with a Sales Representative" defaultMeasure="# Orders">
+  <Cube name="Leads" description="People that made contact through filling a request of contact on a landing page. Can become sellers if they close a deal with a Sales Representative" defaultMeasure="# Orders (lifetime)">
     <Table schema="mondrian" name="leads"/>
     <Dimension name="Is closed deal" description="Whether the qualified lead closed a deal with a Sales Representative and became a seller">
       <Hierarchy allMemberName="All Is closed deal" hasAll="true">
@@ -364,15 +349,15 @@
         <Level name="Business type" column="business_type" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Duration in days to closing the deal" type="StandardDimension" description="The number of days it took from first contact with the lead to closing the deal by a Sales Representative and the lead becoming a seller" foreignKey="duration_in_days_to_closing_the_deal_fk">
-      <Hierarchy allMemberName="All duration in days to closing the deals" hasAll="true" name="By month">
+    <Dimension name="Duration to closing the deal" type="StandardDimension" description="The number of days it took from first contact with the lead to closing the deal by a Sales Representative and the lead becoming a seller" foreignKey="duration_to_closing_the_deal_fk">
+      <Hierarchy allMemberName="All duration to closing the deals" hasAll="true" name="By month">
         <Table schema="time" name="duration"/>
         <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
         <Level name="Months" column="months" type="Integer" levelType="Regular" uniqueMembers="true"/>
         <Level name="Half years" column="half_years" type="Integer" levelType="Regular" uniqueMembers="true"/>
         <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
       </Hierarchy>
-      <Hierarchy allMemberName="All duration in days to closing the deals" hasAll="true" name="By week">
+      <Hierarchy allMemberName="All duration to closing the deals" hasAll="true" name="By week">
         <Table schema="time" name="duration"/>
         <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
         <Level name="Weeks" column="weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
@@ -413,16 +398,11 @@
         <Level name="Seller state" column="state" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Measure name="# Orders" description="Number of orders with at-least one product fulfilled by this seller" column="_orders" aggregator="sum" formatString="Standard" datatype="Numeric"/>
+    <Measure name="# Orders (lifetime)" description="Number of orders with at-least one product fulfilled by this seller" column="_orders_lifetime_" aggregator="sum" formatString="Standard" datatype="Numeric"/>
     <Measure name="# Deliveries" description="Number of orders fulfilled by this seller that were already delivered to the customer" column="_deliveries" aggregator="sum" formatString="Standard" datatype="Numeric"/>
-    <Measure name="Product revenue" description="The lifetime revenue generated from products sold by this seller" column="product_revenue" aggregator="sum" formatString="Standard" datatype="Numeric"/>
-    <Measure name="Shipping revenue" description="The lifetime revenue generated from delivery fees by this seller" column="shipping_revenue" aggregator="sum" formatString="Standard" datatype="Numeric"/>
-    <CalculatedMember name="Revenue" dimension="Measures" description="The total revenue generated from this seller">
-      <Formula>[Measures].[Product revenue] + [Measures].[Shipping revenue]</Formula>
-      <CalculatedMemberProperty name="FORMAT_STRING" value="Standard"/>
-    </CalculatedMember>
+    <Measure name="Lifetime sales" description="The lifetime revenue generated from products sold by this seller" column="lifetime_sales" aggregator="sum" formatString="Standard" datatype="Numeric"/>
     <CalculatedMember name="AOV" dimension="Measures" description="The average revenue per order. Attention: not meaningful when split by product">
-      <Formula>[Measures].[Revenue] / [Measures].[# Orders]</Formula>
+      <Formula>[Measures].[Lifetime sales] / [Measures].[# Orders (lifetime)]</Formula>
       <CalculatedMemberProperty name="FORMAT_STRING" value="Standard"/>
     </CalculatedMember>
   </Cube>

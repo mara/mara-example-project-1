@@ -29,7 +29,7 @@ order_entity.add_attribute(
     type=Type.DATE)
 
 order_entity.add_attribute(
-    name='Payment date',
+    name='Payment approval date',
     description='The date when the customer\'s payment was approved by the seller',
     column_name='payment_approval_date',
     type=Type.DATE)

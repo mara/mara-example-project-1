@@ -15,21 +15,8 @@ CREATE TABLE ec_dim_next.order
     payment_approval_date TIMESTAMP WITH TIME ZONE,  --Shows the payment approval timestamp.
     delivery_date         TIMESTAMP WITH TIME ZONE,  --Shows the actual order delivery date to the customer.
 
-    delivery_time_in_days INTEGER,                   -- date-diff of order_date, delivery_date
-
-    number_of_items       INTEGER,
-    product_revenue       DOUBLE PRECISION,
-    shipping_revenue      DOUBLE PRECISION
+    delivery_time_in_days INTEGER                   -- date-diff of order_date, delivery_date
 );
-
-WITH items AS (
-    SELECT order_id,
-           count(*)              AS number_of_items,
-           sum(product_revenue)  AS product_revenue,
-           sum(shipping_revenue) AS shipping_revenue
-    FROM ec_tmp.order_item
-    GROUP BY order_id
-)
 
 INSERT
 INTO ec_dim_next.order
@@ -41,13 +28,8 @@ SELECT order_id,
        order_date,
        payment_approval_date,
        delivery_date,
-       delivery_time_in_days,
-
-       items.number_of_items      AS number_of_items,
-       items.product_revenue      AS product_revenue,
-       items.shipping_revenue     AS shipping_revenue
-FROM ec_tmp.order
-         LEFT JOIN items USING (order_id);
+       delivery_time_in_days
+FROM ec_tmp.order;
 
 SELECT util.add_index('ec_dim_next', 'order', column_names := ARRAY ['customer_fk']);
 

@@ -14,7 +14,6 @@ CREATE TABLE ec_dim_next.product
 
     number_of_order_items     INTEGER,
     product_revenue           DOUBLE PRECISION,
-    shipping_revenue          DOUBLE PRECISION,
     avg_delivery_time_in_days DOUBLE PRECISION
 );
 
@@ -22,7 +21,6 @@ WITH product_items AS (
     SELECT product_id,
            count(*)                           AS number_of_items,
            sum(product_revenue)               AS product_revenue,
-           sum(shipping_revenue)              AS shipping_revenue,
            avg("order".delivery_time_in_days) AS avg_delivery_time_in_days
     FROM ec_tmp.order_item
              LEFT JOIN ec_tmp.order USING (order_id)
@@ -43,7 +41,6 @@ SELECT product_id,
 
        product_items.number_of_items                  AS number_of_order_items,
        product_items.product_revenue                  AS product_revenue,
-       product_items.shipping_revenue                 AS shipping_revenue,
        product_items.avg_delivery_time_in_days        AS avg_delivery_time_in_days
 FROM ec_tmp.product
          LEFT JOIN product_items USING (product_id);
