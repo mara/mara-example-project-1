@@ -46,7 +46,7 @@ SELECT mql_id                                       AS lead_id,
        first_contact_date::TIMESTAMP WITH TIME ZONE AS first_contact_date,
        landing_page_id,
        COALESCE(origin, 'Unknown')                  AS advertising_channel,
-       DATE_PART('day', won_datet -
+       DATE_PART('day', won_date -
                         first_contact_date)         AS days_to_closing_deal
 FROM m_data.marketing_qualified_lead
          LEFT JOIN m_data.closed_deal USING (mql_id);

@@ -364,6 +364,22 @@
         <Level name="Business type" column="business_type" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
+    <Dimension name="Duration in days to closing the deal" type="StandardDimension" description="The number of days it took from first contact with the lead to closing the deal by a Sales Representative and the lead becoming a seller" foreignKey="duration_in_days_to_closing_the_deal_fk">
+      <Hierarchy allMemberName="All duration in days to closing the deals" hasAll="true" name="By month">
+        <Table schema="time" name="duration"/>
+        <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Months" column="months" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Half years" column="half_years" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
+      </Hierarchy>
+      <Hierarchy allMemberName="All duration in days to closing the deals" hasAll="true" name="By week">
+        <Table schema="time" name="duration"/>
+        <Level name="Days" column="days" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Weeks" column="weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Four weeks" column="four_weeks" type="Integer" levelType="Regular" uniqueMembers="true"/>
+        <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
     <Dimension name="Seller first order date" type="TimeDimension" description="The date when the order was placed (stored in the backend)" foreignKey="seller_first_order_date_fk">
       <Hierarchy allMemberName="All seller first order dates" hasAll="true" name="By month">
         <Table schema="time" name="day"/>
