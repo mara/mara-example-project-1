@@ -18,10 +18,4 @@
 gunicorn
 Flask>=1.0.2
 
-# Packages for package maintenance. Add them here so they get updated
-pip
-wheel
-requests
-setuptools
-pipdeptree
 
