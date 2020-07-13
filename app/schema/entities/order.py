@@ -37,6 +37,7 @@ order_entity.add_attribute(
     name='Delivery date',
     description='The date when the order was delivered to the customer',
     column_name='delivery_date',
+    important_field=True,
     type=Type.DATE)
 
 order_entity.add_attribute(

@@ -17,7 +17,6 @@ zip_code_entity.add_attribute(
 zip_code_entity.add_attribute(
     name='Zip code',
     description='First 5 digits of the zip code (Brazil has an 8-digit system)',
-    important_field=True,
     column_name='zip_code')
 
 zip_code_entity.add_attribute(
@@ -39,5 +38,4 @@ zip_code_entity.add_attribute(
 zip_code_entity.add_attribute(
     name='State',
     description='State name',
-    column_name='state',
-    important_field=True)
+    column_name='state')

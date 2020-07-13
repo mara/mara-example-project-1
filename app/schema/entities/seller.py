@@ -16,10 +16,10 @@ seller_entity.add_attribute(
 from .zip_code import zip_code_entity
 from .order import order_entity
 
-seller_entity.link_entity(target_entity=order_entity, fk_column='first_order_fk',
-                          prefix='First order',
-                          description='The first order fulfilled by the seller')
 seller_entity.link_entity(target_entity=zip_code_entity,
                           prefix='',
                           fk_column='zip_code_fk',
                           description='The ZIP code info of the seller')
+seller_entity.link_entity(target_entity=order_entity, fk_column='first_order_fk',
+                          prefix='First order',
+                          description='The first order fulfilled by the seller')

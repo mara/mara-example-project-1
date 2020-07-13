@@ -16,6 +16,13 @@ lead_entity.add_attribute(
     high_cardinality=True)
 
 lead_entity.add_attribute(
+    name='First contact date',
+    description='The date the lead made first contact by signing up on a landing page',
+    column_name='first_contact_date',
+    important_field=True,
+    type=Type.DATE)
+
+lead_entity.add_attribute(
     name='Is closed deal',
     description='Whether the qualified lead closed a deal with a Sales Representative and became a seller',
     column_name='is_closed_deal',
@@ -23,9 +30,9 @@ lead_entity.add_attribute(
     important_field=True)
 
 lead_entity.add_attribute(
-    name='First contact date',
-    description='The date the lead made first contact by signing up on a landing page',
-    column_name='first_contact_date',
+    name='Deal date',
+    description='The date when the marketing qualified lead was closed and became a seller',
+    column_name='deal_date',
     important_field=True,
     type=Type.DATE)
 
@@ -57,19 +64,11 @@ lead_entity.add_attribute(
     high_cardinality=True)
 
 lead_entity.add_attribute(
-    name='Deal date',
-    description='The date when the marketing qualified lead was closed and became a seller',
-    column_name='deal_date',
-    important_field=True,
-    type=Type.DATE)
-
-lead_entity.add_attribute(
     name='Business Segment',
     description='The business segment in which the seller provides products e.g., "household_utilities", '
                 '"car_accessories". Provided by the lead on the sign up at a landing page or the first contact '
                 'with a Sales Development Representative',
     column_name='business_segment',
-    important_field=True,
     type=Type.ENUM)
 
 lead_entity.add_attribute(
@@ -78,7 +77,6 @@ lead_entity.add_attribute(
                 ' "online_medium". Provided by the lead on the sign up at a landing page or the first contact '
                 'with a Sales Development Representative',
     column_name='lead_type',
-    important_field=True,
     type=Type.ENUM)
 
 lead_entity.add_attribute(
@@ -87,7 +85,6 @@ lead_entity.add_attribute(
                 '(https://en.wikipedia.org/wiki/DISC_assessment). '
                 'Identified by the Sales Development Representative on the first contact with the lead',
     column_name='lead_behaviour_profile',
-    important_field=True,
     type=Type.ENUM)
 
 lead_entity.add_attribute(

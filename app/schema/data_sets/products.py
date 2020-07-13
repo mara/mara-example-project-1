@@ -8,11 +8,11 @@ products_data_set.add_simple_metric(
     name='# Order items (lifetime)',
     description='How many times this product has been sold (at the time of the last DWH import)',
     aggregation=Aggregation.SUM,
-    column_name='number_of_order_items',
-    important_field=True)
+    column_name='number_of_order_items')
 
 products_data_set.add_simple_metric(
     name='Revenue (lifetime)',
     description='The lifetime revenue generated from this product',
     aggregation=Aggregation.SUM,
-    column_name='product_revenue')
+    column_name='product_revenue',
+    important_field=True)

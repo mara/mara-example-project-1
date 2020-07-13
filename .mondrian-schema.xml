@@ -2,6 +2,12 @@
 <Schema name="Mondrian">
   <Cube name="Order items" description="Individual products sold as part of an order" defaultMeasure="# Order items">
     <Table schema="mondrian" name="order_items"/>
+    <Dimension name="Product category" description="The category name describing the group of products (e.g. &quot;health_beauty&quot;, &quot;computers_accessories&quot;, etc." foreignKey="product_fk">
+      <Hierarchy allMemberName="All Product category" hasAll="true" primaryKey="product_id">
+        <Table name="product" schema="ec_dim"/>
+        <Level name="Product category" column="product_category" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
     <Dimension name="Order date" type="TimeDimension" description="The date when the order was placed (stored in the backend)" foreignKey="order_date_fk">
       <Hierarchy allMemberName="All order dates" hasAll="true" name="By month">
         <Table schema="time" name="day"/>
@@ -79,21 +85,6 @@
         <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Customer first order date" type="TimeDimension" description="The date when the order was placed (stored in the backend)" foreignKey="customer_first_order_date_fk">
-      <Hierarchy allMemberName="All customer first order dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All customer first order dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
     <Dimension name="Customer zip code" description="First 5 digits of the zip code (Brazil has an 8-digit system)" foreignKey="order_customer_zip_code_fk">
       <Hierarchy allMemberName="All Customer zip code" hasAll="true" primaryKey="zip_code_id">
         <Table name="zip_code" schema="ec_dim"/>
@@ -112,10 +103,19 @@
         <Level name="Customer state" column="state" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Product category" description="The category name describing the group of products (e.g. &quot;health_beauty&quot;, &quot;computers_accessories&quot;, etc." foreignKey="product_fk">
-      <Hierarchy allMemberName="All Product category" hasAll="true" primaryKey="product_id">
-        <Table name="product" schema="ec_dim"/>
-        <Level name="Product category" column="product_category" uniqueMembers="true"/>
+    <Dimension name="Customer first order date" type="TimeDimension" description="The date when the order was placed (stored in the backend)" foreignKey="customer_first_order_date_fk">
+      <Hierarchy allMemberName="All customer first order dates" hasAll="true" name="By month">
+        <Table schema="time" name="day"/>
+        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
+        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
+        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
+        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      </Hierarchy>
+      <Hierarchy allMemberName="All customer first order dates" hasAll="true" name="By week">
+        <Table schema="time" name="day"/>
+        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
+        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
+        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
     <Dimension name="Seller zip code" description="First 5 digits of the zip code (Brazil has an 8-digit system)" foreignKey="seller_zip_code_fk">
@@ -152,21 +152,6 @@
   </Cube>
   <Cube name="Sellers" description="Merchants that are selling products" defaultMeasure="# Orders (lifetime)">
     <Table schema="mondrian" name="sellers"/>
-    <Dimension name="First order date" type="TimeDimension" description="The date when the order was placed (stored in the backend)" foreignKey="first_order_date_fk">
-      <Hierarchy allMemberName="All first order dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All first order dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
     <Dimension name="Zip code" description="First 5 digits of the zip code (Brazil has an 8-digit system)" foreignKey="zip_code_fk">
       <Hierarchy allMemberName="All Zip code" hasAll="true" primaryKey="zip_code_id">
         <Table name="zip_code" schema="ec_dim"/>
@@ -183,6 +168,21 @@
       <Hierarchy allMemberName="All State" hasAll="true" primaryKey="zip_code_id">
         <Table name="zip_code" schema="ec_dim"/>
         <Level name="State" column="state" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
+    <Dimension name="First order date" type="TimeDimension" description="The date when the order was placed (stored in the backend)" foreignKey="first_order_date_fk">
+      <Hierarchy allMemberName="All first order dates" hasAll="true" name="By month">
+        <Table schema="time" name="day"/>
+        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
+        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
+        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
+        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      </Hierarchy>
+      <Hierarchy allMemberName="All first order dates" hasAll="true" name="By week">
+        <Table schema="time" name="day"/>
+        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
+        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
+        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
     <Measure name="# Orders (lifetime)" description="Number of orders with at-least one product fulfilled by this seller" column="_orders_lifetime_" aggregator="sum" formatString="Standard" datatype="Numeric"/>
@@ -233,6 +233,24 @@
         <Level name="Favourite product category" column="favourite_product_category" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
+    <Dimension name="Zip code" description="First 5 digits of the zip code (Brazil has an 8-digit system)" foreignKey="zip_code_fk">
+      <Hierarchy allMemberName="All Zip code" hasAll="true" primaryKey="zip_code_id">
+        <Table name="zip_code" schema="ec_dim"/>
+        <Level name="Zip code" column="zip_code" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
+    <Dimension name="City" description="City name" foreignKey="zip_code_fk">
+      <Hierarchy allMemberName="All City" hasAll="true" primaryKey="zip_code_id">
+        <Table name="zip_code" schema="ec_dim"/>
+        <Level name="City" column="city" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
+    <Dimension name="State" description="State name" foreignKey="zip_code_fk">
+      <Hierarchy allMemberName="All State" hasAll="true" primaryKey="zip_code_id">
+        <Table name="zip_code" schema="ec_dim"/>
+        <Level name="State" column="state" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
     <Dimension name="First order date" type="TimeDimension" description="The date when the order was placed (stored in the backend)" foreignKey="first_order_date_fk">
       <Hierarchy allMemberName="All first order dates" hasAll="true" name="By month">
         <Table schema="time" name="day"/>
@@ -263,24 +281,6 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Zip code" description="First 5 digits of the zip code (Brazil has an 8-digit system)" foreignKey="zip_code_fk">
-      <Hierarchy allMemberName="All Zip code" hasAll="true" primaryKey="zip_code_id">
-        <Table name="zip_code" schema="ec_dim"/>
-        <Level name="Zip code" column="zip_code" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="City" description="City name" foreignKey="zip_code_fk">
-      <Hierarchy allMemberName="All City" hasAll="true" primaryKey="zip_code_id">
-        <Table name="zip_code" schema="ec_dim"/>
-        <Level name="City" column="city" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="State" description="State name" foreignKey="zip_code_fk">
-      <Hierarchy allMemberName="All State" hasAll="true" primaryKey="zip_code_id">
-        <Table name="zip_code" schema="ec_dim"/>
-        <Level name="State" column="state" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
     <Measure name="# Orders (lifetime)" description="Number of orders placed by this customer" column="_orders_lifetime_" aggregator="sum" formatString="Standard" datatype="Numeric"/>
     <Measure name="Revenue (lifetime)" description="The lifetime revenue generated from items purchased by this customer" column="revenue_lifetime_" aggregator="sum" formatString="Standard" datatype="Numeric"/>
     <CalculatedMember name="AOV" dimension="Measures" description="The average revenue per order of the customer">
@@ -300,11 +300,6 @@
   </Cube>
   <Cube name="Leads" description="People that made contact through filling a request of contact on a landing page. Can become sellers if they close a deal with a Sales Representative" defaultMeasure="# Orders (lifetime)">
     <Table schema="mondrian" name="leads"/>
-    <Dimension name="Is closed deal" description="Whether the qualified lead closed a deal with a Sales Representative and became a seller">
-      <Hierarchy allMemberName="All Is closed deal" hasAll="true">
-        <Level name="Is closed deal" column="is_closed_deal" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
     <Dimension name="First contact date" type="TimeDimension" description="The date the lead made first contact by signing up on a landing page" foreignKey="first_contact_date_fk">
       <Hierarchy allMemberName="All first contact dates" hasAll="true" name="By month">
         <Table schema="time" name="day"/>
@@ -320,14 +315,9 @@
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Landing page ID" description="The ID of the landing page where the lead first made contact">
-      <Hierarchy allMemberName="All Landing page ID" hasAll="true">
-        <Level name="Landing page ID" column="landing_page_id" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Advertising channel" description="Specific advertising channel the lead was acquired on">
-      <Hierarchy allMemberName="All Advertising channel" hasAll="true">
-        <Level name="Advertising channel" column="advertising_channel" uniqueMembers="true"/>
+    <Dimension name="Is closed deal" description="Whether the qualified lead closed a deal with a Sales Representative and became a seller">
+      <Hierarchy allMemberName="All Is closed deal" hasAll="true">
+        <Level name="Is closed deal" column="is_closed_deal" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
     <Dimension name="Deal date" type="TimeDimension" description="The date when the marketing qualified lead was closed and became a seller" foreignKey="deal_date_fk">
@@ -343,6 +333,16 @@
         <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
         <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
         <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
+    <Dimension name="Landing page ID" description="The ID of the landing page where the lead first made contact">
+      <Hierarchy allMemberName="All Landing page ID" hasAll="true">
+        <Level name="Landing page ID" column="landing_page_id" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
+    <Dimension name="Advertising channel" description="Specific advertising channel the lead was acquired on">
+      <Hierarchy allMemberName="All Advertising channel" hasAll="true">
+        <Level name="Advertising channel" column="advertising_channel" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
     <Dimension name="Business Segment" description="The business segment in which the seller provides products e.g., &quot;household_utilities&quot;, &quot;car_accessories&quot;. Provided by the lead on the sign up at a landing page or the first contact with a Sales Development Representative">
@@ -396,21 +396,6 @@
         <Level name="Years" column="years" type="Integer" levelType="Regular" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Seller first order date" type="TimeDimension" description="The date when the order was placed (stored in the backend)" foreignKey="seller_first_order_date_fk">
-      <Hierarchy allMemberName="All seller first order dates" hasAll="true" name="By month">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
-        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-      <Hierarchy allMemberName="All seller first order dates" hasAll="true" name="By week">
-        <Table schema="time" name="day"/>
-        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
-        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
-        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
     <Dimension name="Seller zip code" description="First 5 digits of the zip code (Brazil has an 8-digit system)" foreignKey="seller_zip_code_fk">
       <Hierarchy allMemberName="All Seller zip code" hasAll="true" primaryKey="zip_code_id">
         <Table name="zip_code" schema="ec_dim"/>
@@ -427,6 +412,21 @@
       <Hierarchy allMemberName="All Seller state" hasAll="true" primaryKey="zip_code_id">
         <Table name="zip_code" schema="ec_dim"/>
         <Level name="Seller state" column="state" uniqueMembers="true"/>
+      </Hierarchy>
+    </Dimension>
+    <Dimension name="Seller first order date" type="TimeDimension" description="The date when the order was placed (stored in the backend)" foreignKey="seller_first_order_date_fk">
+      <Hierarchy allMemberName="All seller first order dates" hasAll="true" name="By month">
+        <Table schema="time" name="day"/>
+        <Level name="Year" column="year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
+        <Level name="Quarter" column="quarter_id" type="Integer" levelType="TimeQuarters" uniqueMembers="true"/>
+        <Level name="Month" column="month_id" type="Integer" levelType="TimeMonths" uniqueMembers="true"/>
+        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
+      </Hierarchy>
+      <Hierarchy allMemberName="All seller first order dates" hasAll="true" name="By week">
+        <Table schema="time" name="day"/>
+        <Level name="Year" column="iso_year_id" type="Integer" levelType="TimeYears" uniqueMembers="true"/>
+        <Level name="Week" column="week_id" type="Integer" levelType="TimeWeeks" uniqueMembers="true"/>
+        <Level name="Day" column="day_id" type="Integer" levelType="TimeDays" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
     <Measure name="# Orders (lifetime)" description="Number of orders with at-least one product fulfilled by this seller" column="_orders_lifetime_" aggregator="sum" formatString="Standard" datatype="Numeric"/>
