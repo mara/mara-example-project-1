@@ -30,16 +30,15 @@ WITH customer_first_order AS (
 INSERT
 INTO ec_dim_next.order
 SELECT order_id,
-       customer_id                        AS customer_fk,
+       customer_id                               AS customer_fk,
 
-       status::ec_dim_next.STATUS         AS status,
+       status::ec_dim_next.STATUS                AS status,
 
        order_date,
        payment_approval_date,
        delivery_date,
        delivery_time_in_days,
-       DATE_PART('day', order_date -
-                        first_order_date) AS days_since_first_order
+       order_date::DATE - first_order_date::DATE AS days_since_first_order
 
 FROM ec_tmp.order
          LEFT JOIN customer_first_order USING (customer_id);

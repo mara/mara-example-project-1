@@ -17,18 +17,15 @@ CREATE TABLE ec_tmp.order
 
 INSERT INTO ec_tmp.order
 SELECT order_id,
-       customer.customer_unique_id                AS customer_id,
+       customer.customer_unique_id                                          AS customer_id,
 
-       order_status                               AS status,
+       order_status                                                         AS status,
 
-       order_purchase_timestamp                   AS order_date,
-       order_approved_at                          AS payment_approval_date,
-       order_delivered_customer_date              AS delivery_date,
-       DATE_PART('day', order_approved_at -
-                        order_purchase_timestamp) AS payment_approval_time_in_days,
-
-       DATE_PART('day', order_delivered_customer_date -
-                        order_purchase_timestamp) AS days_of_delivery
+       order_purchase_timestamp                                             AS order_date,
+       order_approved_at                                                    AS payment_approval_date,
+       order_delivered_customer_date                                        AS delivery_date,
+       order_approved_at::DATE - order_purchase_timestamp::DATE             AS payment_approval_time_in_days,
+       order_delivered_customer_date::DATE - order_purchase_timestamp::DATE AS days_of_delivery
 FROM ec_data.order
          LEFT JOIN ec_data.customer USING (customer_id);
 

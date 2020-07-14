@@ -28,26 +28,25 @@ CREATE TABLE m_tmp.lead
 );
 
 INSERT INTO m_tmp.lead
-SELECT mql_id                                       AS lead_id,
+SELECT mql_id                                    AS lead_id,
        seller_id,
        sdr_id,
        sr_id,
 
-       won_date                                     AS deal_date,
-       business_segment                             AS business_segment,
-       lead_type                                    AS lead_type,
-       lead_behaviour_profile                       AS lead_behaviour_profile,
-       has_company::BOOLEAN                         AS has_company,
-       has_gtin::BOOLEAN                            AS has_gtin,
-       average_stock                                AS average_stock,
-       business_type                                AS business_type,
+       won_date                                  AS deal_date,
+       business_segment                          AS business_segment,
+       lead_type                                 AS lead_type,
+       lead_behaviour_profile                    AS lead_behaviour_profile,
+       has_company::BOOLEAN                      AS has_company,
+       has_gtin::BOOLEAN                         AS has_gtin,
+       average_stock                             AS average_stock,
+       business_type                             AS business_type,
        declared_product_catalog_size,
        declared_monthly_revenue,
-       first_contact_date::TIMESTAMP WITH TIME ZONE AS first_contact_date,
+       first_contact_date                        AS first_contact_date,
        landing_page_id,
-       COALESCE(origin, 'Unknown')                  AS advertising_channel,
-       DATE_PART('day', won_date -
-                        first_contact_date)         AS days_to_closing_deal
+       COALESCE(origin, 'Unknown')               AS advertising_channel,
+       won_date::DATE - first_contact_date::DATE AS days_to_closing_deal
 FROM m_data.marketing_qualified_lead
          LEFT JOIN m_data.closed_deal USING (mql_id);
 
