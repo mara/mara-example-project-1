@@ -88,18 +88,6 @@ lead_entity.add_attribute(
     type=Type.ENUM)
 
 lead_entity.add_attribute(
-    name='Has company',
-    description='Whether the lead has a company with formal documentation',
-    column_name='has_company',
-    type=Type.ENUM)
-
-lead_entity.add_attribute(
-    name='Has GTIN',
-    description='Whether the lead has a Global Trade Item Number (barcode) for his products',
-    column_name='has_gtin',
-    type=Type.ENUM)
-
-lead_entity.add_attribute(
     name='Average stock',
     description='The average number of items per product the lead has available on stock. '
                 'Provided by the lead on the sign up at a landing page or the first contact '

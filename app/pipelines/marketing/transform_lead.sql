@@ -11,8 +11,6 @@ CREATE TABLE m_dim_next.lead
     business_segment              m_dim_next.BUSINESS_SEGMENT       NOT NULL,             --Lead business segment. Informed on contact.
     lead_type                     m_dim_next.LEAD_TYPE              NOT NULL,             --Lead type. Informed on contact.
     lead_behaviour_profile        m_dim_next.LEAD_BEHAVIOUR_PROFILE NOT NULL,             --Lead behaviour profile. SDR identify it on contact
-    has_company                   m_dim_next.HAS_COMPANY,                                 --Does the lead have a company (formal documentation)?
-    has_gtin                      m_dim_next.HAS_GTIN,                                    --Does the lead have Global Trade Item Number (barcode) for his products?
     average_stock                 m_dim_next.AVERAGE_STOCK          NOT NULL,             --Lead declared average stock. Informed on contact.
     business_type                 m_dim_next.BUSINESS_TYPE          NOT NULL,             --Type of business (reseller/manufacturer etc.)
 
@@ -26,7 +24,6 @@ CREATE TABLE m_dim_next.lead
     advertising_channel           m_dim_next.ADVERTISING_CHANNEL    NOT NULL,             --Type of media where the lead was acquired
 
     lifetime_number_of_orders     INTEGER,
-    lifetime_number_of_deliveries INTEGER,
     lifetime_sales                DOUBLE PRECISION,
     days_to_closing_deal          INTEGER
 );
@@ -46,20 +43,6 @@ SELECT lead_id                                                        AS lead_id
        COALESCE(lead_behaviour_profile,
                 'Unknown') :: m_dim_next.LEAD_BEHAVIOUR_PROFILE       AS lead_behaviour_profile,
 
-       CASE
-           WHEN has_company IS TRUE
-               THEN 'Has company'
-           WHEN has_company IS FALSE
-               THEN 'Has not company'
-           ELSE 'Unknown' END :: m_dim_next.HAS_COMPANY               AS has_company,
-
-       CASE
-           WHEN has_gtin IS TRUE
-               THEN 'Has GTIN'
-           WHEN has_gtin IS FALSE
-               THEN 'Has not GTIN'
-           ELSE 'Unknown' END :: m_dim_next.HAS_GTIN                  AS has_gtin,
-
        COALESCE(average_stock,
                 'Unknown') :: m_dim_next.AVERAGE_STOCK                AS average_stock,
        COALESCE(business_type,
@@ -78,7 +61,6 @@ SELECT lead_id                                                        AS lead_id
        advertising_channel :: m_dim_next.ADVERTISING_CHANNEL          AS advertising_channel,
 
        seller.lifetime_number_of_orders                               AS lifetime_number_of_orders,
-       seller.lifetime_number_of_deliveries                           AS lifetime_number_of_deliveries,
        seller.lifetime_sales                                          AS lifetime_sales,
        days_to_closing_deal                                           AS days_to_closing_deal
 FROM m_tmp.lead

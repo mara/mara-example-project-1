@@ -18,12 +18,6 @@ leads_data_set.add_simple_metric(
     column_name='lifetime_number_of_orders')
 
 leads_data_set.add_simple_metric(
-    name='# Deliveries (lifetime)',
-    description='Number of orders fulfilled by this seller that were already delivered to the customer',
-    aggregation=Aggregation.SUM,
-    column_name='lifetime_number_of_deliveries')
-
-leads_data_set.add_simple_metric(
     name='Lifetime sales',
     description='The lifetime revenue generated from products sold by this seller',
     aggregation=Aggregation.SUM,

@@ -14,12 +14,6 @@ SELECT util.create_enum('m_dim_next.LEAD_BEHAVIOUR_PROFILE',
                         (SELECT array_agg(DISTINCT coalesce(lead_behaviour_profile, 'Unknown'))
                          FROM m_tmp.lead));
 
-SELECT util.create_enum('m_dim_next.HAS_COMPANY',
-                        ARRAY ['Has company', 'Has not company', 'Unknown']);
-
-SELECT util.create_enum('m_dim_next.HAS_GTIN',
-                        ARRAY ['Has GTIN', 'Has not GTIN', 'Unknown']);
-
 SELECT util.create_enum('m_dim_next.IS_CLOSED_DEAL',
                         ARRAY ['Is closed deal', 'Is not closed deal']);
 

@@ -13,8 +13,6 @@ CREATE TABLE m_tmp.lead
     business_segment              TEXT,                              --Lead business segment. Informed on contact.
     lead_type                     TEXT,                              --Lead type. Informed on contact.
     lead_behaviour_profile        TEXT,                              --Lead behaviour profile. SDR identify it on contact
-    has_company                   BOOLEAN,                           --Does the lead have a company (formal documentation)?
-    has_gtin                      BOOLEAN,                           --Does the lead have Global Trade Item Number (barcode) for his products?
     average_stock                 TEXT,                              --Lead declared average stock. Informed on contact.
     business_type                 TEXT,                              --Type of business (reseller/manufacturer etc.)
 
@@ -37,8 +35,6 @@ SELECT mql_id                                    AS lead_id,
        business_segment                          AS business_segment,
        lead_type                                 AS lead_type,
        lead_behaviour_profile                    AS lead_behaviour_profile,
-       has_company::BOOLEAN                      AS has_company,
-       has_gtin::BOOLEAN                         AS has_gtin,
        average_stock                             AS average_stock,
        business_type                             AS business_type,
        declared_product_catalog_size,

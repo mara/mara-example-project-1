@@ -223,7 +223,6 @@
     </Dimension>
     <Measure name="# Orders (lifetime)" description="Number of orders with at-least one product fulfilled by this seller" column="_orders_lifetime_" aggregator="sum" formatString="Standard" datatype="Numeric"/>
     <Measure name="# Order items (lifetime)" description="Number of products sold by this seller" column="_order_items_lifetime_" aggregator="sum" formatString="Standard" datatype="Numeric"/>
-    <Measure name="# Deliveries (lifetime)" description="Number of orders that were already delivered to the customer" column="_deliveries_lifetime_" aggregator="sum" formatString="Standard" datatype="Numeric"/>
     <Measure name="Lifetime Sales" description="The lifetime revenue generated from products sold by this seller" column="lifetime_sales" aggregator="sum" formatString="Standard" datatype="Numeric"/>
     <CalculatedMember name="AOV" dimension="Measures" description="The average revenue per order. Attention: not meaningful when split by product">
       <Formula>[Measures].[Lifetime Sales] / [Measures].[# Orders (lifetime)]</Formula>
@@ -420,16 +419,6 @@
         <Level name="Lead behaviour profile" column="lead_behaviour_profile" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
-    <Dimension name="Has company" description="Whether the lead has a company with formal documentation">
-      <Hierarchy allMemberName="All Has company" hasAll="true">
-        <Level name="Has company" column="has_company" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
-    <Dimension name="Has GTIN" description="Whether the lead has a Global Trade Item Number (barcode) for his products">
-      <Hierarchy allMemberName="All Has GTIN" hasAll="true">
-        <Level name="Has GTIN" column="has_gtin" uniqueMembers="true"/>
-      </Hierarchy>
-    </Dimension>
     <Dimension name="Average stock" description="The average number of items per product the lead has available on stock. Provided by the lead on the sign up at a landing page or the first contact with a Sales Development Representative">
       <Hierarchy allMemberName="All Average stock" hasAll="true">
         <Level name="Average stock" column="average_stock" uniqueMembers="true"/>
@@ -490,7 +479,6 @@
       </Hierarchy>
     </Dimension>
     <Measure name="# Orders (lifetime)" description="Number of orders with at-least one product fulfilled by this seller" column="_orders_lifetime_" aggregator="sum" formatString="Standard" datatype="Numeric"/>
-    <Measure name="# Deliveries (lifetime)" description="Number of orders fulfilled by this seller that were already delivered to the customer" column="_deliveries_lifetime_" aggregator="sum" formatString="Standard" datatype="Numeric"/>
     <Measure name="Lifetime sales" description="The lifetime revenue generated from products sold by this seller" column="lifetime_sales" aggregator="sum" formatString="Standard" datatype="Numeric"/>
     <CalculatedMember name="AOV" dimension="Measures" description="The average revenue per order. Attention: not meaningful when split by product">
       <Formula>[Measures].[Lifetime sales] / [Measures].[# Orders (lifetime)]</Formula>
