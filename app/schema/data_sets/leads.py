@@ -6,43 +6,31 @@ leads_data_set = DataSet(entity=lead_entity, name='Leads')
 
 leads_data_set.exclude_path(['Seller', ('Order', 'First order'), 'Customer'])
 
-leads_data_set.include_attributes(['Seller', ('Order', 'First order')],
-                                      ['Order date'])
 leads_data_set.include_attributes(['Seller', 'Zip code'],
-                                      ['Zip code', 'City', 'State'])
+                                  ['Zip code', 'City', 'State'])
+leads_data_set.include_attributes(['Seller', ('Order', 'First order')],
+                                  ['Order date'])
 
 leads_data_set.add_simple_metric(
-    name='# Orders',
+    name='# Orders (lifetime)',
     description='Number of orders with at-least one product fulfilled by this seller',
     aggregation=Aggregation.SUM,
-    column_name='number_of_orders',
-    important_field=True)
+    column_name='lifetime_number_of_orders')
 
 leads_data_set.add_simple_metric(
-    name='# Deliveries',
+    name='# Deliveries (lifetime)',
     description='Number of orders fulfilled by this seller that were already delivered to the customer',
     aggregation=Aggregation.SUM,
-    column_name='number_of_deliveries')
+    column_name='lifetime_number_of_deliveries')
 
 leads_data_set.add_simple_metric(
-    name='Product revenue',
+    name='Lifetime sales',
     description='The lifetime revenue generated from products sold by this seller',
     aggregation=Aggregation.SUM,
-    column_name='product_revenue')
-
-leads_data_set.add_simple_metric(
-    name='Shipping revenue',
-    description='The lifetime revenue generated from delivery fees by this seller',
-    aggregation=Aggregation.SUM,
-    column_name='shipping_revenue')
-
-leads_data_set.add_composed_metric(
-    name='Revenue',
-    description='The total revenue generated from this seller',
-    formula='[Product revenue] + [Shipping revenue]',
+    column_name='lifetime_sales',
     important_field=True)
 
 leads_data_set.add_composed_metric(
     name='AOV',
     description='The average revenue per order. Attention: not meaningful when split by product',
-    formula='[Revenue] / [# Orders]')
+    formula='[Lifetime sales] / [# Orders (lifetime)]')

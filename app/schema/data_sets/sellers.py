@@ -6,49 +6,37 @@ sellers_data_set = DataSet(entity=seller_entity, name='Sellers')
 
 sellers_data_set.exclude_path([('Order', 'First order'), 'Customer'])
 
-sellers_data_set.include_attributes(['Order'], ['Order date'])
 sellers_data_set.include_attributes(['Zip code'],
                                     ['Zip code', 'City', 'State'])
 
+sellers_data_set.include_attributes(['Order'], ['Order date'])
+
 sellers_data_set.add_simple_metric(
-    name='# Orders',
+    name='# Orders (lifetime)',
     description='Number of orders with at-least one product fulfilled by this seller',
     aggregation=Aggregation.SUM,
-    column_name='number_of_orders',
-    important_field=True)
+    column_name='lifetime_number_of_orders')
 
 sellers_data_set.add_simple_metric(
-    name='# Order items',
+    name='# Order items (lifetime)',
     description='Number of products sold by this seller',
     aggregation=Aggregation.SUM,
-    column_name='number_of_order_items',
-    important_field=True)
+    column_name='lifetime_number_of_order_items')
 
 sellers_data_set.add_simple_metric(
-    name='# Deliveries',
+    name='# Deliveries (lifetime)',
     description='Number of orders that were already delivered to the customer',
     aggregation=Aggregation.SUM,
-    column_name='number_of_deliveries')
+    column_name='lifetime_number_of_deliveries')
 
 sellers_data_set.add_simple_metric(
-    name='Product revenue',
+    name='Lifetime Sales',
     description='The lifetime revenue generated from products sold by this seller',
     aggregation=Aggregation.SUM,
-    column_name='product_revenue')
-
-sellers_data_set.add_simple_metric(
-    name='Shipping revenue',
-    description='The lifetime revenue generated from delivery fees by this seller',
-    aggregation=Aggregation.SUM,
-    column_name='shipping_revenue')
-
-sellers_data_set.add_composed_metric(
-    name='Revenue',
-    description='The total revenue generated from this seller',
-    formula='[Product revenue] + [Shipping revenue]',
+    column_name='lifetime_sales',
     important_field=True)
 
 sellers_data_set.add_composed_metric(
     name='AOV',
     description='The average revenue per order. Attention: not meaningful when split by product',
-    formula='[Revenue] / [# Orders]')
+    formula='[Lifetime Sales] / [# Orders (lifetime)]')

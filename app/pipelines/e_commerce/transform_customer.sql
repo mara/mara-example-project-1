@@ -10,16 +10,14 @@ CREATE TABLE ec_dim_next.customer
 
     days_since_first_order     INTEGER,
     days_since_last_order      INTEGER,
-    number_of_orders           INTEGER,
-    product_revenue            DOUBLE PRECISION,
-    shipping_revenue           DOUBLE PRECISION
+    lifetime_number_of_orders  INTEGER,
+    lifetime_revenue           DOUBLE PRECISION
 );
 
 WITH customer_items AS (
     SELECT customer_id,
-           count(DISTINCT order_id) AS number_of_orders,
-           sum(product_revenue)     AS product_revenue,
-           sum(shipping_revenue)    AS shipping_revenue
+           count(DISTINCT order_id)                     AS lifetime_number_of_orders,
+           sum(product_revenue) + sum(shipping_revenue) AS lifetime_revenue
     FROM ec_tmp.order_item
     GROUP BY customer_id
 ),
@@ -63,15 +61,16 @@ SELECT customer_id,
        favourite_product_category.favourite_product_category::ec_dim_next.PRODUCT_CATEGORY AS favourite_product_category,
        customer_orders.days_since_first_order                                              AS days_since_first_order,
        customer_orders.days_since_last_order                                               AS days_since_last_order,
-       customer_items.number_of_orders                                                     AS number_of_orders,
-       customer_items.product_revenue                                                      AS product_revenue,
-       customer_items.shipping_revenue                                                     AS shipping_revenue
+       customer_items.lifetime_number_of_orders                                            AS lifetime_number_of_orders,
+       customer_items.lifetime_revenue                                                     AS lifetime_revenue
+
 FROM ec_tmp.customer
          LEFT JOIN customer_items USING (customer_id)
          LEFT JOIN customer_orders USING (customer_id)
          LEFT JOIN favourite_product_category USING (customer_id);
 
-SELECT util.add_index('ec_dim_next', 'customer', column_names := ARRAY ['zip_code_fk', 'first_order_fk', 'last_order_fk']);
+SELECT util.add_index('ec_dim_next', 'customer',
+                      column_names := ARRAY ['zip_code_fk', 'first_order_fk', 'last_order_fk']);
 
 CREATE OR REPLACE FUNCTION ec_tmp.constrain_customer()
     RETURNS VOID AS

@@ -25,10 +25,10 @@ CREATE TABLE m_dim_next.lead
     landing_page_id               m_dim_next.LANDING_PAGE           NOT NULL,             --Landing page id where the lead was acquired
     advertising_channel           m_dim_next.ADVERTISING_CHANNEL    NOT NULL,             --Type of media where the lead was acquired
 
-    number_of_orders              INTEGER,
-    number_of_deliveries          INTEGER,
-    product_revenue               DOUBLE PRECISION,
-    shipping_revenue              DOUBLE PRECISION
+    lifetime_number_of_orders     INTEGER,
+    lifetime_number_of_deliveries INTEGER,
+    lifetime_sales                DOUBLE PRECISION,
+    days_to_closing_deal          INTEGER
 );
 
 INSERT INTO m_dim_next.lead
@@ -77,10 +77,10 @@ SELECT lead_id                                                        AS lead_id
        landing_page_id :: m_dim_next.LANDING_PAGE                     AS landing_page_id,
        advertising_channel :: m_dim_next.ADVERTISING_CHANNEL          AS advertising_channel,
 
-       seller.number_of_orders,
-       seller.number_of_deliveries,
-       seller.product_revenue                                         AS product_revenue,
-       seller.shipping_revenue                                        AS shipping_revenue
+       seller.lifetime_number_of_orders                               AS lifetime_number_of_orders,
+       seller.lifetime_number_of_deliveries                           AS lifetime_number_of_deliveries,
+       seller.lifetime_sales                                          AS lifetime_sales,
+       days_to_closing_deal                                           AS days_to_closing_deal
 FROM m_tmp.lead
          LEFT JOIN ec_dim.seller USING (seller_id);
 

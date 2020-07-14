@@ -6,11 +6,11 @@ CREATE TABLE ec_tmp.product
 
     product_category TEXT,          --root category of product
 
-    number_of_photos INTEGER,       --number of product published photos
     weight           INTEGER,       --product weight measured in grams.
     length           INTEGER,       --product length measured in centimeters.
     height           INTEGER,       --product height measured in centimeters.
-    width            INTEGER        --product width measured in centimeters.
+    width            INTEGER,       --product width measured in centimeters.
+    number_of_photos INTEGER        --number of product published photos
 );
 
 INSERT INTO ec_tmp.product
@@ -19,11 +19,11 @@ SELECT product_id,
        coalesce(coalesce(product_category_name_translation.product_category_name_english,
                          product.product_category_name), 'Unknown') AS product_category,
 
-       photos_quantity                                              AS number_of_photos,
        weight_g                                                     AS weight,
        length_cm                                                    AS length,
        height_cm                                                    AS height,
-       width_cm                                                     AS width
+       width_cm                                                     AS width,
+       photos_quantity                                              AS number_of_photos
 FROM ec_data.product
          LEFT JOIN ec_data.product_category_name_translation USING (product_category_name);
 
