@@ -15,7 +15,7 @@ SELECT util.assert_equal(
 
 SELECT util.assert_equal(
                'The number of distinct customer orders should be the same in customer and order dim tables',
-               'SELECT sum(lifetime_number_of_orders) FROM ec_dim.customer',
+               'SELECT sum(number_of_orders_lifetime) FROM ec_dim.customer',
                'SELECT count(distinct order_fk) FROM ec_dim.order_item');
 
 SELECT util.assert_not_found(
@@ -25,13 +25,13 @@ SELECT util.assert_not_found(
 SELECT util.assert_almost_equal(
                'The total amount of lifetime revenue should be equal among customer and order-item dim tables',
                0.001,
-               'SELECT sum(lifetime_revenue) FROM ec_dim.customer',
+               'SELECT sum(revenue_lifetime) FROM ec_dim.customer',
                'SELECT sum(product_revenue)+sum(shipping_revenue) FROM ec_dim.order_item'
            );
 
 SELECT util.assert_almost_equal(
                'The total amount of lifetime revenue should be equal among seller and order-item dim tables',
                0.001,
-               'SELECT sum(lifetime_sales) FROM ec_dim.seller',
+               'SELECT sum(revenue_lifetime) FROM ec_dim.seller',
                'SELECT sum(product_revenue)+sum(shipping_revenue) FROM ec_dim.order_item'
            );

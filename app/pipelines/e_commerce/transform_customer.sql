@@ -10,14 +10,14 @@ CREATE TABLE ec_dim_next.customer
 
     days_since_first_order     INTEGER,
     days_since_last_order      INTEGER,
-    lifetime_number_of_orders  INTEGER,
-    lifetime_revenue           DOUBLE PRECISION
+    number_of_orders_lifetime  INTEGER,
+    revenue_lifetime           DOUBLE PRECISION
 );
 
 WITH customer_items AS (
     SELECT customer_id,
-           count(DISTINCT order_id)                     AS lifetime_number_of_orders,
-           sum(product_revenue) + sum(shipping_revenue) AS lifetime_revenue
+           count(DISTINCT order_id)                     AS number_of_orders_lifetime,
+           sum(product_revenue) + sum(shipping_revenue) AS revenue_lifetime
     FROM ec_tmp.order_item
     GROUP BY customer_id
 ),
@@ -61,8 +61,8 @@ SELECT customer_id,
        favourite_product_category.favourite_product_category::ec_dim_next.PRODUCT_CATEGORY AS favourite_product_category,
        customer_orders.days_since_first_order                                              AS days_since_first_order,
        customer_orders.days_since_last_order                                               AS days_since_last_order,
-       customer_items.lifetime_number_of_orders                                            AS lifetime_number_of_orders,
-       customer_items.lifetime_revenue                                                     AS lifetime_revenue
+       customer_items.number_of_orders_lifetime                                            AS number_of_orders_lifetime,
+       customer_items.revenue_lifetime                                                     AS revenue_lifetime
 
 FROM ec_tmp.customer
          LEFT JOIN customer_items USING (customer_id)

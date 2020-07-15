@@ -223,9 +223,9 @@
     </Dimension>
     <Measure name="# Orders (lifetime)" description="Number of orders with at-least one product fulfilled by this seller" column="_orders_lifetime_" aggregator="sum" formatString="Standard" datatype="Numeric"/>
     <Measure name="# Order items (lifetime)" description="Number of products sold by this seller" column="_order_items_lifetime_" aggregator="sum" formatString="Standard" datatype="Numeric"/>
-    <Measure name="Lifetime Sales" description="The lifetime revenue generated from products sold by this seller" column="lifetime_sales" aggregator="sum" formatString="Standard" datatype="Numeric"/>
+    <Measure name="Revenue (lifetime)" description="The lifetime revenue generated from products sold by this seller" column="revenue_lifetime_" aggregator="sum" formatString="Standard" datatype="Numeric"/>
     <CalculatedMember name="AOV" dimension="Measures" description="The average revenue per order. Attention: not meaningful when split by product">
-      <Formula>[Measures].[Lifetime Sales] / [Measures].[# Orders (lifetime)]</Formula>
+      <Formula>[Measures].[Revenue (lifetime)] / [Measures].[# Orders (lifetime)]</Formula>
       <CalculatedMemberProperty name="FORMAT_STRING" value="Standard"/>
     </CalculatedMember>
   </Cube>
@@ -479,9 +479,9 @@
       </Hierarchy>
     </Dimension>
     <Measure name="# Orders (lifetime)" description="Number of orders with at-least one product fulfilled by this seller" column="_orders_lifetime_" aggregator="sum" formatString="Standard" datatype="Numeric"/>
-    <Measure name="Lifetime sales" description="The lifetime revenue generated from products sold by this seller" column="lifetime_sales" aggregator="sum" formatString="Standard" datatype="Numeric"/>
+    <Measure name="Revenue (lifetime)" description="The lifetime revenue generated from products sold by this seller" column="revenue_lifetime_" aggregator="sum" formatString="Standard" datatype="Numeric"/>
     <CalculatedMember name="AOV" dimension="Measures" description="The average revenue per order. Attention: not meaningful when split by product">
-      <Formula>[Measures].[Lifetime sales] / [Measures].[# Orders (lifetime)]</Formula>
+      <Formula>[Measures].[Revenue (lifetime)] / [Measures].[# Orders (lifetime)]</Formula>
       <CalculatedMemberProperty name="FORMAT_STRING" value="Standard"/>
     </CalculatedMember>
   </Cube>

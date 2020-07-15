@@ -15,22 +15,22 @@ sellers_data_set.add_simple_metric(
     name='# Orders (lifetime)',
     description='Number of orders with at-least one product fulfilled by this seller',
     aggregation=Aggregation.SUM,
-    column_name='lifetime_number_of_orders')
+    column_name='number_of_orders_lifetime')
 
 sellers_data_set.add_simple_metric(
     name='# Order items (lifetime)',
     description='Number of products sold by this seller',
     aggregation=Aggregation.SUM,
-    column_name='lifetime_number_of_order_items')
+    column_name='number_of_order_items_lifetime')
 
 sellers_data_set.add_simple_metric(
-    name='Lifetime Sales',
+    name='Revenue (lifetime)',
     description='The lifetime revenue generated from products sold by this seller',
     aggregation=Aggregation.SUM,
-    column_name='lifetime_sales',
+    column_name='revenue_lifetime',
     important_field=True)
 
 sellers_data_set.add_composed_metric(
     name='AOV',
     description='The average revenue per order. Attention: not meaningful when split by product',
-    formula='[Lifetime Sales] / [# Orders (lifetime)]')
+    formula='[Revenue (lifetime)] / [# Orders (lifetime)]')
