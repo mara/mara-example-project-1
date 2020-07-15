@@ -52,14 +52,14 @@ lead_entity.add_attribute(
 lead_entity.add_attribute(
     name='Sales development representative ID',
     description='The ID of the Sales Development Representative as defined in the backend',
-    column_name='sdr_id',
+    column_name='sales_development_representative_id',
     type=Type.ID,
     high_cardinality=True)
 
 lead_entity.add_attribute(
     name='Sales representative ID',
     description='The ID of the Sales Representative as defined in the backend',
-    column_name='sr_id',
+    column_name='sales_representative_id',
     type=Type.ID,
     high_cardinality=True)
 
@@ -102,7 +102,7 @@ lead_entity.add_attribute(
     type=Type.ENUM)
 
 lead_entity.add_attribute(
-    name='Duration to closing the deal',
+    name='Days to closing the deal',
     description='The number of days it took from first contact with the lead '
                 'to closing the deal by a Sales Representative and the lead becoming a seller',
     column_name='days_to_closing_deal',

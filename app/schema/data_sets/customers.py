@@ -18,13 +18,13 @@ customers_data_set.add_simple_metric(
     name='# Orders (lifetime)',
     description='Number of orders placed by this customer',
     aggregation=Aggregation.SUM,
-    column_name='lifetime_number_of_orders')
+    column_name='number_of_orders_lifetime')
 
 customers_data_set.add_simple_metric(
     name='Revenue (lifetime)',
     description='The lifetime revenue generated from products purchased by this customer',
     aggregation=Aggregation.SUM,
-    column_name='lifetime_revenue',
+    column_name='revenue_lifetime',
     important_field=True)
 
 customers_data_set.add_composed_metric(

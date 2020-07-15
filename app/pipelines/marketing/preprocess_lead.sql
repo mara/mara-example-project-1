@@ -4,32 +4,32 @@
 DROP TABLE IF EXISTS m_tmp.lead CASCADE;
 CREATE TABLE m_tmp.lead
 (
-    lead_id                       TEXT                     NOT NULL, --Marketing Qualified Lead id
-    seller_id                     TEXT,                              --Seller id
-    sdr_id                        TEXT,                              --Sales Development Representative id
-    sr_id                         TEXT,                              --Sales Representative
+    lead_id                             TEXT                     NOT NULL, --Marketing Qualified Lead id
+    seller_id                           TEXT,                              --Seller id
+    sales_development_representative_id TEXT,                              --Sales Development Representative id
+    sales_representative_id             TEXT,                              --Sales Representative
 
-    deal_date                     TIMESTAMP WITH TIME ZONE,          --Date the deal was closed.
-    business_segment              TEXT,                              --Lead business segment. Informed on contact.
-    lead_type                     TEXT,                              --Lead type. Informed on contact.
-    lead_behaviour_profile        TEXT,                              --Lead behaviour profile. SDR identify it on contact
-    average_stock                 TEXT,                              --Lead declared average stock. Informed on contact.
-    business_type                 TEXT,                              --Type of business (reseller/manufacturer etc.)
+    deal_date                           TIMESTAMP WITH TIME ZONE,          --Date the deal was closed.
+    business_segment                    TEXT,                              --Lead business segment. Informed on contact.
+    lead_type                           TEXT,                              --Lead type. Informed on contact.
+    lead_behaviour_profile              TEXT,                              --Lead behaviour profile. SDR identify it on contact
+    average_stock                       TEXT,                              --Lead declared average stock. Informed on contact.
+    business_type                       TEXT,                              --Type of business (reseller/manufacturer etc.)
 
-    declared_product_catalog_size DOUBLE PRECISION,                  --Lead declared catalog size. Informed on contact.
-    declared_monthly_revenue      DOUBLE PRECISION,                  --Lead declared estimated monthly revenue. Informed on contact.
+    declared_product_catalog_size       DOUBLE PRECISION,                  --Lead declared catalog size. Informed on contact.
+    declared_monthly_revenue            DOUBLE PRECISION,                  --Lead declared estimated monthly revenue. Informed on contact.
 
-    first_contact_date            TIMESTAMP WITH TIME ZONE NOT NULL, --Date of the first contact solicitation.
-    landing_page_id               TEXT                     NOT NULL, --Landing page id where the lead was acquired
-    advertising_channel           TEXT                     NOT NULL, --Type of media where the lead was acquired
-    days_to_closing_deal          INTEGER
+    first_contact_date                  TIMESTAMP WITH TIME ZONE NOT NULL, --Date of the first contact solicitation.
+    landing_page_id                     TEXT                     NOT NULL, --Landing page id where the lead was acquired
+    advertising_channel                 TEXT                     NOT NULL, --Type of media where the lead was acquired
+    days_to_closing_deal                INTEGER
 );
 
 INSERT INTO m_tmp.lead
 SELECT mql_id                                    AS lead_id,
        seller_id,
-       sdr_id,
-       sr_id,
+       sdr_id                                    AS sales_development_representative_id,
+       sr_id                                     AS sales_representative_id,
 
        won_date                                  AS deal_date,
        business_segment                          AS business_segment,

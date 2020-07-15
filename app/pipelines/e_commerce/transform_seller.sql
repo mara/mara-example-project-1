@@ -6,16 +6,16 @@ CREATE TABLE ec_dim_next.seller
     zip_code_fk                    INTEGER NOT NULL,             -- integer representation of a zip_code_prefix
     first_order_fk                 TEXT,
 
-    lifetime_number_of_orders      INTEGER,
-    lifetime_number_of_order_items INTEGER,
-    lifetime_sales                 DOUBLE PRECISION
+    number_of_orders_lifetime      INTEGER,
+    number_of_order_items_lifetime INTEGER,
+    revenue_lifetime               DOUBLE PRECISION
 );
 
 WITH seller_items AS (
     SELECT seller_id,
-           count(*)                                     AS lifetime_number_of_order_items,
-           count(DISTINCT order_item.order_id)          AS lifetime_number_of_orders,
-           sum(product_revenue) + sum(shipping_revenue) AS lifetime_sales
+           count(*)                                     AS number_of_order_items_lifetime,
+           count(DISTINCT order_item.order_id)          AS number_of_orders_lifetime,
+           sum(product_revenue) + sum(shipping_revenue) AS revenue_lifetime
     FROM ec_tmp.order_item
              LEFT JOIN ec_tmp.order USING (order_id)
     GROUP BY seller_id
@@ -37,9 +37,9 @@ SELECT seller_id,
        seller_orders.first_order_id                AS first_order_fk,
 
 
-       seller_items.lifetime_number_of_orders      AS lifetime_number_of_orders,
-       seller_items.lifetime_number_of_order_items AS lifetime_number_of_order_items,
-       seller_items.lifetime_sales                 AS lifetime_sales
+       seller_items.number_of_orders_lifetime      AS number_of_orders_lifetime,
+       seller_items.number_of_order_items_lifetime AS number_of_order_items_lifetime,
+       seller_items.revenue_lifetime               AS revenue_lifetime
 FROM ec_tmp.seller
          LEFT JOIN seller_items USING (seller_id)
          LEFT JOIN seller_orders USING (seller_id);
