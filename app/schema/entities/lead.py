@@ -111,4 +111,6 @@ lead_entity.add_attribute(
 
 from .seller import seller_entity
 
-lead_entity.link_entity(target_entity=seller_entity, fk_column='seller_fk')
+lead_entity.link_entity(
+    target_entity=seller_entity,
+    description='The seller info of the lead who has a closed deal')

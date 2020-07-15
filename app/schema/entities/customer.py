@@ -45,11 +45,12 @@ customer_entity.link_entity(
 
 customer_entity.link_entity(
     target_entity=order_entity,
-    description='First order of the customer',
+    description='The first order made by the customer',
     fk_column='first_order_fk',
     prefix='First order')
 
 customer_entity.link_entity(
     target_entity=order_entity,
+    description='The last order made by the customer',
     fk_column='last_order_fk',
     prefix='Last order')

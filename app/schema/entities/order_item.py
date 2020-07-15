@@ -18,7 +18,10 @@ from .order import order_entity
 from .product import product_entity
 from .seller import seller_entity
 
-order_item_entity.link_entity(target_entity=product_entity)
-order_item_entity.link_entity(target_entity=order_entity, prefix='')
+order_item_entity.link_entity(target_entity=product_entity,
+                              description="The product that was ordered")
+order_item_entity.link_entity(target_entity=order_entity,
+                              description="The order that contains the order item",
+                              prefix='')
 order_item_entity.link_entity(target_entity=seller_entity,
                               description='The seller who fulfills the order')
