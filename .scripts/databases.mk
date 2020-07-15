@@ -3,13 +3,18 @@
 dwh-db := example_project_1_dwh
 mara-db := example_project_1_mara
 olist-db := olist_ecommerce
+
+# overwrites variables in ./mara-metabase/metabase.mk
 metabase-data-db := example_project_1_metabase_data
 metabase-metadata-db := example_project_1_metabase_metadata
 
-databases := dwh-db mara-db olist-db metabase-data-db metabase-metadata-db
-
+# overwrites variable in ./mara-mondrian/mondrian-server.mk
 mondrian-server-db := $(dwh-db)
 
+databases := dwh-db mara-db olist-db metabase-data-db metabase-metadata-db
+
+
+# create all configured databases
 ensure-databases: $(addprefix .ensure-database-, $(databases))
 
 .ensure-database-%:
@@ -20,6 +25,7 @@ ensure-databases: $(addprefix .ensure-database-, $(databases))
 	fi;
 
 
+# delete all databases
 .cleanup-databases: $(addprefix .cleanup-database-, $(databases))
 
 .cleanup-database-%:
