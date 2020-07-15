@@ -1,38 +1,38 @@
 DROP TABLE IF EXISTS m_dim_next.lead CASCADE;
 CREATE TABLE m_dim_next.lead
 (
-    lead_id                       TEXT                              NOT NULL PRIMARY KEY, --Marketing Qualified Lead id
-    seller_fk                     TEXT,                                                   --Seller id
-    sdr_id                        TEXT,                                                   --Sales Development Representative id
-    sr_id                         TEXT,                                                   --Sales Representative
+    lead_id                             TEXT                              NOT NULL PRIMARY KEY, --Marketing Qualified Lead id
+    seller_fk                           TEXT,                                                   --Seller id
+    sales_development_representative_id TEXT,                                                   --Sales Development Representative id
+    sales_representative_id             TEXT,                                                   --Sales Representative
 
-    deal_date                     TIMESTAMP WITH TIME ZONE,                               --Date the deal was closed.
+    deal_date                           TIMESTAMP WITH TIME ZONE,                               --Date the deal was closed.
 
-    business_segment              m_dim_next.BUSINESS_SEGMENT       NOT NULL,             --Lead business segment. Informed on contact.
-    lead_type                     m_dim_next.LEAD_TYPE              NOT NULL,             --Lead type. Informed on contact.
-    lead_behaviour_profile        m_dim_next.LEAD_BEHAVIOUR_PROFILE NOT NULL,             --Lead behaviour profile. SDR identify it on contact
-    average_stock                 m_dim_next.AVERAGE_STOCK          NOT NULL,             --Lead declared average stock. Informed on contact.
-    business_type                 m_dim_next.BUSINESS_TYPE          NOT NULL,             --Type of business (reseller/manufacturer etc.)
+    business_segment                    m_dim_next.BUSINESS_SEGMENT       NOT NULL,             --Lead business segment. Informed on contact.
+    lead_type                           m_dim_next.LEAD_TYPE              NOT NULL,             --Lead type. Informed on contact.
+    lead_behaviour_profile              m_dim_next.LEAD_BEHAVIOUR_PROFILE NOT NULL,             --Lead behaviour profile. SDR identify it on contact
+    average_stock                       m_dim_next.AVERAGE_STOCK          NOT NULL,             --Lead declared average stock. Informed on contact.
+    business_type                       m_dim_next.BUSINESS_TYPE          NOT NULL,             --Type of business (reseller/manufacturer etc.)
 
-    declared_product_catalog_size DOUBLE PRECISION,                                       --Lead declared catalog size. Informed on contact.
-    declared_monthly_revenue      DOUBLE PRECISION,                                       --Lead declared estimated monthly revenue. Informed on contact.
+    declared_product_catalog_size       DOUBLE PRECISION,                                       --Lead declared catalog size. Informed on contact.
+    declared_monthly_revenue            DOUBLE PRECISION,                                       --Lead declared estimated monthly revenue. Informed on contact.
 
-    is_closed_deal                m_dim_next.IS_CLOSED_DEAL         NOT NULL,
+    is_closed_deal                      m_dim_next.IS_CLOSED_DEAL         NOT NULL,
 
-    first_contact_date            TIMESTAMP WITH TIME ZONE          NOT NULL,             --Date of the first contact solicitation.
-    landing_page_id               m_dim_next.LANDING_PAGE           NOT NULL,             --Landing page id where the lead was acquired
-    advertising_channel           m_dim_next.ADVERTISING_CHANNEL    NOT NULL,             --Type of media where the lead was acquired
+    first_contact_date                  TIMESTAMP WITH TIME ZONE          NOT NULL,             --Date of the first contact solicitation.
+    landing_page_id                     m_dim_next.LANDING_PAGE           NOT NULL,             --Landing page id where the lead was acquired
+    advertising_channel                 m_dim_next.ADVERTISING_CHANNEL    NOT NULL,             --Type of media where the lead was acquired
 
-    number_of_orders_lifetime     INTEGER,
-    revenue_lifetime              DOUBLE PRECISION,
-    days_to_closing_deal          INTEGER
+    number_of_orders_lifetime           INTEGER,
+    revenue_lifetime                    DOUBLE PRECISION,
+    days_to_closing_deal                INTEGER
 );
 
 INSERT INTO m_dim_next.lead
 SELECT lead_id                                                        AS lead_id,
        seller.seller_id                                               AS seller_fk,
-       sdr_id                                                         AS sdr_id,
-       sr_id                                                          AS sr_id,
+       sales_development_representative_id                            AS sales_development_representative_id,
+       sales_representative_id                                        AS sales_representative_id,
 
        deal_date                                                      AS deal_date,
 
