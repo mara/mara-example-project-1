@@ -23,7 +23,7 @@ order_entity.add_attribute(
 order_entity.add_attribute(
     name='Order status',
     description='The current status of the order (created, approved, shipped, etc)',
-    column_name='status',
+    column_name='order_status',
     type=Type.ENUM)
 
 order_entity.add_attribute(

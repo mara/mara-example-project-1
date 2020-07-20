@@ -17,11 +17,19 @@ pipeline.add_initial(
          ]))
 
 pipeline.add(
+    Task(id="preprocess_customer",
+         description="",
+         commands=[
+             ExecuteSQL(sql_file_name="preprocess_customer.sql")
+         ]))
+
+pipeline.add(
     Task(id="preprocess_order",
          description="",
          commands=[
              ExecuteSQL(sql_file_name="preprocess_order.sql")
-         ]))
+         ]),
+    upstreams=["preprocess_customer"])
 
 pipeline.add(
     Task(id="preprocess_order_item",
@@ -43,13 +51,6 @@ pipeline.add(
          description="",
          commands=[
              ExecuteSQL(sql_file_name="preprocess_seller.sql")
-         ]))
-
-pipeline.add(
-    Task(id="preprocess_customer",
-         description="",
-         commands=[
-             ExecuteSQL(sql_file_name="preprocess_customer.sql")
          ]))
 
 pipeline.add(
