@@ -21,23 +21,7 @@ WITH customer_items AS (
     FROM ec_tmp.order_item
     GROUP BY customer_id
 ),
-     customer_orders AS (
-         SELECT DISTINCT order_item.customer_id,
-                         first_value(order_id)
-                         OVER (PARTITION BY order_item.customer_id
-                             ORDER BY "order".order_date ASC)                     AS first_order_id,
-                         first_value(order_id)
-                         OVER (PARTITION BY order_item.customer_id
-                             ORDER BY "order".order_date DESC)                    AS last_order_id,
-                         now() :: DATE
-                             - MIN("order".order_date)
-                               OVER (PARTITION BY order_item.customer_id) :: DATE AS days_since_first_order,
-                         now() :: DATE
-                             - MAX("order".order_date)
-                               OVER (PARTITION BY order_item.customer_id) :: DATE AS days_since_last_order
-         FROM ec_tmp.order_item
-                  LEFT JOIN ec_tmp.order USING (order_id)
-     ),
+
      favourite_product_category AS (
          SELECT DISTINCT customer_id, favourite_product_category
          FROM (
@@ -56,17 +40,16 @@ INSERT
 INTO ec_dim_next.customer
 SELECT customer_id,
        zip_code::INTEGER                                                                   AS zip_code_fk,
-       customer_orders.first_order_id                                                      AS first_order_fk,
-       customer_orders.last_order_id                                                       AS last_order_fk,
+       first_order_id                                                                      AS first_order_fk,
+       last_order_id                                                                       AS last_order_fk,
        favourite_product_category.favourite_product_category::ec_dim_next.PRODUCT_CATEGORY AS favourite_product_category,
-       customer_orders.days_since_first_order                                              AS days_since_first_order,
-       customer_orders.days_since_last_order                                               AS days_since_last_order,
+       days_since_first_order                                                              AS days_since_first_order,
+       days_since_last_order                                                               AS days_since_last_order,
        customer_items.number_of_orders_lifetime                                            AS number_of_orders_lifetime,
        customer_items.revenue_lifetime                                                     AS revenue_lifetime
 
 FROM ec_tmp.customer
          LEFT JOIN customer_items USING (customer_id)
-         LEFT JOIN customer_orders USING (customer_id)
          LEFT JOIN favourite_product_category USING (customer_id);
 
 SELECT util.add_index('ec_dim_next', 'customer',

@@ -56,7 +56,7 @@
     <Dimension name="Order status" description="The current status of the order (created, approved, shipped, etc)" foreignKey="order_fk">
       <Hierarchy allMemberName="All Order status" hasAll="true" primaryKey="order_id">
         <Table name="order" schema="ec_dim"/>
-        <Level name="Order status" column="status" uniqueMembers="true"/>
+        <Level name="Order status" column="order_status" uniqueMembers="true"/>
       </Hierarchy>
     </Dimension>
     <Dimension name="Payment approval date" type="TimeDimension" description="The date when the customer's payment was approved by the seller" foreignKey="payment_approval_date_fk">

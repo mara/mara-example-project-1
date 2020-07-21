@@ -2,14 +2,15 @@ DROP TABLE IF EXISTS ec_tmp.order_item CASCADE;
 
 CREATE TABLE ec_tmp.order_item
 (
-    order_item_id       TEXT             NOT NULL, --sequential number identifying number of items included in the same order.
-    order_id            TEXT             NOT NULL, --order unique identifier
-    customer_id         TEXT             NOT NULL, -- Unique identifier of a customer
-    product_id          TEXT             NOT NULL, --product unique identifier
-    seller_id           TEXT             NOT NULL, --seller unique identifier
+    order_item_id     TEXT             NOT NULL, --sequential number identifying number of items included in the same order.
+    order_id          TEXT             NOT NULL, --order unique identifier
+    customer_id       TEXT             NOT NULL, -- Unique identifier of a customer
+    product_id        TEXT             NOT NULL, --product unique identifier
+    seller_id         TEXT             NOT NULL, --seller unique identifier
+    is_first_order_id TEXT,
 
-    product_revenue     DOUBLE PRECISION NOT NULL, --item price
-    shipping_revenue    DOUBLE PRECISION NOT NULL  --item freight value item (if an order has more than one item the freight value is split between items)
+    product_revenue   DOUBLE PRECISION NOT NULL, --item price
+    shipping_revenue  DOUBLE PRECISION NOT NULL  --item freight value item (if an order has more than one item the freight value is split between items)
 );
 
 INSERT INTO ec_tmp.order_item
@@ -18,6 +19,16 @@ SELECT order_id || '_' || order_item_id AS order_item_id, -- create a unique ord
        "order".customer_id              AS customer_id,
        product_id,
        seller_id,
+
+       CASE
+           WHEN
+                           first_value(order_id)
+                           OVER (PARTITION BY "order".customer_id
+                               ORDER BY "order".order_date ASC) = order_id THEN
+                       first_value(order_id)
+                       OVER (PARTITION BY "order".customer_id
+                           ORDER BY "order".order_date ASC)
+           ELSE NULL END                AS is_first_order_id,
 
        price                            AS product_revenue,
        freight_value                    AS shipping_revenue

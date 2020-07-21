@@ -33,7 +33,7 @@ pipeline.add(
 
 pipeline.add(
     Task(id="transform_lead",
-         description="",
+         description="Creates the lead dim table",
          commands=[
              ExecuteSQL(sql_file_name="transform_lead.sql", echo_queries=False)
          ]),
