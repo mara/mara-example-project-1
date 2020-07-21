@@ -23,7 +23,7 @@ pipeline.add(
         description="Loads the closed deals data from the back-end DB",
         commands=[
             ExecuteSQL(sql_file_name='closed_deal/create_closed_deal_table.sql'),
-            Copy(sql_file_name='closed_deal/load_closed_deal_data.sql', source_db_alias='olist',
+            Copy(sql_file_name='closed_deal/load_closed_deal.sql', source_db_alias='olist',
                  target_db_alias='dwh', target_table='m_data.closed_deal',
                  delimiter_char=';',
                  replace={"@@first-date@@": lambda: config.first_date()})
@@ -35,7 +35,7 @@ pipeline.add(
         description="Loads the marketing_qualified_leads data from the back-end DB",
         commands=[
             ExecuteSQL(sql_file_name='marketing_qualified_lead/create_marketing_qualified_lead_table.sql'),
-            Copy(sql_file_name='marketing_qualified_lead/load_marketing_qualified_lead_data.sql', source_db_alias='olist',
+            Copy(sql_file_name='marketing_qualified_lead/load_marketing_qualified_lead.sql', source_db_alias='olist',
                  target_db_alias='dwh', target_table='m_data.marketing_qualified_lead',
                  delimiter_char=';',
                  replace={"@@first-date@@": lambda: config.first_date()})
