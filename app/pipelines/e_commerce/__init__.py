@@ -5,7 +5,7 @@ from mara_pipelines.pipelines import Pipeline, Task
 
 pipeline = Pipeline(
     id="e_commerce",
-    description="Builds cubes related to the e-commerce public data by Olist",
+    description="Builds the e-commerce cubes and datasets",
     base_path=pathlib.Path(__file__).parent,
     labels={"Schema": "ec_dim"})
 

@@ -6,7 +6,7 @@ from mara_pipelines import config
 
 pipeline = Pipeline(
     id="load_ecommerce_data",
-    description="Jobs related with loading e-commerce data from the Olist back-end database",
+    description="Jobs related with loading e-commerce data from the backend database",
     max_number_of_parallel_tasks=5,
     base_path=pathlib.Path(__file__).parent,
     labels={"Schema": "ec_data"})

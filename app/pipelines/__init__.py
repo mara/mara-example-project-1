@@ -30,7 +30,7 @@ def root_pipeline():
 
     pipeline = Pipeline(
         id='mara_example_project_1',
-        description='An example pipeline that integrates the Olist e-commerce and marketing funnel data')
+        description='An example pipeline that integrates e-commerce and marketing funnel data')
 
     pipeline.add_initial(app.pipelines.initialize_db.pipeline)
     pipeline.add(app.pipelines.load_data.load_ecommerce_data.pipeline)

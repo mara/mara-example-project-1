@@ -6,7 +6,7 @@ from mara_pipelines import config
 
 pipeline = Pipeline(
     id="load_marketing_data",
-    description="Jobs related with loading marketing data from the Olist back-end database",
+    description="Jobs related with loading marketing leads data from the backend database",
     max_number_of_parallel_tasks=5,
     base_path=pathlib.Path(__file__).parent,
     labels={"Schema": "m_data"})
@@ -20,7 +20,7 @@ pipeline.add_initial(
 pipeline.add(
     Task(
         id="load_closed_deal_data",
-        description="Loads the closed deals data from the back-end DB",
+        description="Loads the closed deals data from the backend DB",
         commands=[
             ExecuteSQL(sql_file_name='closed_deal/create_closed_deal_table.sql'),
             Copy(sql_file_name='closed_deal/load_closed_deal.sql', source_db_alias='olist',
@@ -32,7 +32,7 @@ pipeline.add(
 pipeline.add(
     Task(
         id="load_marketing_qualified_lead_data",
-        description="Loads the marketing_qualified_leads data from the back-end DB",
+        description="Loads the marketing_qualified_leads data from the backend DB",
         commands=[
             ExecuteSQL(sql_file_name='marketing_qualified_lead/create_marketing_qualified_lead_table.sql'),
             Copy(sql_file_name='marketing_qualified_lead/load_marketing_qualified_lead.sql', source_db_alias='olist',
