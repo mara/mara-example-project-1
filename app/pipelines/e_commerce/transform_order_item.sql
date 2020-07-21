@@ -2,38 +2,29 @@ DROP TABLE IF EXISTS ec_dim_next.order_item CASCADE;
 
 CREATE TABLE ec_dim_next.order_item
 (
-    order_item_id       TEXT             NOT NULL PRIMARY KEY, -- sequential number identifying number of items included in the same order.
-    order_fk            TEXT             NOT NULL,             -- order unique identifier
-    customer_fk         TEXT             NOT NULL,             -- Unique identifier of a customer
-    product_fk          TEXT             NOT NULL,             -- product unique identifier
-    seller_fk           TEXT             NOT NULL,             -- seller unique identifier
-    is_first_order_id   TEXT,
+    order_item_id     TEXT             NOT NULL PRIMARY KEY, -- sequential number identifying number of items included in the same order.
+    order_fk          TEXT             NOT NULL,             -- order unique identifier
+    customer_fk       TEXT             NOT NULL,             -- Unique identifier of a customer
+    product_fk        TEXT             NOT NULL,             -- product unique identifier
+    seller_fk         TEXT             NOT NULL,             -- seller unique identifier
+    is_first_order_id TEXT,
 
-    product_revenue     DOUBLE PRECISION NOT NULL,             -- item price
-    shipping_revenue    DOUBLE PRECISION NOT NULL              -- item freight value item (if an order has more than one item the freight value is split between items)
+    product_revenue   DOUBLE PRECISION NOT NULL,             -- item price
+    shipping_revenue  DOUBLE PRECISION NOT NULL              -- item freight value item (if an order has more than one item the freight value is split between items)
 );
 
 INSERT INTO ec_dim_next.order_item
 SELECT order_item_id,
-       order_id               AS order_fk,
-       order_item.customer_id AS customer_fk,
-       product_id             AS product_fk,
-       seller_id              AS seller_fk,
+       order_id    AS order_fk,
+       customer_id AS customer_fk,
+       product_id  AS product_fk,
+       seller_id   AS seller_fk,
 
-       CASE
-           WHEN
-                           first_value(order_id)
-                           OVER (PARTITION BY "order".customer_id
-                               ORDER BY "order".order_date ASC) = order_id THEN
-                       first_value(order_id)
-                       OVER (PARTITION BY "order".customer_id
-                           ORDER BY "order".order_date ASC)
-           ELSE NULL END      AS is_first_order_id,
+       is_first_order_id,
 
        product_revenue,
        shipping_revenue
-FROM ec_tmp.order_item
-         LEFT JOIN ec_tmp.order USING (order_id);
+FROM ec_tmp.order_item;
 
 SELECT util.add_index('ec_dim_next', 'order_item',
                       column_names := ARRAY ['order_fk', 'customer_fk', 'product_fk', 'seller_fk']);

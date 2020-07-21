@@ -17,7 +17,6 @@ CREATE TABLE ec_tmp.order
 
 WITH order_with_unique_customer_id AS (
     SELECT "order".order_id,
---            "order".customer_id                                                  AS customer_id_to_order,
            customer.customer_unique_id                                          AS customer_id,
            order_status                                                         AS order_status,
 
