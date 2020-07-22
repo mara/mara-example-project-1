@@ -18,12 +18,12 @@ pipeline.add_initial(
                             pathlib.Path(__file__).parent.parent / 'recreate_ecommerce_data_schema.sql'])]))
 
 tables = [
-    "customer",
-    "order",
-    "order_item",
-    "product",
-    "product_category_name_translation",
-    "seller"
+    'customer',
+    'order',
+    'order_item',
+    'product',
+    'product_category_name_translation',
+    'seller'
 ]
 
 for table in tables:
