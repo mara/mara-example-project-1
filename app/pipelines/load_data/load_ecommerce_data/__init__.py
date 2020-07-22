@@ -2,7 +2,6 @@ import pathlib
 
 from mara_pipelines.commands.sql import ExecuteSQL, Copy
 from mara_pipelines.pipelines import Pipeline, Task
-from mara_pipelines import config
 
 pipeline = Pipeline(
     id="load_ecommerce_data",
@@ -15,18 +14,36 @@ pipeline.add_initial(
     Task(id="initialize_schemas", description="Recreates the e-commerce data schema",
          commands=[
              ExecuteSQL(sql_file_name='../recreate_ecommerce_data_schema.sql',
-                        file_dependencies=[pathlib.Path(__file__).parent.parent / 'recreate_ecommerce_data_schema.sql'])]))
+                        file_dependencies=[
+                            pathlib.Path(__file__).parent.parent / 'recreate_ecommerce_data_schema.sql'])]))
 
-pipeline.add(
-    Task(
-        id="load_customer_data",
-        description="Loads the customers data from the backend DB",
-        commands=[
-            ExecuteSQL(sql_file_name='customer/create_customer_table.sql'),
-            Copy(sql_file_name='customer/load_customer.sql', source_db_alias='olist',
-                 target_db_alias='dwh', target_table='ec_data.customer',
-                 delimiter_char=';')
-        ]))
+tables = [
+    'customer',
+    'order',
+    'order_item',
+    'product',
+    'product_category_name_translation',
+    'seller'
+]
+
+for table in tables:
+    pipeline.add(
+        Task(id=f"load_{table}",
+             description=f'Loads the {table}s from the backend database',
+             commands=[
+
+                 ExecuteSQL(sql_file_name=f'{table}/create_{table}_table.sql'),
+
+                 Copy(sql_statement=f"""
+                 SELECT *
+                 FROM ecommerce.{table}s;
+""",
+                      source_db_alias='olist',
+                      target_db_alias='dwh',
+                      target_table=f'ec_data.{table}',
+                      delimiter_char=';')]
+             )
+    )
 
 pipeline.add(
     Task(
@@ -37,85 +54,5 @@ pipeline.add(
             ExecuteSQL(sql_file_name='geolocation/create_geolocation_table.sql'),
             Copy(sql_file_name='geolocation/load_geolocation.sql', source_db_alias='olist',
                  target_db_alias='dwh', target_table='ec_data.geolocation',
-                 delimiter_char=';')
-        ]))
-
-pipeline.add(
-    Task(
-        id="load_order_item_data",
-        description="Loads the order items data from the backend DB",
-        commands=[
-            ExecuteSQL(sql_file_name='order_item/create_order_item_table.sql'),
-            Copy(sql_file_name='order_item/load_order_item.sql', source_db_alias='olist',
-                 target_db_alias='dwh', target_table='ec_data.order_item',
-                 delimiter_char=';')
-        ]))
-
-pipeline.add(
-    Task(
-        id="load_order_payment_data",
-        description="Loads the order payments data from the backend DB",
-        commands=[
-            ExecuteSQL(sql_file_name='order_payment/create_order_payment_table.sql'),
-            Copy(sql_file_name='order_payment/load_order_payment.sql', source_db_alias='olist',
-                 target_db_alias='dwh', target_table='ec_data.order_payment',
-                 delimiter_char=';')
-        ]))
-
-pipeline.add(
-    Task(
-        id="load_order_review_data",
-        description="Loads the order reviews data from the backend DB",
-        commands=[
-            ExecuteSQL(sql_file_name='order_review/create_order_review_table.sql'),
-            Copy(sql_file_name='order_review/load_order_review.sql', source_db_alias='olist',
-                 target_db_alias='dwh', target_table='ec_data.order_review',
-                 delimiter_char=';',
-                 replace={"@@first-date@@": lambda: config.first_date()})
-        ]))
-
-pipeline.add(
-    Task(
-        id="load_order_data",
-        description="Loads the orders data from the backend DB",
-        commands=[
-            ExecuteSQL(sql_file_name='order/create_order_table.sql'),
-            Copy(sql_file_name='order/load_order.sql', source_db_alias='olist',
-                 target_db_alias='dwh', target_table='ec_data.order',
-                 delimiter_char=';',
-                 replace={"@@first-date@@": lambda: config.first_date()})
-        ]))
-
-pipeline.add(
-    Task(
-        id="load_product_category_name_translation_data",
-        description="Loads the product_category_name translation data from the backend DB",
-        commands=[
-            ExecuteSQL(sql_file_name='product_category_name_translation/create_product_category_name_translation_table.sql'),
-            Copy(sql_file_name='product_category_name_translation/load_product_category_name_translation.sql',
-                 source_db_alias='olist',
-                 target_db_alias='dwh', target_table='ec_data.product_category_name_translation',
-                 delimiter_char=';')
-        ]))
-
-pipeline.add(
-    Task(
-        id="load_product_data",
-        description="Loads the products data from the backend DB",
-        commands=[
-            ExecuteSQL(sql_file_name='product/create_product_data_table.sql'),
-            Copy(sql_file_name='product/load_product.sql', source_db_alias='olist',
-                 target_db_alias='dwh', target_table='ec_data.product',
-                 delimiter_char=';')
-        ]))
-
-pipeline.add(
-    Task(
-        id="load_seller_data",
-        description="Loads the sellers data from the backend DB",
-        commands=[
-            ExecuteSQL(sql_file_name='seller/create_seller_table.sql'),
-            Copy(sql_file_name='seller/load_seller.sql', source_db_alias='olist',
-                 target_db_alias='dwh', target_table='ec_data.seller',
                  delimiter_char=';')
         ]))
