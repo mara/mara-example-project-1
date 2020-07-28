@@ -48,3 +48,5 @@ FROM m_data.marketing_qualified_lead
 
 SELECT util.add_index('m_tmp', 'lead',
                       column_names := ARRAY ['lead_id', 'seller_id']);
+
+ANALYZE m_tmp.lead;

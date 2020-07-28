@@ -29,6 +29,8 @@ FROM ec_tmp.order_item;
 SELECT util.add_index('ec_dim_next', 'order_item',
                       column_names := ARRAY ['order_fk', 'customer_fk', 'product_fk', 'seller_fk']);
 
+ANALYZE ec_dim_next.order_item;
+
 CREATE OR REPLACE FUNCTION ec_tmp.constrain_order_item()
     RETURNS VOID AS
 $$

@@ -37,6 +37,8 @@ FROM ec_tmp.seller
 
 SELECT util.add_index('ec_dim_next', 'seller', column_names := ARRAY ['seller_id', 'zip_code_fk']);
 
+ANALYZE ec_dim_next.seller;
+
 CREATE OR REPLACE FUNCTION ec_tmp.constrain_sellers()
     RETURNS VOID AS
 $$

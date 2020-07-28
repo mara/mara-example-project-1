@@ -1,7 +1,3 @@
-SELECT util.create_enum(
-               'ec_dim_next.ORDER_STATUS',
-               (SELECT array_agg(DISTINCT order_status) FROM ec_tmp.order));
-
 DROP TABLE IF EXISTS ec_dim_next.order CASCADE;
 
 CREATE TABLE ec_dim_next.order
@@ -35,6 +31,8 @@ SELECT order_id,
 FROM ec_tmp.order;
 
 SELECT util.add_index('ec_dim_next', 'order', column_names := ARRAY ['customer_fk']);
+
+ANALYZE ec_dim_next.order;
 
 CREATE OR REPLACE FUNCTION ec_tmp.constrain_orders()
     RETURNS VOID AS

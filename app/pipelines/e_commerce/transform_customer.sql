@@ -53,7 +53,9 @@ FROM ec_tmp.customer
          LEFT JOIN favourite_product_category USING (customer_id);
 
 SELECT util.add_index('ec_dim_next', 'customer',
-                      column_names := ARRAY ['zip_code_fk', 'first_order_fk', 'last_order_fk']);
+                      column_names := ARRAY ['zip_code_fk', 'first_order_fk', 'last_order_fk', 'favourite_product_category']);
+
+ANALYZE ec_dim_next.customer;
 
 CREATE OR REPLACE FUNCTION ec_tmp.constrain_customer()
     RETURNS VOID AS

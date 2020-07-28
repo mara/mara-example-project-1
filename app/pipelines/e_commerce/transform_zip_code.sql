@@ -16,3 +16,4 @@ SELECT zip_code_id,
        state            AS state
 FROM ec_tmp.zip_code;
 
+ANALYZE ec_dim_next.zip_code;

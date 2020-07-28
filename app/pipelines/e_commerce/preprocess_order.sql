@@ -29,7 +29,7 @@ WITH order_with_unique_customer_id AS (
 )
 
 INSERT
-INTO ec_tmp."order"
+INTO ec_tmp.order
 SELECT order_id,
        customer_id                                        AS customer_id,
 
@@ -44,3 +44,9 @@ FROM order_with_unique_customer_id
          LEFT JOIN ec_tmp.customer USING (customer_id);
 
 SELECT util.add_index('ec_tmp', 'order', column_names := ARRAY ['order_id', 'customer_id']);
+
+ANALYZE ec_tmp.order;
+
+SELECT util.create_enum(
+               'ec_dim_next.ORDER_STATUS',
+               (SELECT array_agg(DISTINCT order_status) FROM ec_tmp.order));
