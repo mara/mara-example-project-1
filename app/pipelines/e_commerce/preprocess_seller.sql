@@ -12,7 +12,7 @@ CREATE TABLE ec_tmp.seller
 WITH seller_orders AS (
     SELECT DISTINCT order_item.seller_id,
                     first_value("order".order_id)
-                    OVER (PARTITION BY "order_item".seller_id
+                    OVER (PARTITION BY order_item.seller_id
                         ORDER BY "order".order_purchase_timestamp ASC) AS first_order_id
     FROM ec_data.order_item
              LEFT JOIN ec_data.order USING (order_id)
@@ -29,3 +29,5 @@ FROM ec_data.seller
          LEFT JOIN seller_orders USING (seller_id);
 
 SELECT util.add_index('ec_tmp', 'seller', column_names := ARRAY ['seller_id']);
+
+ANALYZE ec_tmp.seller;

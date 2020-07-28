@@ -69,6 +69,8 @@ FROM m_tmp.lead
 SELECT util.add_index('m_dim_next', 'lead',
                       column_names := ARRAY ['seller_fk']);
 
+ANALYZE m_dim_next.lead;
+
 CREATE OR REPLACE FUNCTION m_tmp.constrain_lead()
     RETURNS VOID AS
 $$

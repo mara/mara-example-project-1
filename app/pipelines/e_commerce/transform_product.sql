@@ -39,3 +39,6 @@ SELECT product_id,
 FROM ec_tmp.product
          LEFT JOIN product_items USING (product_id);
 
+SELECT util.add_index('ec_dim_next', 'product', column_names := ARRAY ['product_category']);
+
+ANALYZE ec_dim_next.product;

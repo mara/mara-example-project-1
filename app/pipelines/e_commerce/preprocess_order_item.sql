@@ -39,3 +39,5 @@ WHERE "order".order_id IS NOT NULL;
 
 SELECT util.add_index('ec_tmp', 'order_item',
                       column_names := ARRAY ['order_item_id', 'order_id', 'product_id', 'seller_id']);
+
+ANALYZE ec_tmp.order_item;

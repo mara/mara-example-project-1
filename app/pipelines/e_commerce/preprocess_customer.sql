@@ -27,20 +27,20 @@ WITH customer_orders AS (
                     OVER (PARTITION BY customer_unique_id
                         ORDER BY order_purchase_timestamp DESC)                   AS state,
                     first_value(order_id)
-                    OVER (PARTITION BY customer.customer_unique_id
-                        ORDER BY "order".order_purchase_timestamp ASC)            AS first_order_id,
+                    OVER (PARTITION BY customer_unique_id
+                        ORDER BY order_purchase_timestamp ASC)            AS first_order_id,
                     first_value(order_purchase_timestamp)
-                    OVER (PARTITION BY customer.customer_unique_id
-                        ORDER BY "order".order_purchase_timestamp ASC)            AS first_order_date,
+                    OVER (PARTITION BY customer_unique_id
+                        ORDER BY order_purchase_timestamp ASC)            AS first_order_date,
                     first_value(order_id)
-                    OVER (PARTITION BY customer.customer_unique_id
-                        ORDER BY "order".order_purchase_timestamp DESC)           AS last_order_id,
+                    OVER (PARTITION BY customer_unique_id
+                        ORDER BY order_purchase_timestamp DESC)           AS last_order_id,
                     now() :: DATE
-                        - MIN("order".order_purchase_timestamp)
-                          OVER (PARTITION BY customer.customer_unique_id) :: DATE AS days_since_first_order,
+                        - MIN(order_purchase_timestamp)
+                          OVER (PARTITION BY customer_unique_id) :: DATE AS days_since_first_order,
                     now() :: DATE
-                        - MAX("order".order_purchase_timestamp)
-                          OVER (PARTITION BY customer.customer_unique_id) :: DATE AS days_since_last_order
+                        - MAX(order_purchase_timestamp)
+                          OVER (PARTITION BY customer_unique_id) :: DATE AS days_since_last_order
     FROM ec_data.order
              LEFT JOIN ec_data.customer USING (customer_id)
 )
@@ -67,3 +67,5 @@ FROM ec_data.customer
          LEFT JOIN customer_orders USING (customer_unique_id);
 
 SELECT util.add_index('ec_tmp', 'customer', column_names := ARRAY ['customer_id']);
+
+ANALYZE ec_tmp.customer;

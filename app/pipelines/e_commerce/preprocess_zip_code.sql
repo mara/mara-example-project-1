@@ -37,3 +37,5 @@ FROM zip_codes
 GROUP BY zip_code_prefix;
 
 SELECT util.add_index('ec_tmp', 'zip_code', column_names := ARRAY ['zip_code_id']);
+
+ANALYZE ec_tmp.zip_code;
