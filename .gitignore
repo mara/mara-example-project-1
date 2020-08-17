@@ -4,6 +4,7 @@
 /data
 /.metabase
 /.mondrian-server
+/.singer
 /app/local_setup.py
 
 *.pyc

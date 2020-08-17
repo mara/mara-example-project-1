@@ -12,7 +12,7 @@
 -e git+https://github.com/mara/mara-metabase.git@2.0.0#egg=mara-metabase
 
 -e git+https://git@github.com/mara/mara-olist-ecommerce-data.git@master#egg=mara-olist-ecommerce-data
-
+-e git+https://github.com/hz-lschick/mara-singer.git@v0.8.0#egg=mara-singer
 
 # running flask
 gunicorn

@@ -1,7 +1,7 @@
 all:
 	make -j ensure-config ensure-databases
 	make setup-mara
-	make -j load-olist-data setup-metabase setup-mondrian-server
+	make -j load-olist-data setup-metabase setup-mondrian-server setup-singer
 
 run:
 	make -j run-metabase run-mondrian-server run-flask
@@ -27,8 +27,11 @@ include .scripts/mara-metabase/metabase.mk
 # mondrian server setup
 include .scripts/mara-mondrian/mondrian-server.mk
 
+# singer.io package install
+include .scripts/mara-singer/singer.mk
+
 load-olist-data:
 	. .venv/bin/activate; flask olist_ecommerce.load-data
 
 cleanup:
-	make -j .cleanup-vitualenv .cleanup-databases .cleanup-metabase .cleanup-mondrian-server .cleanup-config
+	make -j .cleanup-vitualenv .cleanup-databases .cleanup-metabase .cleanup-mondrian-server .cleanup-singer .cleanup-config

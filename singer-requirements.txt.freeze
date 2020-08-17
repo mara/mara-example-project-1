@@ -1,0 +1,4 @@
+-e git+https://github.com/chrisgoddard/singer-discover.git@3b807a94c5eb1d6193edd0cb2898ca0e21dcd03f#egg=singer-discover
+tap-covid-19==0.0.10
+target-jsonl==0.1.2
+-e git+https://github.com/datamill-co/target-postgres.git@094b080bfcedcb2f2505610a01d009f8aa6c9016#egg=target-postgres

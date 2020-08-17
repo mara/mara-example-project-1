@@ -1,0 +1,10 @@
+# taps
+tap-covid-19>=0.0.10
+
+# targets
+# default targets
+target-jsonl==0.1.2
+-e git+https://github.com/datamill-co/target-postgres.git@v0.2.4#egg=target-postgres
+
+# optional for development:
+-e git+https://github.com/chrisgoddard/singer-discover.git#egg=singer-discover
