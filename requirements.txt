@@ -8,7 +8,7 @@
 -e git+https://github.com/mara/mara-etl-tools.git@4.0.0#egg=mara-etl-tools
 -e git+https://github.com/mara/mara-schema.git@master#egg=mara-schema
 -e git+https://github.com/mara/mara-data-explorer.git@3.0.0#egg=mara-data-explorer
--e git+https://github.com/mara/mara-mondrian.git@1.0.1#egg=mara-mondrian
+-e git+https://github.com/mara/mara-mondrian.git@1.0.2#egg=mara-mondrian
 -e git+https://github.com/mara/mara-metabase.git@1.0.1#egg=mara-metabase
 
 -e git+https://git@github.com/mara/mara-olist-ecommerce-data.git@master#egg=mara-olist-ecommerce-data
