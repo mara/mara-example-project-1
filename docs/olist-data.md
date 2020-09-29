@@ -13,10 +13,10 @@ Its features allow viewing a sales process from multiple dimensions: lead catego
 The total size of this data is 121MB and is included as a project requirement from the
 [olist-ecommerce-data](https://github.com/mara/olist-ecommerce-data) package for ease of loading.
 
-Then, there is the ETL in [app/pipelines](app/pipelines) that transforms 
+Then, there is the ETL in [app/pipelines](/app/pipelines) that transforms 
 this data into a classic Kimball-like [star schema](https://en.wikipedia.org/wiki/Star_schema):
 
-![Star schema](docs/star-schema.png)
+![Star schema](star-schema.png)
 
 It shows 2 database schemas, each created by a different pipeline: 
 
@@ -63,13 +63,13 @@ LIMIT 10;
 
 The Mara pipelines are visualized and debugged though a web ui. Here, the pipeline `e_commerce` is run (locally on an Ubuntu 18.04 with all available data): 
 
-![Mara web ui ETL run](docs/mara-web-ui-etl-run.gif)
+![Mara web ui ETL run](mara-web-ui-etl-run.png)
 
 &nbsp;
 
 On production, pipelines are run through a cli interface:
 
-![Mara cli ETL run](docs/mara-cli-etl-run.gif)
+![Mara cli ETL run](mara-cli-etl-run.png)
 
 &nbsp;
 
@@ -77,7 +77,7 @@ Mara ETL pipelines are completely transparent, both to stakeholders in terms of 
 
 This is the page in the web ui that visualizes the pipeline `e_commerce`: 
 
-![Mara web UI for pipelines](docs/mara-web-ui-pipeline.png)
+![Mara web UI for pipelines](mara-web-ui-pipeline.png)
 
 It shows 
 
@@ -90,7 +90,7 @@ It shows
 
 Similarly, this is the page for the task `e_commerce/transform_order_item`:
 
-![Mara web ui for tasks](docs/mara-web-ui-task.png)
+![Mara web ui for tasks](mara-web-ui-task.png)
 
 It shows its
 
@@ -110,7 +110,7 @@ and ensures consistency across reporting tools and transparency to the DWH users
 The package has a web UI for documentation of the business semantics in a DWH: 
 Entities, Attributes, Metrics, DataSets, etc.
 
-![Mara schema documentation overview](docs/mara-schema-documentation-overview.png)
+![Mara schema documentation overview](mara-schema-documentation-overview.png)
 
 The [mara-schema/schema](https://github.com/mara/mara-schema/tree/master/mara_schema/schema) directory,
 contains modules with classes for `DataSet`, `Entity`, `Metric`, `Attribute`, etc.
@@ -122,7 +122,7 @@ directory, contains modules with functions that generate SQL for flattened table
 Please take a look at the pipeline [generate_artifacts](https://github.com/mara/mara-example-project-1/blob/master/app/pipelines/generate_artifacts/__init__.py),
 which shows an example of using Mara Schema to automate the generation of artifacts:
 
-![Generate artifacts pipeline](docs/generate-artifacts-pipeline.png)
+![Generate artifacts pipeline](generate-artifacts-pipeline.png)
 
 The following flask command generates an XML file for Mondrian schema in an activated virtual environment.
 Please check the [README.md](https://github.com/mara/mara-schema/blob/master/README.md#create-mondrian-schema) for the configuration.
