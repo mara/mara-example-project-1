@@ -13,6 +13,8 @@
 
 -e git+https://git@github.com/mara/mara-olist-ecommerce-data.git@master#egg=mara-olist-ecommerce-data
 
+-e git+https://github.com/mara/mara-markdown-docs.git@master#egg=mara-markdown-docs
+
 
 # running flask
 gunicorn
