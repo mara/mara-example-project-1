@@ -33,7 +33,7 @@ setup-metabase: migrate-metabase-db .copy-mara-metabase-scripts
 
 # copy scripts from mara-metabase package to project code
 .copy-mara-metabase-scripts:
-	rsync --archive --recursive --itemize-changes  --delete $(mara-metabase-package-dir)/.scripts/ $(mara-etabase-scripts-dir)
+	rsync --archive --recursive --itemize-changes  --delete $(mara-metabase-package-dir)/.scripts/ $(mara-metabase-scripts-dir)
 
 
 .cleanup-metabase:
