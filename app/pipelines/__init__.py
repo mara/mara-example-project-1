@@ -26,7 +26,6 @@ def root_pipeline():
     import app.pipelines.generate_artifacts
     import app.pipelines.update_frontends
     import app.pipelines.consistency_checks
-    import app.pipelines.update_frontends
 
     pipeline = Pipeline(
         id='mara_example_project_1',
