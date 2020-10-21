@@ -1,7 +1,7 @@
 # properties file setup, run mondrian-server locally
 
 mondrian-server-directory ?= .mondrian-server
-mondrian-server-properties-file := $(mondrian-server-directory)/mondrian-server.propertiess
+mondrian-server-properties-file := $(mondrian-server-directory)/mondrian-server.properties
 saiku-storage-directory ?= $(mondrian-server-directory)/saiku-queries
 
 mondrian-server-db ?= dwh
@@ -38,9 +38,9 @@ $(saiku-storage-directory):
 
 $(mondrian-server-properties-file): $(mondrian-server-directory)
 	cat $(mara-mondrian-package-dir)/mondrian-server.properties.example \
-	   | sed 's@/absolute/path/to/mondrian-schema.xml@$(mondrian-schema-file)@g' \
-	   | sed 's@^databaseUrl.*@databaseUrl=$(mondrian-server-db-connection-url)@g' \
-	   | sed 's@^saikuStorageDir.*@saikuStorageDir=$(saiku-storage-directory)@g' \
+	   | sed 's§/absolute/path/to/mondrian-schema.xml§$(mondrian-schema-file)§g' \
+	   | sed 's§^databaseUrl.*§databaseUrl=$(mondrian-server-db-connection-url)§g' \
+	   | sed 's§^saikuStorageDir.*§saikuStorageDir=$(saiku-storage-directory)§g' \
 	   > $(mondrian-server-properties-file)
 	>&2 echo '!!! copied $(mara-mondrian-package-dir)/mondrian-server.properties.example to $(mondrian-server-properties-file). Please check'
 

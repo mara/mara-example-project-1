@@ -1,24 +1,28 @@
 """Set up Navigation, ACL & Logos"""
 
-import mara_pipelines
-import mara_data_explorer
+import pathlib
+
 import flask
 import mara_acl
+import mara_acl.config
+import mara_acl.permissions
 import mara_acl.users
 import mara_app
+import mara_app.config
 import mara_app.layout
+import mara_data_explorer
 import mara_db
+import mara_markdown_docs.config
+import mara_metabase
+import mara_metabase.config
+import mara_mondrian
+import mara_mondrian.config
 import mara_page.acl
+import mara_pipelines
+import mara_schema
 from mara_app import monkey_patch
 from mara_page import acl
 from mara_page import navigation
-import mara_mondrian.config
-import mara_mondrian
-import mara_metabase.config
-import mara_metabase
-
-import mara_schema
-import olist_ecommerce
 
 from app.ui import start_page
 
@@ -52,11 +56,11 @@ def acl_resources():
             acl.AclResource(name='Data',
                             children=[*mara_data_explorer.MARA_ACL_RESOURCES().values(),
                                       *mara_metabase.MARA_ACL_RESOURCES().values(),
-                                      *mara_mondrian.MARA_ACL_RESOURCES().values()
-                            ]),
+                                      *mara_mondrian.MARA_ACL_RESOURCES().values()]),
             acl.AclResource(name='Admin',
                             children=[mara_app.MARA_ACL_RESOURCES().get('Configuration'),
-                                      mara_acl.MARA_ACL_RESOURCES().get('Acl')])]
+                                      mara_acl.MARA_ACL_RESOURCES().get('Acl')])
+            ]
 
 
 # activate ACL
@@ -78,7 +82,27 @@ def navigation_root() -> navigation.NavigationEntry:
         *mara_schema.MARA_NAVIGATION_ENTRIES().values(),
         *mara_pipelines.MARA_NAVIGATION_ENTRIES().values(),
         *mara_db.MARA_NAVIGATION_ENTRIES().values(),
+        *mara_markdown_docs.MARA_NAVIGATION_ENTRIES().values(),
         navigation.NavigationEntry(
             'Settings', icon='cog', description='ACL & Configuration', rank=100,
             children=[*mara_app.MARA_NAVIGATION_ENTRIES().values(),
-                      *mara_acl.MARA_NAVIGATION_ENTRIES().values()])])
+                      *mara_acl.MARA_NAVIGATION_ENTRIES().values()]),
+    ])
+
+
+@monkey_patch.patch(mara_markdown_docs.config.documentation)
+def documentation() -> dict:
+    """Dict with name -> path to markdown file.
+
+    If name contains a single '/' it will be shown in a submenu. Multiple '/' are not allowed.
+    The insertion order is mostly preserved (folders are grouped in the menu)."""
+
+    repo_root_dir = pathlib.Path(__file__).parent.parent.parent
+
+    # Cases matter in path!
+    docs = {
+        'Olist Data': repo_root_dir / 'docs/olist-data.md',
+        'Developer/Setup': repo_root_dir / 'README.md',
+    }
+
+    return docs
