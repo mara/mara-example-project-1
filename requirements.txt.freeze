@@ -16,13 +16,13 @@ Mako==1.1.3
 -e git+https://github.com/mara/mara-acl.git@751066101c1cac484edd2984fd0eace283f6332d#egg=mara_acl
 -e git+https://github.com/mara/mara-app.git@c4ec0fa40644f569b5a898d5e7c566dad466fdfb#egg=mara_app
 -e git+https://github.com/mara/mara-data-explorer.git@77803fcf07516aae163bb709c9f4b8105896e0bb#egg=mara_data_explorer
--e git+https://github.com/mara/mara-db.git@817bf658e918bf8dfd0c34236404eada5f0e28fd#egg=mara_db
+-e git+https://github.com/mara/mara-db.git@a032be654be40880230d969f5eb1782831eb2b1f#egg=mara_db
 -e git+https://github.com/mara/mara-etl-tools.git@55bb4e8729af44bd8ccb88f9cb95dd3eef81ecee#egg=mara_etl_tools
--e git+https://github.com/mara/mara-metabase.git@503f6d1172783fc6ec46a4362bf40fc10f6c8002#egg=mara_metabase
+-e git+https://github.com/mara/mara-metabase.git@47eb1b060cf40798afa06db9a7a1dd19f217d1d4#egg=mara_metabase
 -e git+https://github.com/mara/mara-mondrian.git@a54a91608a7da8317217bdb927d7de34b97a32ed#egg=mara_mondrian
 -e git+https://git@github.com/mara/mara-olist-ecommerce-data.git@663660edff1b4cd711a172027081915771628b9f#egg=mara_olist_ecommerce_data
--e git+https://github.com/mara/mara-page.git@c499a6c44aaa638c1515c3a857e5f68cad8b84c9#egg=mara_page
--e git+https://github.com/mara/mara-pipelines.git@ab41e916be81969212f2f0e95a6b0e5794dd800d#egg=mara_pipelines
+-e git+https://github.com/mara/mara-page.git@531a1500e16d55072fca503ac524bcf8de72111e#egg=mara_page
+-e git+https://github.com/mara/mara-pipelines.git@ae17c34e7759915b5e37799c486c4c03443aedae#egg=mara_pipelines
 -e git+https://github.com/mara/mara-schema.git@13774db2bfc8b94b34bddd890871d746e987b015#egg=mara_schema
 MarkupSafe==1.1.1
 more-itertools==8.4.0

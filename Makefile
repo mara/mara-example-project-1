@@ -18,6 +18,9 @@ include .scripts/config.mk
 # creation of databases that are needed in a local setup
 include .scripts/databases.mk
 
+# overwrite metabase version
+metabase-version ?= v0.37.0.1
+
 # metabase setup
 include .scripts/mara-metabase/metabase.mk
 

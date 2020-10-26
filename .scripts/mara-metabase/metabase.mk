@@ -10,7 +10,7 @@ metabase-metadata-db-connection-uri ?= postgres://127.0.0.1:5432/$(metabase-meta
 mara-metabase-scripts-dir := $(dir $(lastword $(MAKEFILE_LIST)))
 
 # where mara-metabase is installed relative to the project root
-mara-metabase-package-dir ?= packages/mara-metabase
+mara-metabase-dir ?= packages/mara-metabase
 
 
 # run metabase with the configured metadata database connection
@@ -33,7 +33,7 @@ setup-metabase: migrate-metabase-db .copy-mara-metabase-scripts
 
 # copy scripts from mara-metabase package to project code
 .copy-mara-metabase-scripts:
-	rsync --archive --recursive --itemize-changes  --delete $(mara-metabase-package-dir)/.scripts/ $(mara-metabase-scripts-dir)
+	rsync --archive --recursive --itemize-changes  --delete $(mara-metabase-dir)/.scripts/ $(mara-metabase-scripts-dir)
 
 
 .cleanup-metabase:
