@@ -21,7 +21,7 @@ ensure-databases: $(addprefix .ensure-database-, $(databases))
 	if psql -lqt | cut -d \| -f 1 | grep -qw $($*) ; then \
 		echo "$* database exists"; \
 	else \
-		psql postgres -c "create database $($*);"; \
+		psql postgres -c "create database $($*) with encoding='UTF8';"; \
 	fi;
 
 
