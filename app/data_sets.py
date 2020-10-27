@@ -37,4 +37,4 @@ def _data_sets():
 
 
 # adapt to the favorite chart color of your company
-patch(mara_data_explorer.config.charts_color)(lambda: '#008000')
+patch(mara_data_explorer.config.charts_color)(lambda: '#0275d8')
