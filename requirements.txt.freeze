@@ -19,11 +19,11 @@ Mako==1.1.3
 -e git+https://github.com/mara/mara-db.git@a032be654be40880230d969f5eb1782831eb2b1f#egg=mara_db
 -e git+https://github.com/mara/mara-etl-tools.git@55bb4e8729af44bd8ccb88f9cb95dd3eef81ecee#egg=mara_etl_tools
 -e git+https://github.com/mara/mara-metabase.git@47eb1b060cf40798afa06db9a7a1dd19f217d1d4#egg=mara_metabase
--e git+https://github.com/mara/mara-mondrian.git@a54a91608a7da8317217bdb927d7de34b97a32ed#egg=mara_mondrian
+-e git+https://github.com/mara/mara-mondrian.git@2af1678f54c29e5e6f0ec4609a15a86cea4166c4#egg=mara_mondrian
 -e git+https://git@github.com/mara/mara-olist-ecommerce-data.git@663660edff1b4cd711a172027081915771628b9f#egg=mara_olist_ecommerce_data
 -e git+https://github.com/mara/mara-page.git@531a1500e16d55072fca503ac524bcf8de72111e#egg=mara_page
 -e git+https://github.com/mara/mara-pipelines.git@ae17c34e7759915b5e37799c486c4c03443aedae#egg=mara_pipelines
--e git+https://github.com/mara/mara-schema.git@13774db2bfc8b94b34bddd890871d746e987b015#egg=mara_schema
+-e git+https://github.com/mara/mara-schema.git@1d614878a0d03c65772ef93ea11c57e762895fb8#egg=mara_schema
 MarkupSafe==1.1.1
 more-itertools==8.4.0
 mpmath==1.1.0
