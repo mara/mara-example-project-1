@@ -11,7 +11,7 @@ mondrian-server-db-connection-url ?= jdbc:postgresql://localhost/$(mondrian-serv
 mondrian-schema-file ?= $(shell pwd)/.mondrian-schema.xml
 
 # where mara-mondrian is installed relative to the project root
-mara-mondrian-package-dir ?= packages/mara-mondrian
+mara-mondrian-dir ?= packages/mara-mondrian
 
 # the directory of this Makefile in project
 mara-mondrian-scripts-dir := $(dir $(lastword $(MAKEFILE_LIST)))
@@ -21,9 +21,9 @@ mara-mondrian-scripts-dir := $(dir $(lastword $(MAKEFILE_LIST)))
 # run mondrian server
 run-mondrian-server: $(mondrian-server-properties-file)
 	java -Dmondrian-server.properties=$(mondrian-server-properties-file) -Dlog4j.logLevel=INFO \
-	   -jar $(mara-mondrian-package-dir)/jetty-runner.jar \
+	   -jar $(mara-mondrian-dir)/jetty-runner.jar \
 	   --port 8080 \
-	   $(mara-mondrian-package-dir)/mondrian-server.war 2>&1
+	   $(mara-mondrian-dir)/mondrian-server.war 2>&1
 
 
 # create mondrian server directory and config file
@@ -36,18 +36,20 @@ $(mondrian-server-directory):
 $(saiku-storage-directory):
 	mkdir -pv $@
 
+
+
 $(mondrian-server-properties-file): $(mondrian-server-directory)
-	cat $(mara-mondrian-package-dir)/mondrian-server.properties.example \
-	   | sed 's§/absolute/path/to/mondrian-schema.xml§$(mondrian-schema-file)§g' \
-	   | sed 's§^databaseUrl.*§databaseUrl=$(mondrian-server-db-connection-url)§g' \
-	   | sed 's§^saikuStorageDir.*§saikuStorageDir=$(saiku-storage-directory)§g' \
+	cat $(mara-mondrian-dir)/mondrian-server.properties.example \
+	   | sed 's@/absolute/path/to/mondrian-schema.xml@$(subst @,\@,$(mondrian-schema-file))@g' \
+	   | sed 's@^databaseUrl.*@databaseUrl=$(subst @,\@,$(mondrian-server-db-connection-url))@g' \
+	   | sed 's@^saikuStorageDir.*@saikuStorageDir=$(subst @,\@,$(saiku-storage-directory))@g' \
 	   > $(mondrian-server-properties-file)
-	>&2 echo '!!! copied $(mara-mondrian-package-dir)/mondrian-server.properties.example to $(mondrian-server-properties-file). Please check'
+	>&2 echo '!!! copied $(mara-mondrian-dir)/mondrian-server.properties.example to $(mondrian-server-properties-file). Please check'
 
 
 # copy scripts from mara-app package to project code
 .copy-mara-mondrian-scripts:
-	rsync --archive --recursive --itemize-changes  --delete $(mara-mondrian-package-dir)/.scripts/ $(mara-mondrian-scripts-dir)
+	rsync --archive --recursive --itemize-changes  --delete $(mara-mondrian-dir)/.scripts/ $(mara-mondrian-scripts-dir)
 
 .cleanup-mondrian-server:
 	rm -rf $(mondrian-server-directory)
