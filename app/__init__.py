@@ -13,11 +13,15 @@ if not local_setup_py_path.exists():
 
 import app.local_setup
 
+
 # configure application and packages
+
+# noinspection PyUnresolvedReferences
 import app.pipelines
 import app.data_sets
 import app.schema
 import app.ui
+import olist_ecommerce
 
 
 def MARA_CONFIG_MODULES():
