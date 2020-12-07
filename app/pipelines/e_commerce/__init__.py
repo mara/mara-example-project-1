@@ -76,7 +76,7 @@ pipeline.add(
          commands=[
              ExecuteSQL(sql_file_name="transform_seller.sql")
          ]),
-    upstreams=["preprocess_order_item"])
+    upstreams=["preprocess_order_item", "preprocess_seller"])
 
 pipeline.add(
     Task(id="transform_order",
