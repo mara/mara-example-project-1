@@ -1,4 +1,5 @@
 import mara_acl.config
+import mara_cron.config
 import mara_db.config
 import mara_db.dbs
 import mara_pipelines.config
@@ -33,6 +34,19 @@ def databases():
 
 # Disable http header based authentication
 patch(mara_acl.config.require_email_http_header)(lambda: False)
+
+
+# Activates mara_cron jobs. If not set all jobs are
+# by default disabled and can only be activated via
+# executing:
+#    flask mara_cron.enable --job-id "my_job_id"
+patch(mara_cron.config.enabled)(lambda: True)
+
+# Optional parameter to specify a mara instance name
+# This is necessary to separate multiple environments running
+# on the same user
+patch(mara_cron.config.instance_name)(lambda: 'local-dev')
+
 
 # How many cores to use for running the ETL, defaults to the number of CPUs of the machine
 # On production, make sure the ETL does not slow down other services too much

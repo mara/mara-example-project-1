@@ -1,6 +1,7 @@
 all:
 	make -j ensure-config ensure-databases
 	make setup-mara
+	make setup-cron
 	make -j load-olist-data setup-metabase setup-mondrian-server
 
 run:
@@ -11,6 +12,7 @@ include .scripts/mara-app/init.mk
 
 # virtual env creation, package updates, db migration
 include .scripts/mara-app/install.mk
+include .scripts/mara-cron/install.mk
 
 # ensure local_setup.py exists
 include .scripts/config.mk
