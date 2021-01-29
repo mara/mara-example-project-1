@@ -5,6 +5,7 @@ import mara_acl
 import mara_acl.users
 import mara_app
 import mara_app.layout
+import mara_cron
 import mara_data_explorer
 import mara_db
 import mara_metabase
@@ -79,6 +80,7 @@ def navigation_root() -> navigation.NavigationEntry:
         *mara_schema.MARA_NAVIGATION_ENTRIES().values(),
         *mara_pipelines.MARA_NAVIGATION_ENTRIES().values(),
         *mara_db.MARA_NAVIGATION_ENTRIES().values(),
+        *mara_cron.MARA_NAVIGATION_ENTRIES().values(),
         navigation.NavigationEntry(
             'Settings', icon='cog', description='ACL & Configuration', rank=100,
             children=[*mara_app.MARA_NAVIGATION_ENTRIES().values(),
