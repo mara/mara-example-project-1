@@ -85,7 +85,7 @@ The app is now accessible at [http://localhost:5000](http://localhost:5000).
 For development, it is recommended to run the ETL from the web UI (see above). 
 On production, use `flask mara_pipelines.ui.run` to run a pipeline or a set of its child nodes. 
 
-The command `mara_pipelines.ui.run_interactively` provides an ncurses-based menu for selecting and running pipelines.
+The command `mara_pipelines.ui.run-interactively` provides an ncurses-based menu for selecting and running pipelines.
 
 &nbsp;
 
